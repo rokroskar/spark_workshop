@@ -1,5 +1,9 @@
-# spark workshop materials
-Materials for an introductory workshop to using Spark in data processing.
+# Introductory workshop on using distributed processing in data analysis
+This workshop will try to show some techniques for processing large data sets that do not fit into a single machine. 
+While there are many methods to accomplish such a task, we will focus on the *map/reduce* (MR) paradigm that has
+gained a lot of traction in industry, but only seldom in academia. To explore the possibilities of using 
+such a framework, we will make use of [Spark](http://spark.apache.org), which is a modern MR framework with a rich
+API and many properties which make it attractive for data exploration. 
 
 ## Prerequisites
 
