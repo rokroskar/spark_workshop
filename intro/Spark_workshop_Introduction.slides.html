@@ -222,7 +222,7 @@ div.output_prompt {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Science-Data-Analysis-with-Spark">Science Data Analysis with Spark<a class="anchor-link" href="#Science-Data-Analysis-with-Spark">&#182;</a></h1><h2 id="Day-0:-Basics">Day 0: Basics<a class="anchor-link" href="#Day-0:-Basics">&#182;</a></h2>
+<h1 id="Analyzing-large-datasets">Analyzing large datasets<a class="anchor-link" href="#Analyzing-large-datasets">&#182;</a></h1><h2 id="Day-0:-Basics">Day 0: Basics<a class="anchor-link" href="#Day-0:-Basics">&#182;</a></h2>
 </div>
 </div>
 </div></section>
@@ -234,8 +234,57 @@ div.output_prompt {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><a href="http://apache.spark.org">Spark</a> is a distributed data analysis framework that allows for processing of large data sets with a minimal amount of complexity for the user/scientist. It builds on the <a href="http://en.wikipedia.org/wiki/MapReduce">Map/Reduce</a> computing paradigm, of which the Apache Hadoop project is perhaps the most well known implementation.</p>
-<p>In this workshop we will first learn the basics of the map-reduce programming model and some associated <code>python</code> tricks. We will then use this knowledge to build simple Spark applications.</p>
+<h3 id="Purpose">Purpose<a class="anchor-link" href="#Purpose">&#182;</a></h3><p>What are we doing here?</p>
+<ul>
+<li>analyzing data on a laptop or even a capable workstation doesn't cut it anymore</li>
+<li>individual data sets are quickly growing to many Gb of <em>raw</em> data </li>
+<li>add on top of this memory overhead for processing and you're stuck!</li>
+<li>on top of it all, we'd like some interactivity please! hard to really understand data without exploration</li>
+</ul>
+
+</div>
+</div>
+</div></section>
+    </section><section>
+    <section>
+    
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Sooner or later, data analysis needs to become <em>distributed</em>.</p>
+<p>This doesn't mean using more cores on your laptop - it means using many machines in a coordinated way.</p>
+
+</div>
+</div>
+</div></section>
+    </section><section>
+    <section>
+    
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>People have been doing this for decades!</p>
+<p>But mostly for <em>creating</em> data on various HPC platforms, not processing it!</p>
+<p>Some interactive tools exist, but are often specialized and hard to taylor to specific needs</p>
+
+</div>
+</div>
+</div></section>
+    </section><section>
+    <section>
+    
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Distributed data processing has really been driven by <em>industry</em> for the past decade or so.</p>
+<p>Enormous amounts of data in data warehouses needed a sensible way to chug through it all as cheaply as possible</p>
+<p>---&gt; Map/Reduce was born</p>
 
 </div>
 </div>
@@ -273,7 +322,7 @@ div.output_prompt {
 
 </div>
 </div>
-</div><div class="fragment" data-fragment-index="4">
+</div><div class="fragment" data-fragment-index="7">
     
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
@@ -320,7 +369,7 @@ div.output_prompt {
 
 </div>
 </div>
-</div><div class="fragment" data-fragment-index="6">
+</div><div class="fragment" data-fragment-index="9">
     
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
@@ -367,7 +416,7 @@ div.output_prompt {
 
 </div>
 </div>
-</div><div class="fragment" data-fragment-index="8">
+</div><div class="fragment" data-fragment-index="11">
     
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
@@ -393,7 +442,7 @@ div.output_prompt {
 
 </div>
 </div>
-</div><div class="fragment" data-fragment-index="10">
+</div><div class="fragment" data-fragment-index="13">
     
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
@@ -422,7 +471,7 @@ div.output_prompt {
 
 </div>
 </div>
-</div><div class="fragment" data-fragment-index="10">
+</div><div class="fragment" data-fragment-index="13">
         
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
@@ -452,7 +501,7 @@ div.output_prompt {
 </div>
 
 </div>
-        </div><div class="fragment" data-fragment-index="13">
+        </div><div class="fragment" data-fragment-index="16">
     
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
@@ -464,7 +513,7 @@ div.output_prompt {
 </div>
 </div>
 </div>
-    </div><div class="fragment" data-fragment-index="13">
+    </div><div class="fragment" data-fragment-index="16">
         
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
@@ -522,7 +571,7 @@ div.output_prompt {
 
 </div>
 </div>
-</div><div class="fragment" data-fragment-index="17">
+</div><div class="fragment" data-fragment-index="20">
     
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
@@ -554,7 +603,7 @@ div.output_prompt {
 </div>
 
 </div>
-    </div><div class="fragment" data-fragment-index="17">
+    </div><div class="fragment" data-fragment-index="20">
         
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
@@ -589,12 +638,24 @@ div.output_prompt {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>The basic syntax is that you enclose a <code>for</code> loop <em>inside</em> the list brackets <code>[]</code>. To make a simple (slightly contrived) example, consider:</p>
+<p>The basic syntax is that you enclose a <code>for</code> loop <em>inside</em> the list brackets <code>[]</code>.</p>
 
 </div>
 </div>
-</div><div class="fragment" data-fragment-index="21">
+</div><div class="fragment" data-fragment-index="24">
     
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>To make a simple (slightly contrived) example, consider:</p>
+
+</div>
+</div>
+</div>
+    </div><div class="fragment" data-fragment-index="24">
+        
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[10]:</div>
@@ -625,7 +686,7 @@ div.output_prompt {
 </div>
 
 </div>
-    </div></section>
+        </div></section>
     </section><section>
     <section>
     
@@ -638,7 +699,7 @@ div.output_prompt {
 
 </div>
 </div>
-</div><div class="fragment" data-fragment-index="23">
+</div><div class="fragment" data-fragment-index="27">
     
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
@@ -650,7 +711,7 @@ div.output_prompt {
 </div>
 </div>
 </div>
-    </div><div class="fragment" data-fragment-index="23">
+    </div><div class="fragment" data-fragment-index="27">
         
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
@@ -682,7 +743,7 @@ div.output_prompt {
 </div>
 
 </div>
-        </div><div class="fragment" data-fragment-index="25">
+        </div><div class="fragment" data-fragment-index="29">
     
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
@@ -694,7 +755,7 @@ div.output_prompt {
 </div>
 </div>
 </div>
-    </div><div class="fragment" data-fragment-index="25">
+    </div><div class="fragment" data-fragment-index="29">
         
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
@@ -725,7 +786,7 @@ div.output_prompt {
 </div>
 
 </div>
-        </div><div class="fragment" data-fragment-index="25">
+        </div><div class="fragment" data-fragment-index="29">
         
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
@@ -746,11 +807,23 @@ div.output_prompt {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Often, you will want to apply a condition on the values in the iterator when creating the new list via a list comprehension. This is allowed for in the syntax and done quite simply by including an <code>if</code> statement. For example, if we wanted only the letters corresponding to all the even values:</p>
+<p>Often, you will want to apply a condition on the values in the iterator when creating the new list via a list comprehension. This is allowed for in the syntax and done quite simply by including an <code>if</code> statement.</p>
 
 </div>
 </div>
-</div><div class="fragment" data-fragment-index="25">
+</div><div class="fragment" data-fragment-index="33">
+    
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>For example, if we wanted only the letters corresponding to all the even values:</p>
+
+</div>
+</div>
+</div>
+    </div><div class="fragment" data-fragment-index="33">
         
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
@@ -794,7 +867,7 @@ div.output_prompt {
 
 </div>
 </div>
-</div><div class="fragment" data-fragment-index="25">
+</div><div class="fragment" data-fragment-index="33">
         
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
@@ -839,7 +912,7 @@ div.output_prompt {
 
 </div>
 </div>
-</div><div class="fragment" data-fragment-index="25">
+</div><div class="fragment" data-fragment-index="33">
         
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
@@ -896,7 +969,7 @@ div.output_prompt {
 
 </div>
 </div>
-</div><div class="fragment" data-fragment-index="25">
+</div><div class="fragment" data-fragment-index="33">
         
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
@@ -955,7 +1028,7 @@ div.output_prompt {
 
 </div>
 </div>
-</div><div class="fragment" data-fragment-index="25">
+</div><div class="fragment" data-fragment-index="33">
         
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
@@ -999,7 +1072,7 @@ div.output_prompt {
 
 </div>
 </div>
-</div><div class="fragment" data-fragment-index="25">
+</div><div class="fragment" data-fragment-index="33">
         
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
@@ -1031,7 +1104,7 @@ div.output_prompt {
 </div>
 
 </div>
-        </div><div class="fragment" data-fragment-index="42">
+        </div><div class="fragment" data-fragment-index="47">
     
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
@@ -1080,7 +1153,7 @@ div.output_prompt {
 
 </div>
 </div>
-</div><div class="fragment" data-fragment-index="42">
+</div><div class="fragment" data-fragment-index="47">
         
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
@@ -1111,7 +1184,7 @@ div.output_prompt {
 </div>
 
 </div>
-        </div><div class="fragment" data-fragment-index="42">
+        </div><div class="fragment" data-fragment-index="47">
         
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
