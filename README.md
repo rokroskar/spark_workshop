@@ -1,5 +1,9 @@
-# spark workshop materials
-Materials for an introductory workshop to using Spark in data processing.
+# Distributed data analysis
+This workshop will try to show some techniques for processing large data sets that do not fit into a single machine. 
+While there are many methods to accomplish such a task, we will focus on the *map/reduce* (MR) paradigm that has
+gained a lot of traction in industry, but only seldom in academia. To explore the possibilities of using 
+such a framework, we will make use of [Spark](http://spark.apache.org), which is a modern MR framework with a rich
+API and many properties which make it attractive for data exploration. 
 
 ## Prerequisites
 
@@ -7,7 +11,7 @@ To work with this material, you will need:
 
 * a python installation including ipython and ipython notebook.
     * python packages: numpy, scikit-learn, scipy, itertools (note: make a miniconda script that grabs all the dependencies)
-* spark -- grab a hadoop 2.6 compiled binary from http://spark.apache.org/downloads.html
+* [spark](http://spark.apache.org): grab a hadoop 2.6 compiled binary from http://spark.apache.org/downloads.html
 
 
 ## Using this material
