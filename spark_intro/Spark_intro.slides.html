@@ -258,7 +258,7 @@ the <a href="http://hadoop.apache.org">Apache Hadoop</a> ecosystem.</p>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><img src="../figs/basic_rdd.png" alt="Basic RDD diagram"></p>
+<p><img src="https://raw.githubusercontent.com/rokroskar/spark_workshop/master/figs/basic_rdd.png" alt="Basic RDD diagram"></p>
 
 </div>
 </div>
@@ -287,7 +287,7 @@ the <a href="http://hadoop.apache.org">Apache Hadoop</a> ecosystem.</p>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><img src="../figs/spark_universe.png" alt="Spark Universe"></p>
+<p><img src="https://raw.githubusercontent.com/rokroskar/spark_workshop/master/figs/spark_universe.png" alt="Spark Universe"></p>
 
 </div>
 </div>
@@ -318,19 +318,108 @@ the <a href="http://hadoop.apache.org">Apache Hadoop</a> ecosystem.</p>
 
 </div>
 </div>
+</div></section>
+    </section><section>
+    <section>
+    
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Starting-up-the-SparkContext-locally">Starting up the <code>SparkContext</code> locally<a class="anchor-link" href="#Starting-up-the-SparkContext-locally">&#182;</a></h2><p>The most lightweight way of playing around with Spark is to run the whole Spark runtime on a single (local) machine.</p>
+<p>First, we need to do a few lines of setup (we can later move these to a startup script of some sort) and then we start the <code>SparkContext</code></p>
+
+</div>
+</div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre> 
+<div class=" highlight hl-ipython2"><pre><span class="kn">import</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">os</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s">&#39;SPARK_HOME&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;/Users/rok/spark&#39;</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s">&#39;/Users/rok/spark/python/&#39;</span><span class="p">)</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s">&#39;/Users/rok/spark/python/lib/py4j-0.8.2.1-src.zip&#39;</span><span class="p">)</span>
+
+<span class="kn">import</span> <span class="nn">pyspark</span>
 </pre></div>
 
 </div>
 </div>
 </div>
 
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="n">sc</span> <span class="o">=</span> <span class="n">pyspark</span><span class="o">.</span><span class="n">SparkContext</span><span class="p">(</span><span class="n">master</span><span class="o">=</span><span class="s">&#39;local[4]&#39;</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div></section>
+    </section><section>
+    <section>
+    
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Hurrah! We have a Spark Context! Now lets get some data in there just to see if it works:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">1000000</span><span class="p">)</span>
+<span class="n">rdd</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&#39;Number of elements: &#39;</span><span class="p">,</span> <span class="n">rdd</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+<span class="k">print</span> <span class="s">&#39;Sum and mean: &#39;</span><span class="p">,</span> <span class="n">rdd</span><span class="o">.</span><span class="n">sum</span><span class="p">(),</span> <span class="n">rdd</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Number of elements:  1000000
+Sum and mean:  500178.597714 0.500178597714
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now if you look at your console, you will see <em>a lot</em> of output -- Spark is reporting all the stages of execution and can become rather verbose. Initially it's useful to inspect this output just to see what's going on and to see when issues arise. Later on we'll see how to quiet it down.</p>
+<p>In addition, each Spark application runs its own dedicated Web UI, accessible by default at <code>driver:4040</code>. In this case this is <a href="http://localhost:4040">http://localhost:4040</a>.</p>
+
+</div>
+</div>
 </div></section>
     </section>
 </div>
