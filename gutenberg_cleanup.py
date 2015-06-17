@@ -55,7 +55,7 @@ class RdfParser():
         self.author = soup.find('dcterms:creator') or soup.find('marcrel:com')
         if self.author:
             self.author_id = self.author.find('pgterms:agent')
-            self.author_id = self.author_id.attrs['rdf:about'].split('/')[-1]                 if 'rdf:about' in getattr(self.author_id, 'attrs', '') else None
+            self.author_id = self.author_id.attrs['rdf:about'].split('/')[-1] if 'rdf:about' in getattr(self.author_id, 'attrs', '') else None
 
             if self.author.find('pgterms:name'):
                 self.author_name = self.author.find('pgterms:name')
@@ -140,15 +140,27 @@ def get_text(html_path) :
     # when returning, remove also the left and right space padding
     return cleaned.strip()
 
-def get_metadata(html_path, rdf_path = '/Users/rok/python_src/gutenberg/rdf-files/') :
+def get_gid(html_path) : 
+    digits = re.compile('[0-9]+')
+    gid = digits.findall(os.path.splitext(os.path.basename(html_path))[0])[0]
+    return gid
+
+def get_metadata(gid, rdf_path = '/Users/rok/python_src/gutenberg/rdf-files/') :
     """Extract the metadata from the appropriate RDF file"""
 
-    digits = re.compile('[0-9]+')
-    obj_id = digits.findall(os.path.splitext(os.path.basename(html_path))[0])[0]
-    rdf_file = glob.glob(rdf_path+obj_id+'/*')[0]
+    gid = str(gid)
+
+    rdf_file = glob.glob(rdf_path+gid+'/*')[0]
 
     with open(rdf_file) as f :
-        rdf_data = f.read()
-    return RdfParser(rdf_data, obj_id).parse()
+        rdf_data = f.read() 
+
+    rp = RdfParser(rdf_data, gid).parse()
+
+    return {'gid': int(rp.gid), 'title': rp.title, 
+            'first_name': rp.first_name, 'last_name': rp.last_name, 
+            'birth_year': rp.birth_year, 'death_year': rp.death_year}
+
+    #return "%d||%s||%s||%s||%s||%s"%(int(rp.        gid), rp.title,rp.first_name,rp.last_name,rp.birth_year,rp.death_year)
 
 
