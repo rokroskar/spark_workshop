@@ -143,7 +143,7 @@ def get_text(html_path) :
 def get_gid(html_path) : 
     digits = re.compile('[0-9]+')
     gid = digits.findall(os.path.splitext(os.path.basename(html_path))[0])[0]
-    return gid
+    return int(gid)
 
 def get_metadata(gid, rdf_path = '/cluster/home03/sdid/roskarr/work/gutenberg/rdf-files/') :
     """Extract the metadata from the appropriate RDF file"""
