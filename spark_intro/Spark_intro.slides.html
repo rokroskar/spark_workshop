@@ -244,6 +244,7 @@ the <a href="http://hadoop.apache.org">Apache Hadoop</a> ecosystem.</p>
 <li>keeps track of data distribution across the workers  </li>
 <li>provides an interface to the user to access and operate on the data</li>
 <li>can rebuild data upon failure</li>
+<li>keeps track of lineage </li>
 </ul>
 <p><strong> As a Spark user, you write applications that feed data into RDDs and subsequently transform them into something useful </strong></p>
 
@@ -327,42 +328,29 @@ the <a href="http://hadoop.apache.org">Apache Hadoop</a> ecosystem.</p>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Starting-up-the-SparkContext-locally">Starting up the <code>SparkContext</code> locally<a class="anchor-link" href="#Starting-up-the-SparkContext-locally">&#182;</a></h2><p>The most lightweight way of playing around with Spark is to run the whole Spark runtime on a single (local) machine.</p>
-<p>First, we need to do a few lines of setup (we can later move these to a startup script of some sort) and then we start the <code>SparkContext</code></p>
+<h2 id="RDD-transformations/actions">RDD transformations/actions<a class="anchor-link" href="#RDD-transformations/actions">&#182;</a></h2><p>Once an RDD is created, it is <strong>immutable</strong> - it can only be modified via a <em>transformation</em></p>
+<p>Transformations include:</p>
+<ul>
+<li><code>map</code> -- the most basic component of map/reduce with 1:1 correspondence to original data</li>
+<li><code>flatMap</code> -- returns a number of items different from the original data</li>
+<li><code>filter</code> -- only keep those elements for which the filter function evaluates to <code>True</code></li>
+<li><code>distinct</code> -- only retain the unique elements of the entire RDD</li>
+<li><code>reduceByKey</code> -- group elements by key and keep the data distributed </li>
+<li><code>mapPartitions</code> -- similar to <code>map</code> but done on a per-partition basis</li>
+</ul>
+<p>Transformations are "lazy" evaluated - the system keeps a lineage graph that is only executed once an <em>action</em> is performed.</p>
+<p>Actions include:</p>
+<ul>
+<li><code>collect</code> -- pulls all elements of the RDD to the driver (often a bad idea!!)</li>
+<li><code>collectAsMap</code> -- like <code>collect</code> but returns a dictionary to the driver which makes it easy to lookup the keys </li>
+<li><code>reduce</code> -- reduces the entire RDD to a single value</li>
+<li><code>countByKey</code>/<code>countByValue</code></li>
+<li><code>take</code> -- yields a desired number of items to the driver</li>
+<li><code>first</code> -- returns the first element of the RDD to the driver -- very useful for inspecting the data!</li>
+</ul>
 
 </div>
 </div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="kn">import</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">os</span>
-<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s">&#39;SPARK_HOME&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;/Users/rok/spark&#39;</span>
-<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s">&#39;/Users/rok/spark/python/&#39;</span><span class="p">)</span>
-<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s">&#39;/Users/rok/spark/python/lib/py4j-0.8.2.1-src.zip&#39;</span><span class="p">)</span>
-
-<span class="kn">import</span> <span class="nn">pyspark</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[6]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="n">sc</span> <span class="o">=</span> <span class="n">pyspark</span><span class="o">.</span><span class="n">SparkContext</span><span class="p">(</span><span class="n">master</span><span class="o">=</span><span class="s">&#39;local[4]&#39;</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
 </div></section>
     </section><section>
     <section>
@@ -372,54 +360,37 @@ the <a href="http://hadoop.apache.org">Apache Hadoop</a> ecosystem.</p>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Hurrah! We have a Spark Context! Now lets get some data in there just to see if it works:</p>
+<h2 id="Lineage">Lineage<a class="anchor-link" href="#Lineage">&#182;</a></h2><ul>
+<li>When an RDD is transformed, this <strong>transformation</strong> is not automatically carried out. </li>
+<li>Instead, the system remembers how to get from one RDD to another and only executes whatever is needed for the <strong>action</strong> that is being done. </li>
+</ul>
+<h2 id="Partitioning">Partitioning<a class="anchor-link" href="#Partitioning">&#182;</a></h2><ul>
+<li>data of each RDD is partitioned and each partition is assigned to an executor</li>
+<li>each partition in a transformation results in a task</li>
+<li>there may be many more tasks than cores in the system, which allows for good utilization by fine-graining the overall load.</li>
+</ul>
+<h2 id="Caching">Caching<a class="anchor-link" href="#Caching">&#182;</a></h2><ul>
+<li>whenever an action is performed, the entire lineage graph is recalculated</li>
+<li>unless! an intermediate RDD is cached -- then it is only calculated once and reused from memory each subsequent time</li>
+<li>this allows for good performance when iterating on an RDD is required </li>
+</ul>
+<p>&lt; Insert a graphic showing a typical execution path &gt;</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
-
-<span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">1000000</span><span class="p">)</span>
-<span class="n">rdd</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-<span class="k">print</span> <span class="s">&#39;Number of elements: &#39;</span><span class="p">,</span> <span class="n">rdd</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
-<span class="k">print</span> <span class="s">&#39;Sum and mean: &#39;</span><span class="p">,</span> <span class="n">rdd</span><span class="o">.</span><span class="n">sum</span><span class="p">(),</span> <span class="n">rdd</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<div class=" highlight hl-ipython2"><pre> 
 </pre></div>
 
 </div>
 </div>
 </div>
 
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Number of elements:  1000000
-Sum and mean:  500178.597714 0.500178597714
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Now if you look at your console, you will see <em>a lot</em> of output -- Spark is reporting all the stages of execution and can become rather verbose. Initially it's useful to inspect this output just to see what's going on and to see when issues arise. Later on we'll see how to quiet it down.</p>
-<p>In addition, each Spark application runs its own dedicated Web UI, accessible by default at <code>driver:4040</code>. In this case this is <a href="http://localhost:4040">http://localhost:4040</a>.</p>
-
-</div>
-</div>
 </div></section>
     </section>
 </div>
