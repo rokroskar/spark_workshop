@@ -234,7 +234,7 @@ div.output_prompt {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Purpose">Purpose<a class="anchor-link" href="#Purpose">&#182;</a></h3><p>What are we doing here?</p>
+<h2 id="Purpose">Purpose<a class="anchor-link" href="#Purpose">&#182;</a></h2><p>What are we doing here?</p>
 <ul>
 <li>analyzing data on a laptop or even a capable workstation doesn't cut it anymore</li>
 <li>individual data sets are quickly growing to many Gb of <em>raw</em> data </li>
@@ -242,6 +242,16 @@ div.output_prompt {
 <li>on top of it all, we'd like some interactivity please! hard to really understand data without exploration</li>
 </ul>
 
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Outline">Outline<a class="anchor-link" href="#Outline">&#182;</a></h2><h4 id="1.-MapReduce">1. <a href="#Map-reduce">MapReduce</a><a class="anchor-link" href="#1.-MapReduce">&#182;</a></h4><h4>2. <a href="#"Lambda"-functions">Lambda functions</a></h4>
+<h4 id="3.-List-comprehensions-(and-Tuples)">3. <a href="#List-comprehension">List comprehensions</a> (and <a href="#Tuples">Tuples</a>)<a class="anchor-link" href="#3.-List-comprehensions-(and-Tuples)">&#182;</a></h4><h4 id="4.-Generator-expressions">4. <a href="#Generator-expressions">Generator expressions</a><a class="anchor-link" href="#4.-Generator-expressions">&#182;</a></h4><h4 id="5.-Generators">5. <a href="#Generators">Generators</a><a class="anchor-link" href="#5.-Generators">&#182;</a></h4>
 </div>
 </div>
 </div></section>
@@ -267,7 +277,7 @@ div.output_prompt {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>People have been doing this for decades!</p>
+<p>People have been doing this (using many machines for computation) for decades!</p>
 <p>But mostly for <em>creating</em> data on various HPC platforms, not processing it!</p>
 <p>Some interactive tools exist, but are often specialized and hard to taylor to specific needs</p>
 
@@ -322,7 +332,7 @@ div.output_prompt {
 
 </div>
 </div>
-</div><div class="fragment" data-fragment-index="7">
+</div><div class="fragment" data-fragment-index="8">
     
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
@@ -369,7 +379,7 @@ div.output_prompt {
 
 </div>
 </div>
-</div><div class="fragment" data-fragment-index="9">
+</div><div class="fragment" data-fragment-index="10">
     
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
@@ -416,7 +426,7 @@ div.output_prompt {
 
 </div>
 </div>
-</div><div class="fragment" data-fragment-index="11">
+</div><div class="fragment" data-fragment-index="12">
     
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
@@ -424,7 +434,12 @@ div.output_prompt {
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>But the two stages are separable:</p>
-<p>we might <em>first</em> double all the elements in <code>data</code> and then sum them all together. This is exactly what a map-reduce operation would do. First, <em>map</em> the values to be double the original, and then <em>reduce</em> them to a single number by summing them together.</p>
+<p>we might <em>first</em> double all the elements in <code>data</code> and then sum them all together.</p>
+<p>This is exactly a map-reduce operation:</p>
+<ol>
+<li><em>map</em> the values to be double the original</li>
+<li><em>reduce</em> them to a single number by summing them together. </li>
+</ol>
 
 </div>
 </div>
@@ -442,11 +457,11 @@ div.output_prompt {
 
 </div>
 </div>
-</div><div class="fragment" data-fragment-index="13">
+</div><div class="fragment" data-fragment-index="14">
     
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="k">def</span> <span class="nf">double_the_number</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="p">:</span> 
@@ -458,9 +473,7 @@ div.output_prompt {
 </div>
 
 </div>
-    </div></section>
-    </section><section>
-    <section>
+    </div><div class="fragment" data-fragment-index="15">
     
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
@@ -471,11 +484,12 @@ div.output_prompt {
 
 </div>
 </div>
-</div><div class="fragment" data-fragment-index="13">
+</div>
+    </div><div class="fragment" data-fragment-index="15">
         
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[14]:</div>
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="n">dbl_data</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">double_the_number</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
@@ -501,7 +515,7 @@ div.output_prompt {
 </div>
 
 </div>
-        </div><div class="fragment" data-fragment-index="16">
+        </div><div class="fragment" data-fragment-index="17">
     
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
@@ -513,11 +527,11 @@ div.output_prompt {
 </div>
 </div>
 </div>
-    </div><div class="fragment" data-fragment-index="16">
+    </div><div class="fragment" data-fragment-index="17">
         
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[15]:</div>
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="kn">from</span> <span class="nn">operator</span> <span class="kn">import</span> <span class="n">add</span>
@@ -532,7 +546,7 @@ div.output_prompt {
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[15]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[5]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -571,11 +585,11 @@ div.output_prompt {
 
 </div>
 </div>
-</div><div class="fragment" data-fragment-index="20">
+</div><div class="fragment" data-fragment-index="21">
     
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="n">dbl_data</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">*</span><span class="mi">2</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
@@ -590,7 +604,7 @@ div.output_prompt {
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[9]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[6]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -603,7 +617,7 @@ div.output_prompt {
 </div>
 
 </div>
-    </div><div class="fragment" data-fragment-index="20">
+    </div><div class="fragment" data-fragment-index="21">
         
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
@@ -642,7 +656,7 @@ div.output_prompt {
 
 </div>
 </div>
-</div><div class="fragment" data-fragment-index="24">
+</div><div class="fragment" data-fragment-index="25">
     
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
@@ -654,11 +668,11 @@ div.output_prompt {
 </div>
 </div>
 </div>
-    </div><div class="fragment" data-fragment-index="24">
+    </div><div class="fragment" data-fragment-index="25">
         
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="n">simple_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)]</span>
@@ -673,7 +687,7 @@ div.output_prompt {
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[10]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[7]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -686,6 +700,64 @@ div.output_prompt {
 </div>
 
 </div>
+        </div><div class="fragment" data-fragment-index="27">
+    
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The equivalent <code>for</code> loop:</p>
+
+</div>
+</div>
+</div>
+    </div><div class="fragment" data-fragment-index="27">
+        
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="n">simple_list</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="p">:</span> 
+    <span class="n">simple_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">simple_list</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[1]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+        </div><div class="fragment" data-fragment-index="27">
+        
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The list comprehension gives you much more concise syntax!</p>
+
+</div>
+</div>
+</div>
         </div></section>
     </section><section>
     <section>
@@ -695,27 +767,33 @@ div.output_prompt {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>The <code>f(x) for x in y</code> construct is <em>extremely</em> powerful! Anything that can be iterated can be used as <code>y</code>. Note that in the case above, <code>f(x)</code> is just <code>x</code> itself, but it could be any function you want (including of course a lambda function!)</p>
+<p>The construct</p>
+
+<pre><code>f(x) for x in y  
+
+</code></pre>
+<p>is <em>extremely</em> powerful!</p>
+<p>Anything that can be iterated can be used as the <code>y</code>. In the case above, <code>f(x)</code> is just <code>x</code> itself, but it could be any function you want (including of course a lambda function!)</p>
 
 </div>
 </div>
-</div><div class="fragment" data-fragment-index="27">
+</div><div class="fragment" data-fragment-index="31">
     
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Lets make a simple list of tuples to see one common application of such list comprehensions:</p>
+<h3 id="Tuples">Tuples<a class="anchor-link" href="#Tuples">&#182;</a></h3><p>Lets make a simple list of tuples to see one common application of such list comprehensions:</p>
 
 </div>
 </div>
 </div>
-    </div><div class="fragment" data-fragment-index="27">
+    </div><div class="fragment" data-fragment-index="31">
         
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="n">tuple_list</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">],</span> <span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">,</span><span class="s">&#39;b&#39;</span><span class="p">,</span><span class="s">&#39;c&#39;</span><span class="p">,</span><span class="s">&#39;d&#39;</span><span class="p">])</span>
@@ -730,7 +808,7 @@ div.output_prompt {
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[11]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[3]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -743,7 +821,7 @@ div.output_prompt {
 </div>
 
 </div>
-        </div><div class="fragment" data-fragment-index="29">
+        </div><div class="fragment" data-fragment-index="33">
     
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
@@ -755,11 +833,11 @@ div.output_prompt {
 </div>
 </div>
 </div>
-    </div><div class="fragment" data-fragment-index="29">
+    </div><div class="fragment" data-fragment-index="33">
         
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">tuple_list</span><span class="p">]</span>
@@ -773,7 +851,7 @@ div.output_prompt {
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[12]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[4]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -786,7 +864,50 @@ div.output_prompt {
 </div>
 
 </div>
-        </div><div class="fragment" data-fragment-index="29">
+        </div><div class="fragment" data-fragment-index="35">
+    
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>An even clearer syntax is to label the tuple elements that we are extracting from the list:</p>
+
+</div>
+</div>
+</div>
+    </div><div class="fragment" data-fragment-index="35">
+        
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="p">[</span><span class="n">letter</span> <span class="k">for</span> <span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="n">letter</span><span class="p">)</span> <span class="ow">in</span> <span class="n">tuple_list</span><span class="p">]</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[7]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[&apos;a&apos;, &apos;b&apos;, &apos;c&apos;, &apos;d&apos;]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+        </div><div class="fragment" data-fragment-index="35">
         
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
@@ -807,11 +928,11 @@ div.output_prompt {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Often, you will want to apply a condition on the values in the iterator when creating the new list via a list comprehension. This is allowed for in the syntax and done quite simply by including an <code>if</code> statement.</p>
+<p>Often, you will want to apply a condition on the values in the iterator when creating the new list via a list comprehension. This is done quite simply by including an <code>if</code> statement.</p>
 
 </div>
 </div>
-</div><div class="fragment" data-fragment-index="33">
+</div><div class="fragment" data-fragment-index="39">
     
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
@@ -823,14 +944,14 @@ div.output_prompt {
 </div>
 </div>
 </div>
-    </div><div class="fragment" data-fragment-index="33">
+    </div><div class="fragment" data-fragment-index="39">
         
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="prompt input_prompt">In&nbsp;[18]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">tuple_list</span> <span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">%</span><span class="k">2</span> == 0]
+<div class=" highlight hl-ipython2"><pre><span class="p">[</span><span class="n">letter</span> <span class="k">for</span> <span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="n">letter</span><span class="p">)</span> <span class="ow">in</span> <span class="n">tuple_list</span> <span class="k">if</span> <span class="n">num</span><span class="o">%</span><span class="k">2</span> == 0]
 </pre></div>
 
 </div>
@@ -841,7 +962,7 @@ div.output_prompt {
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[13]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[18]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -863,18 +984,23 @@ div.output_prompt {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>A similar result can be obtained using the built-in <code>filter</code> function. Sometimes this offers an extra degree of flexibility and is prefered to the conditional inside a list comprehension. For example,</p>
+<p>A similar result can be obtained using the built-in <code>filter</code> function.</p>
+<p>Sometimes this offers an extra degree of flexibility and is prefered to the conditional inside a list comprehension, especially if the filtering condition is more complicated. For example,</p>
 
 </div>
 </div>
-</div><div class="fragment" data-fragment-index="33">
+</div><div class="fragment" data-fragment-index="39">
         
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[38]:</div>
+<div class="prompt input_prompt">In&nbsp;[19]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="n">filtered_tuple_list</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span> <span class="p">:</span> <span class="n">x</span><span class="o">%</span><span class="k">2</span> == 0, tuple_list)
+<div class=" highlight hl-ipython2"><pre><span class="k">def</span> <span class="nf">filter_func</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="p">:</span>
+    <span class="n">num</span><span class="p">,</span> <span class="n">letter</span> <span class="o">=</span> <span class="n">x</span>
+    <span class="k">return</span> <span class="n">num</span><span class="o">%</span><span class="k">2</span> == 0
+
+<span class="n">filtered_tuple_list</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="n">filter_func</span><span class="p">,</span> <span class="n">tuple_list</span><span class="p">)</span>
 <span class="n">filtered_tuple_list</span>
 </pre></div>
 
@@ -886,7 +1012,138 @@ div.output_prompt {
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[38]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[19]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[(2, &apos;b&apos;), (4, &apos;d&apos;)]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+        </div><div class="fragment" data-fragment-index="43">
+    
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We can of course use the results of <code>filter</code> also in a list comprehension:</p>
+
+</div>
+</div>
+</div>
+    </div><div class="fragment" data-fragment-index="43">
+        
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[16]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="p">[</span><span class="n">letter</span> <span class="k">for</span> <span class="p">(</span><span class="n">num</span><span class="p">,</span><span class="n">letter</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">filter</span><span class="p">(</span><span class="n">filter_func</span><span class="p">,</span> <span class="n">tuple_list</span><span class="p">)]</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[16]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[&apos;b&apos;, &apos;d&apos;]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+        </div></section>
+    </section><section>
+    <section>
+    
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Slight <strong>warning</strong> here:</p>
+<p>the elements of the list are tuples and the function arguments don't expand the tuple automatically. That's why we have the extra line</p>
+
+<pre><code>num, letter = x
+
+</code></pre>
+<p>which takes <code>num</code> and <code>letter</code> out of each tuple that gets passed to <code>filter_func</code>.</p>
+<p>The same would happen with a <code>lambda funcion</code>:</p>
+
+</div>
+</div>
+</div><div class="fragment" data-fragment-index="43">
+        
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[22]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="c"># error</span>
+<span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">:</span> <span class="n">x</span><span class="o">%</span><span class="k">2</span>==0, tuple_list)
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_text output_error">
+<pre>
+<span class="ansired">---------------------------------------------------------------------------</span>
+<span class="ansired">TypeError</span>                                 Traceback (most recent call last)
+<span class="ansigreen">&lt;ipython-input-22-cefd26cb6b0b&gt;</span> in <span class="ansicyan">&lt;module&gt;</span><span class="ansiblue">()</span>
+<span class="ansigreen">      1</span> <span class="ansired"># error</span><span class="ansiblue"></span><span class="ansiblue"></span>
+<span class="ansigreen">----&gt; 2</span><span class="ansired"> </span>filter<span class="ansiblue">(</span><span class="ansigreen">lambda</span> x<span class="ansiblue">,</span>y<span class="ansiblue">:</span> x<span class="ansiblue">%</span><span class="ansicyan">2</span><span class="ansiblue">==</span><span class="ansicyan">0</span><span class="ansiblue">,</span> tuple_list<span class="ansiblue">)</span><span class="ansiblue"></span>
+
+<span class="ansired">TypeError</span>: &lt;lambda&gt;() takes exactly 2 arguments (1 given)</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+        </div><div class="fragment" data-fragment-index="43">
+        
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[23]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="c"># correct syntax</span>
+<span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">):</span> <span class="n">x</span><span class="o">%</span><span class="k">2</span>==0, tuple_list)
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[23]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -908,51 +1165,7 @@ div.output_prompt {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Or to do the same as before:</p>
-
-</div>
-</div>
-</div><div class="fragment" data-fragment-index="33">
-        
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[40]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">):</span> <span class="n">i</span><span class="o">%</span><span class="k">2</span> == 0, tuple_list)]
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt output_prompt">Out[40]:</div>
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>[&apos;b&apos;, &apos;d&apos;]</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-        </div></section>
-    </section><section>
-    <section>
-    
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Generator-expressions">Generator expressions<a class="anchor-link" href="#Generator-expressions">&#182;</a></h3><p>Unfortunately, lists can have considerable memory overhead when they become long enough. Often, we don't need to hold the entire lists in memory, but only need the elements one by one -- this is the case with <em>all</em> reductions, for example, such as the <code>sum</code> we used above.</p>
+<h2 id="Generator-expressions">Generator expressions<a class="anchor-link" href="#Generator-expressions">&#182;</a></h2><p>Unfortunately, lists can have considerable memory overhead when they become long enough. Often, we don't need to hold the entire lists in memory, but only need the elements one by one -- this is the case with <em>all</em> reductions, for example, such as the <code>sum</code> we used above.</p>
 
 </div>
 </div>
@@ -969,11 +1182,11 @@ div.output_prompt {
 
 </div>
 </div>
-</div><div class="fragment" data-fragment-index="33">
+</div><div class="fragment" data-fragment-index="43">
         
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[41]:</div>
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="nb">sum</span><span class="p">([</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100000</span><span class="p">)])</span>
@@ -987,7 +1200,7 @@ div.output_prompt {
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[41]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[13]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -1028,11 +1241,11 @@ div.output_prompt {
 
 </div>
 </div>
-</div><div class="fragment" data-fragment-index="33">
+</div><div class="fragment" data-fragment-index="43">
         
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[31]:</div>
+<div class="prompt input_prompt">In&nbsp;[14]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="nb">sum</span><span class="p">((</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100000</span><span class="p">)))</span>
@@ -1046,7 +1259,7 @@ div.output_prompt {
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[31]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[14]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -1072,11 +1285,11 @@ div.output_prompt {
 
 </div>
 </div>
-</div><div class="fragment" data-fragment-index="33">
+</div><div class="fragment" data-fragment-index="43">
         
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[33]:</div>
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="n">list_expression</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">)]</span>
@@ -1091,7 +1304,7 @@ div.output_prompt {
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[33]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[15]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -1104,11 +1317,11 @@ div.output_prompt {
 </div>
 
 </div>
-        </div><div class="fragment" data-fragment-index="47">
+        </div><div class="fragment" data-fragment-index="56">
     
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[35]:</div>
+<div class="prompt input_prompt">In&nbsp;[16]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="n">gen_expression</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">))</span>
@@ -1128,9 +1341,9 @@ div.output_prompt {
 <pre>
 <span class="ansired">---------------------------------------------------------------------------</span>
 <span class="ansired">TypeError</span>                                 Traceback (most recent call last)
-<span class="ansigreen">&lt;ipython-input-35-7946e8f635be&gt;</span> in <span class="ansicyan">&lt;module&gt;</span><span class="ansiblue">()</span>
-<span class="ansigreen">      1</span> gen_expression <span class="ansiyellow">=</span> <span class="ansiyellow">(</span>x <span class="ansigreen">for</span> x <span class="ansigreen">in</span> range<span class="ansiyellow">(</span><span class="ansicyan">100</span><span class="ansiyellow">)</span><span class="ansiyellow">)</span><span class="ansiyellow"></span>
-<span class="ansigreen">----&gt; 2</span><span class="ansiyellow"> </span>gen_expression<span class="ansiyellow">[</span><span class="ansicyan">5</span><span class="ansiyellow">]</span><span class="ansiyellow"></span>
+<span class="ansigreen">&lt;ipython-input-16-7946e8f635be&gt;</span> in <span class="ansicyan">&lt;module&gt;</span><span class="ansiblue">()</span>
+<span class="ansigreen">      1</span> gen_expression <span class="ansiblue">=</span> <span class="ansiblue">(</span>x <span class="ansigreen">for</span> x <span class="ansigreen">in</span> range<span class="ansiblue">(</span><span class="ansicyan">100</span><span class="ansiblue">)</span><span class="ansiblue">)</span><span class="ansiblue"></span>
+<span class="ansigreen">----&gt; 2</span><span class="ansired"> </span>gen_expression<span class="ansiblue">[</span><span class="ansicyan">5</span><span class="ansiblue">]</span><span class="ansiblue"></span>
 
 <span class="ansired">TypeError</span>: &apos;generator&apos; object has no attribute &apos;__getitem__&apos;</pre>
 </div>
@@ -1153,11 +1366,11 @@ div.output_prompt {
 
 </div>
 </div>
-</div><div class="fragment" data-fragment-index="47">
+</div><div class="fragment" data-fragment-index="56">
         
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[42]:</div>
+<div class="prompt input_prompt">In&nbsp;[17]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="p">(</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
@@ -1171,11 +1384,11 @@ div.output_prompt {
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[42]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[17]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>&lt;generator object &lt;genexpr&gt; at 0x2b3708061eb0&gt;</pre>
+<pre>&lt;generator object &lt;genexpr&gt; at 0x106b75fa0&gt;</pre>
 </div>
 
 </div>
@@ -1184,11 +1397,11 @@ div.output_prompt {
 </div>
 
 </div>
-        </div><div class="fragment" data-fragment-index="47">
+        </div><div class="fragment" data-fragment-index="56">
         
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[43]:</div>
+<div class="prompt input_prompt">In&nbsp;[18]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="nb">sum</span><span class="p">((</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">10</span><span class="p">)))</span>
@@ -1202,7 +1415,7 @@ div.output_prompt {
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[43]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[18]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -1211,6 +1424,233 @@ div.output_prompt {
 
 </div>
 
+</div>
+</div>
+
+</div>
+        </div></section>
+    </section><section>
+    <section>
+    
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Generators">Generators<a class="anchor-link" href="#Generators">&#182;</a></h2><p>Closely related to generator <em>expressions</em> are <em>generators</em> - they are functions that keep track of their internal state even when they return to the caller. When they are called again, they continue from where they left off.</p>
+<p>It's easy to illustrate this with writing our own version of <code>xrange</code> discussed above.</p>
+
+</div>
+</div>
+</div></section>
+    </section><section>
+    <section>
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="k">def</span> <span class="nf">my_xrange</span><span class="p">(</span><span class="n">N</span><span class="p">)</span> <span class="p">:</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">N</span> <span class="p">:</span>
+        <span class="k">yield</span> <span class="n">i</span>
+        <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">raise</span> <span class="ne">StopIteration</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div><div class="fragment" data-fragment-index="56">
+        
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="n">gen</span> <span class="o">=</span> <span class="n">my_xrange</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">gen</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[9]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&lt;generator object my_xrange at 0x106b75dc0&gt;</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+        </div><div class="fragment" data-fragment-index="56">
+        
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="n">gen</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[10]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>0</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+        </div><div class="fragment" data-fragment-index="56">
+        
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="c"># continuing where it left off</span>
+<span class="n">gen</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[11]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>1</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+        </div><div class="fragment" data-fragment-index="56">
+        
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">gen</span><span class="p">]</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[12]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[2, 3, 4, 5, 6, 7, 8, 9]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+        </div><div class="fragment" data-fragment-index="56">
+        
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="c"># exhausted iterator</span>
+<span class="n">gen</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_text output_error">
+<pre>
+<span class="ansired">---------------------------------------------------------------------------</span>
+<span class="ansired">StopIteration</span>                             Traceback (most recent call last)
+<span class="ansigreen">&lt;ipython-input-13-4e0a0c01742f&gt;</span> in <span class="ansicyan">&lt;module&gt;</span><span class="ansiblue">()</span>
+<span class="ansigreen">      1</span> <span class="ansired"># exhausted iterator</span><span class="ansiblue"></span><span class="ansiblue"></span>
+<span class="ansigreen">----&gt; 2</span><span class="ansired"> </span>gen<span class="ansiblue">.</span>next<span class="ansiblue">(</span><span class="ansiblue">)</span><span class="ansiblue"></span>
+
+<span class="ansired">StopIteration</span>: </pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+        </div></section>
+    </section><section>
+    <section>
+    
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>This only scratches the surface of generator functionality in <code>python</code>, but for our purposes it is enough. For a more complete discussion see e.g. <a href="https://wiki.python.org/moin/Generators">the python wiki</a> and <a href="http://jeffknupp.com/blog/2013/04/07/improve-your-python-yield-and-generators-explained/">this pretty good example</a>.</p>
+<p>Generators and generator expressions are useful in general when dealing with large data objects because they allow you to iterate through the data without ever holding it in memory.</p>
+<p>The concept of generators will be useful when we discuss the <code>mapPartitions</code> RDD method in Spark.</p>
+
+</div>
+</div>
+</div><div class="fragment" data-fragment-index="56">
+        
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre> 
+</pre></div>
+
+</div>
 </div>
 </div>
 
