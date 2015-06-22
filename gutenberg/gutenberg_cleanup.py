@@ -103,7 +103,19 @@ class RdfParser():
 
 
 def get_text(html_path) :
-    """Clean HTML tags, escape characters, special unicode, punctuation, and empty spaces from the raw html"""
+    """Clean HTML tags, escape characters, special unicode, punctuation, and empty spaces from the raw html
+    
+    Inputs:
+    -------
+
+    `html_path`: path to the raw html Gutenberg project book file
+
+    Outputs:
+    --------
+
+    a string of cleaned, lower-case text
+    
+    """
     
     with open(html_path) as f : 
         source = f.read()
@@ -151,12 +163,43 @@ def get_text(html_path) :
     return cleaned.strip()
 
 def get_gid(html_path) : 
+    """
+    Return the Gutenberg book ID (`gid`) give the path to the raw html file.
+
+    Input:
+    ------
+    `html_path`: path to the html Gutenberg book file
+
+    Output:
+    -------
+    `gid`: the ID of the Gutenberg book
+
+    """
+
     digits = re.compile('[0-9]+')
     gid = digits.findall(os.path.splitext(os.path.basename(html_path))[0])[0]
     return int(gid)
 
 def get_metadata(gid, rdf_path = '/cluster/home03/sdid/roskarr/work/gutenberg/rdf-files/') :
-    """Extract the metadata from the appropriate RDF file"""
+    """Extract the metadata from the Gutenberg book represented by the gid.
+    
+    Inputs:
+    -------
+
+    `gid`: the Gutenberg project book ID
+
+    Optional Keywords:
+    ------------------
+    
+    `rdf_path`: path to the Gutenberg project RDF projects
+
+    Outputs:
+    --------
+
+    dictionary containing the book metadata
+
+    """
+    
 
     gid = str(gid)
 
