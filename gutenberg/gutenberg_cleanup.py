@@ -120,7 +120,17 @@ def get_text(html_path) :
     # remove escape characters
     no_escape = re.compile('\r?\n|\r')
     cleaned = no_escape.sub(' ', cleaned)
-    
+   
+    # replace umlauts
+    a_uml = re.compile('\\xc3\\xa4')
+    cleaned = a_uml.sub('ae', cleaned)
+
+    o_uml = re.compile('\\xc3\\xb6')
+    cleaned = o_uml.sub('oe', cleaned)
+
+    u_uml = re.compile('\\xc3\\xbc')
+    cleaned = u_uml.sub('ue', cleaned)
+
     # remove all non-ascii
     no_non_ascii = re.compile('[^\x00-\x7F]+')
     cleaned = no_non_ascii.sub(' ', cleaned)
@@ -159,7 +169,8 @@ def get_metadata(gid, rdf_path = '/cluster/home03/sdid/roskarr/work/gutenberg/rd
 
     return {'gid': int(rp.gid), 'title': rp.title, 
             'first_name': rp.first_name, 'last_name': rp.last_name, 
-            'birth_year': rp.birth_year, 'death_year': rp.death_year}
+            'birth_year': rp.birth_year, 'death_year': rp.death_year, 
+            'lang': rp.language, 'downloads': rp.downloads}
 
     #return "%d||%s||%s||%s||%s||%s"%(int(rp.        gid), rp.title,rp.first_name,rp.last_name,rp.birth_year,rp.death_year)
 
