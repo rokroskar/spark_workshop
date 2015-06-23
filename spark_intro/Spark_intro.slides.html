@@ -245,15 +245,13 @@ the <a href="http://hadoop.apache.org">Apache Hadoop</a> ecosystem.</p>
 <li>provides an interface to the user to access and operate on the data</li>
 <li>can rebuild data upon failure</li>
 <li>keeps track of lineage </li>
+<li><strong> is immutable </strong></li>
 </ul>
 <p><strong> As a Spark user, you write applications that feed data into RDDs and subsequently transform them into something useful </strong></p>
 
 </div>
 </div>
-</div></section>
-    </section><section>
-    <section>
-    
+</div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
@@ -273,9 +271,37 @@ the <a href="http://hadoop.apache.org">Apache Hadoop</a> ecosystem.</p>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Spark-Architecture-Overview">Spark Architecture Overview<a class="anchor-link" href="#Spark-Architecture-Overview">&#182;</a></h2><p>A very abbreviated and naive description of how Spark works:</p>
-<p>The runtime system consists of a <strong>driver</strong>, <strong>executors</strong> and <strong>workers</strong>. The driver coordinates the work to be done and keeps track of tasks, collects metrics about the tasks (disk IO, memory, etc.), and communicates with the executors. The executors receive tasks to be done from the driver and distribute them among the workers that they control. Bsaically, you can think of an executor as a <em>node</em> and a worker as a <em>core</em> on that node.</p>
+<p>The runtime system consists of a <strong>driver</strong> and <strong>workers</strong> (there are more specific components like schedulers and memory managers, but those are details).</p>
+<p><strong>Driver</strong></p>
+<ul>
+<li>coordinates the work to be done  </li>
+<li>keeps track of tasks</li>
+<li>collects metrics about the tasks (disk IO, memory, etc.) </li>
+<li>communicates with the workers (and the user) </li>
+</ul>
+<p><strong>Workers</strong></p>
+<ul>
+<li>receive tasks to be done from the driver</li>
+<li>store data in memory or on disk</li>
+<li>perform calculations</li>
+<li>return results to the driver</li>
+</ul>
 <p>The user's access point to this Spark universe is the <strong>Spark Context</strong> which provides an interface to generate RDDs.</p>
-<p><strong> The only point of contact with the Spark "universe" is the Spark Context and the RDDs </strong></p>
+<p><strong> The only point of contact with the Spark "universe" is the Spark Context and the RDDs via the driver </strong></p>
+
+</div>
+</div>
+</div></section>
+    </section><section>
+    <section>
+    
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="The-Spark-Architecture">The Spark Architecture<a class="anchor-link" href="#The-Spark-Architecture">&#182;</a></h3><p>(in a very abbreviated form) 
+<img src="http://qph.is.quoracdn.net/main-qimg-89845fb3187dbbc7a49a9d1c8840ddaa?convert_to_webp=true"></p>
 
 </div>
 </div>
@@ -306,7 +332,7 @@ the <a href="http://hadoop.apache.org">Apache Hadoop</a> ecosystem.</p>
 <ul>
 <li>a single machine (local)</li>
 <li>a set of pre-defined machines (stand-alone)</li>
-<li>a dedicated Hadoop-aware scheduler (YARN/Mesos)</li>
+<li>a dedicated Hadoop-aware scheduler (YARN/Mesos )</li>
 <li>"cloud", e.g. Amazon EC2 </li>
 </ul>
 <p>The development workflow is that you start small (local) and scale up to one of the other solutions, depending on your needs and resources.</p>
@@ -336,7 +362,8 @@ the <a href="http://hadoop.apache.org">Apache Hadoop</a> ecosystem.</p>
 <li><code>filter</code> -- only keep those elements for which the filter function evaluates to <code>True</code></li>
 <li><code>distinct</code> -- only retain the unique elements of the entire RDD</li>
 <li><code>reduceByKey</code> -- group elements by key and keep the data distributed </li>
-<li><code>mapPartitions</code> -- similar to <code>map</code> but done on a per-partition basis</li>
+<li><code>mapPartitions</code> -- similar to <code>map</code> but done on a per-partition basis (requires a generator function)</li>
+<li><code>sortBy</code> -- sort using the provided function</li>
 </ul>
 <p>Transformations are "lazy" evaluated - the system keeps a lineage graph that is only executed once an <em>action</em> is performed.</p>
 <p>Actions include:</p>
@@ -363,6 +390,7 @@ the <a href="http://hadoop.apache.org">Apache Hadoop</a> ecosystem.</p>
 <h2 id="Lineage">Lineage<a class="anchor-link" href="#Lineage">&#182;</a></h2><ul>
 <li>When an RDD is transformed, this <strong>transformation</strong> is not automatically carried out. </li>
 <li>Instead, the system remembers how to get from one RDD to another and only executes whatever is needed for the <strong>action</strong> that is being done. </li>
+<li>this allows one to build up a complex "pipeline" and easily tweak/rerun it in its entirety </li>
 </ul>
 <h2 id="Partitioning">Partitioning<a class="anchor-link" href="#Partitioning">&#182;</a></h2><ul>
 <li>data of each RDD is partitioned and each partition is assigned to an executor</li>
@@ -370,11 +398,46 @@ the <a href="http://hadoop.apache.org">Apache Hadoop</a> ecosystem.</p>
 <li>there may be many more tasks than cores in the system, which allows for good utilization by fine-graining the overall load.</li>
 </ul>
 <h2 id="Caching">Caching<a class="anchor-link" href="#Caching">&#182;</a></h2><ul>
+<li>RDD evalutations are <em>lazy</em> </li>
 <li>whenever an action is performed, the entire lineage graph is recalculated</li>
 <li>unless! an intermediate RDD is cached -- then it is only calculated once and reused from memory each subsequent time</li>
 <li>this allows for good performance when iterating on an RDD is required </li>
 </ul>
-<p>&lt; Insert a graphic showing a typical execution path &gt;</p>
+
+</div>
+</div>
+</div></section>
+    </section><section>
+    <section>
+    
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="A-typical-execution-path">A typical execution path<a class="anchor-link" href="#A-typical-execution-path">&#182;</a></h3><p>Spark separates execution into stages consisting of many narrow dependencies between partitions.</p>
+<p><strong> Narrow </strong> : <code>map</code>, <code>filter</code></p>
+<p><strong> Wide </strong> : <code>join</code>, <code>groupBy</code></p>
+<p>If some parts of the RDD were to be lost due to executor failure, the missing pieces are automatically recomputed via the appropriate stages.</p>
+
+</div>
+</div>
+</div></section>
+    </section><section>
+    <section>
+    
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Here we have a few things going on:</p>
+<ul>
+<li>the elements of RDD $A$ are grouped by key yielding RDD $B$</li>
+<li>$C$ is mapped to $D$ and unioned with $E$ resulting in $F$</li>
+<li>$B$ and $F$ are joined together</li>
+</ul>
+<p><img src="http://qph.is.quoracdn.net/main-qimg-d2eaaaad37ec65f2b21f6a6cc9f35ae8?convert_to_webp=true"></p>
 
 </div>
 </div>
