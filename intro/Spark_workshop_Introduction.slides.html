@@ -222,7 +222,7 @@ div.output_prompt {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Analyzing-large-datasets">Analyzing large datasets<a class="anchor-link" href="#Analyzing-large-datasets">&#182;</a></h1><h2 id="Day-0:-Basics">Day 0: Basics<a class="anchor-link" href="#Day-0:-Basics">&#182;</a></h2>
+<h1 id="Analyzing-large-datasets-Workshop">Analyzing large datasets Workshop<a class="anchor-link" href="#Analyzing-large-datasets-Workshop">&#182;</a></h1><h2 id="Day-1:-Basics">Day 1: Basics<a class="anchor-link" href="#Day-1:-Basics">&#182;</a></h2>
 </div>
 </div>
 </div></section>
@@ -244,7 +244,10 @@ div.output_prompt {
 
 </div>
 </div>
-</div>
+</div></section>
+    </section><section>
+    <section>
+    
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
@@ -328,11 +331,32 @@ div.output_prompt {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<p>Before we get started, make sure you grab the workshop repository:</p>
+
+<pre><code>&gt; git clone git@github.com:rokroskar/spark_workshop.git
+
+</code></pre>
+<p>You can see all the notebooks by starting up an ipython notebook server:</p>
+
+<pre><code>&gt; cd spark_workshop
+&gt; ipython notebook</code></pre>
+
+</div>
+</div>
+</div></section>
+    </section><section>
+    <section>
+    
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>First, we define our data array, in this case we're not very creative and just use 10 random integers in the range 0 - 100:</p>
 
 </div>
 </div>
-</div><div class="fragment" data-fragment-index="8">
+</div><div class="fragment" data-fragment-index="9">
     
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
@@ -379,7 +403,7 @@ div.output_prompt {
 
 </div>
 </div>
-</div><div class="fragment" data-fragment-index="10">
+</div><div class="fragment" data-fragment-index="11">
     
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
@@ -426,7 +450,7 @@ div.output_prompt {
 
 </div>
 </div>
-</div><div class="fragment" data-fragment-index="12">
+</div><div class="fragment" data-fragment-index="13">
     
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
@@ -457,7 +481,7 @@ div.output_prompt {
 
 </div>
 </div>
-</div><div class="fragment" data-fragment-index="14">
+</div><div class="fragment" data-fragment-index="15">
     
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
@@ -473,7 +497,7 @@ div.output_prompt {
 </div>
 
 </div>
-    </div><div class="fragment" data-fragment-index="15">
+    </div><div class="fragment" data-fragment-index="16">
     
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
@@ -485,7 +509,7 @@ div.output_prompt {
 </div>
 </div>
 </div>
-    </div><div class="fragment" data-fragment-index="15">
+    </div><div class="fragment" data-fragment-index="16">
         
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
@@ -515,7 +539,7 @@ div.output_prompt {
 </div>
 
 </div>
-        </div><div class="fragment" data-fragment-index="17">
+        </div><div class="fragment" data-fragment-index="18">
     
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
@@ -527,7 +551,7 @@ div.output_prompt {
 </div>
 </div>
 </div>
-    </div><div class="fragment" data-fragment-index="17">
+    </div><div class="fragment" data-fragment-index="18">
         
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
@@ -585,7 +609,7 @@ div.output_prompt {
 
 </div>
 </div>
-</div><div class="fragment" data-fragment-index="21">
+</div><div class="fragment" data-fragment-index="22">
     
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
@@ -617,7 +641,7 @@ div.output_prompt {
 </div>
 
 </div>
-    </div><div class="fragment" data-fragment-index="21">
+    </div><div class="fragment" data-fragment-index="22">
         
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
@@ -656,7 +680,7 @@ div.output_prompt {
 
 </div>
 </div>
-</div><div class="fragment" data-fragment-index="25">
+</div><div class="fragment" data-fragment-index="26">
     
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
@@ -668,7 +692,7 @@ div.output_prompt {
 </div>
 </div>
 </div>
-    </div><div class="fragment" data-fragment-index="25">
+    </div><div class="fragment" data-fragment-index="26">
         
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
@@ -700,7 +724,7 @@ div.output_prompt {
 </div>
 
 </div>
-        </div><div class="fragment" data-fragment-index="27">
+        </div><div class="fragment" data-fragment-index="28">
     
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
@@ -712,7 +736,7 @@ div.output_prompt {
 </div>
 </div>
 </div>
-    </div><div class="fragment" data-fragment-index="27">
+    </div><div class="fragment" data-fragment-index="28">
         
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
@@ -746,7 +770,7 @@ div.output_prompt {
 </div>
 
 </div>
-        </div><div class="fragment" data-fragment-index="27">
+        </div><div class="fragment" data-fragment-index="28">
         
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
@@ -777,7 +801,7 @@ div.output_prompt {
 
 </div>
 </div>
-</div><div class="fragment" data-fragment-index="31">
+</div><div class="fragment" data-fragment-index="32">
     
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
@@ -789,7 +813,7 @@ div.output_prompt {
 </div>
 </div>
 </div>
-    </div><div class="fragment" data-fragment-index="31">
+    </div><div class="fragment" data-fragment-index="32">
         
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
@@ -821,7 +845,7 @@ div.output_prompt {
 </div>
 
 </div>
-        </div><div class="fragment" data-fragment-index="33">
+        </div><div class="fragment" data-fragment-index="34">
     
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
@@ -833,7 +857,7 @@ div.output_prompt {
 </div>
 </div>
 </div>
-    </div><div class="fragment" data-fragment-index="33">
+    </div><div class="fragment" data-fragment-index="34">
         
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
@@ -864,7 +888,7 @@ div.output_prompt {
 </div>
 
 </div>
-        </div><div class="fragment" data-fragment-index="35">
+        </div><div class="fragment" data-fragment-index="36">
     
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
@@ -876,7 +900,7 @@ div.output_prompt {
 </div>
 </div>
 </div>
-    </div><div class="fragment" data-fragment-index="35">
+    </div><div class="fragment" data-fragment-index="36">
         
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
@@ -907,7 +931,7 @@ div.output_prompt {
 </div>
 
 </div>
-        </div><div class="fragment" data-fragment-index="35">
+        </div><div class="fragment" data-fragment-index="36">
         
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
@@ -932,7 +956,7 @@ div.output_prompt {
 
 </div>
 </div>
-</div><div class="fragment" data-fragment-index="39">
+</div><div class="fragment" data-fragment-index="40">
     
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
@@ -944,7 +968,7 @@ div.output_prompt {
 </div>
 </div>
 </div>
-    </div><div class="fragment" data-fragment-index="39">
+    </div><div class="fragment" data-fragment-index="40">
         
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
@@ -989,7 +1013,7 @@ div.output_prompt {
 
 </div>
 </div>
-</div><div class="fragment" data-fragment-index="39">
+</div><div class="fragment" data-fragment-index="40">
         
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
@@ -1025,7 +1049,7 @@ div.output_prompt {
 </div>
 
 </div>
-        </div><div class="fragment" data-fragment-index="43">
+        </div><div class="fragment" data-fragment-index="44">
     
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
@@ -1037,7 +1061,7 @@ div.output_prompt {
 </div>
 </div>
 </div>
-    </div><div class="fragment" data-fragment-index="43">
+    </div><div class="fragment" data-fragment-index="44">
         
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
@@ -1088,7 +1112,7 @@ div.output_prompt {
 
 </div>
 </div>
-</div><div class="fragment" data-fragment-index="43">
+</div><div class="fragment" data-fragment-index="44">
         
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
@@ -1124,7 +1148,7 @@ div.output_prompt {
 </div>
 
 </div>
-        </div><div class="fragment" data-fragment-index="43">
+        </div><div class="fragment" data-fragment-index="44">
         
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
@@ -1182,7 +1206,7 @@ div.output_prompt {
 
 </div>
 </div>
-</div><div class="fragment" data-fragment-index="43">
+</div><div class="fragment" data-fragment-index="44">
         
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
@@ -1241,7 +1265,7 @@ div.output_prompt {
 
 </div>
 </div>
-</div><div class="fragment" data-fragment-index="43">
+</div><div class="fragment" data-fragment-index="44">
         
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
@@ -1285,7 +1309,7 @@ div.output_prompt {
 
 </div>
 </div>
-</div><div class="fragment" data-fragment-index="43">
+</div><div class="fragment" data-fragment-index="44">
         
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
@@ -1317,7 +1341,7 @@ div.output_prompt {
 </div>
 
 </div>
-        </div><div class="fragment" data-fragment-index="56">
+        </div><div class="fragment" data-fragment-index="57">
     
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
@@ -1366,7 +1390,7 @@ div.output_prompt {
 
 </div>
 </div>
-</div><div class="fragment" data-fragment-index="56">
+</div><div class="fragment" data-fragment-index="57">
         
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
@@ -1397,7 +1421,7 @@ div.output_prompt {
 </div>
 
 </div>
-        </div><div class="fragment" data-fragment-index="56">
+        </div><div class="fragment" data-fragment-index="57">
         
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
@@ -1463,7 +1487,7 @@ div.output_prompt {
 </div>
 </div>
 
-</div><div class="fragment" data-fragment-index="56">
+</div><div class="fragment" data-fragment-index="57">
         
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
@@ -1495,7 +1519,7 @@ div.output_prompt {
 </div>
 
 </div>
-        </div><div class="fragment" data-fragment-index="56">
+        </div><div class="fragment" data-fragment-index="57">
         
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
@@ -1526,7 +1550,7 @@ div.output_prompt {
 </div>
 
 </div>
-        </div><div class="fragment" data-fragment-index="56">
+        </div><div class="fragment" data-fragment-index="57">
         
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
@@ -1558,7 +1582,7 @@ div.output_prompt {
 </div>
 
 </div>
-        </div><div class="fragment" data-fragment-index="56">
+        </div><div class="fragment" data-fragment-index="57">
         
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
@@ -1589,7 +1613,7 @@ div.output_prompt {
 </div>
 
 </div>
-        </div><div class="fragment" data-fragment-index="56">
+        </div><div class="fragment" data-fragment-index="57">
         
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
@@ -1640,7 +1664,7 @@ div.output_prompt {
 
 </div>
 </div>
-</div><div class="fragment" data-fragment-index="56">
+</div><div class="fragment" data-fragment-index="57">
         
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
