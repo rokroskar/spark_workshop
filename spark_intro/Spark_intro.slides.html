@@ -365,7 +365,7 @@ the <a href="http://hadoop.apache.org">Apache Hadoop</a> ecosystem.</p>
 <li><code>mapPartitions</code> -- similar to <code>map</code> but done on a per-partition basis (requires a generator function)</li>
 <li><code>sortBy</code> -- sort using the provided function</li>
 </ul>
-<p>Transformations are "lazy" evaluated - the system keeps a lineage graph that is only executed once an <em>action</em> is performed.</p>
+<p>Transformations are "lazy" evaluated - only executed once an <em>action</em> is performed.</p>
 <p>Actions include:</p>
 <ul>
 <li><code>collect</code> -- pulls all elements of the RDD to the driver (often a bad idea!!)</li>
