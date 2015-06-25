@@ -106,14 +106,10 @@ def get_text(html_path) :
     """Clean HTML tags, escape characters, special unicode, punctuation, and empty spaces from the raw html
     
     Inputs:
-    -------
-
-    `html_path`: path to the raw html Gutenberg project book file
+        `html_path`: path to the raw html Gutenberg project book file
 
     Outputs:
-    --------
-
-    a string of cleaned, lower-case text
+        a string of cleaned, lower-case text
     
     """
     
@@ -167,12 +163,10 @@ def get_gid(html_path) :
     Return the Gutenberg book ID (`gid`) give the path to the raw html file.
 
     Input:
-    ------
-    `html_path`: path to the html Gutenberg book file
+        `html_path`: path to the html Gutenberg book file
 
     Output:
-    -------
-    `gid`: the ID of the Gutenberg book
+        `gid`: the ID of the Gutenberg book
 
     """
 
@@ -184,19 +178,13 @@ def get_metadata(gid, rdf_path = '/cluster/home03/sdid/roskarr/work/gutenberg/rd
     """Extract the metadata from the Gutenberg book represented by the gid.
     
     Inputs:
-    -------
-
-    `gid`: the Gutenberg project book ID
+        `gid`: the Gutenberg project book ID
 
     Optional Keywords:
-    ------------------
-    
-    `rdf_path`: path to the Gutenberg project RDF projects
+         `rdf_path`: path to the Gutenberg project RDF projects
 
     Outputs:
-    --------
-
-    dictionary containing the book metadata
+        dictionary containing the book metadata
 
     """
     
