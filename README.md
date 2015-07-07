@@ -19,9 +19,40 @@ The language used in the workshop is python. If you are not familiar with python
 
 ## Setting up
 
-The computer you bring to the workshop needs to have python and spark installed. 
+There are quite a few requirements for all the software used in this workshop to function properly. You can either install it all by hand (or perhaps you have it installed already), but if you don't want to bother with the set up, you can simply use the virtual machine option. 
 
-### python dependencies
+### Easiest Setup: use a Virtual Machine
+
+Download and install [Vagrant](https://www.vagrantup.com/downloads.html) and 
+[VirtualBox](https://www.virtualbox.org/wiki/Downloads). Then you can simply
+open up a terminal, navigate to this repository and type 
+
+```bash
+$ vagrant up
+```
+
+This will first download, configure, and boot the virtual machine (VM). The first time you do this, it has to download everything off the internet so it
+will take some time. Once it's finished, you can log in to the VM with
+```bash
+$ vagrant ssh
+```
+
+To shut down the VM temporarily, you can do
+```
+$ vagrant halt
+```
+
+or to get rid of it completely
+
+```
+$ vagrant destroy
+```
+
+
+
+### Manual setup 
+
+#### python dependencies
 
 The python installation should have the following packages: numpy, scipy, scikit-learn, pip, ipython, ipython notebook, matplotlib
 
@@ -31,7 +62,11 @@ that you [download the miniconda installer](http://conda.pydata.org/miniconda.ht
     > conda update conda 
     > conda install -y numpy scipy scikit-learn pip ipython ipython-notebook matplotlib
 
-### Spark
+
+#### Java
+You need a JDK installed. 
+
+#### Spark
 
 Spark requires a Java installation -- if you don't have it already (most systems come with some flavor of Java installed), you can get it [here](https://java.com/en/download/).
 
@@ -55,6 +90,24 @@ and try to run a basic spark example to see if everything is working:
 
 Notebooks can be downloaded and run on a local machine or any spark cluster. 
 The notebooks are created using `ipython` `v3.1.0` and will probably not work with earlier versions. 
+
+### Running in the VM
+
+If the VM is not running, start it with `vagrant up`. Then:
+```
+$ vagrant up
+Last login: Tue Jul  7 13:26:09 2015 from 10.0.2.2
+[vagrant@sparkws ~]$
+```
+
+Go to the `notebooks` directory and start the ipython notebook
+```
+[vagrant@sparkws ~]$ cd notebooks
+[vagrant@sparkws notebooks]$ ipython notebook
+```
+
+This will bring up a firefox window with the ipython notebook. 
+
 
 Once you have `ipython` installed, you can simply type 
 
