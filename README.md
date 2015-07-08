@@ -108,6 +108,7 @@ Go to the `notebooks` directory and start the ipython notebook
 
 This will bring up a firefox window with the ipython notebook. 
 
+### Running localy without a VM
 
 Once you have `ipython` installed, you can simply type 
 
