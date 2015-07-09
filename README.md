@@ -23,6 +23,11 @@ There are quite a few requirements for all the software used in this workshop to
 
 ### Easiest Setup: use a Virtual Machine
 
+If you want to simply get up and running, then we recommend you use the 
+workshop materials through the Virtual Machine environment set up specifically
+for this purpose. This way you will only have to deal with the minimal set of
+installations.
+
 Download and install [Vagrant](https://www.vagrantup.com/downloads.html) and 
 [VirtualBox](https://www.virtualbox.org/wiki/Downloads). Then you can simply
 open up a terminal, navigate to this repository and type 
@@ -50,7 +55,10 @@ $ vagrant destroy
 
 
 
-### Manual setup 
+### Advanced setup 
+If you want to run Spark from your own machine and you really want to do 
+the setup yourself, or if you are an experienced user, you can follow 
+the instructions below. 
 
 #### python dependencies
 
