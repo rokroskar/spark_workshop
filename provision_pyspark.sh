@@ -49,7 +49,4 @@ echo "updating and installing linux packages"
     dbus-uuidgen > tmp_dbus
     sudo cp tmp_dbus /var/lib/dbus/machine-id
     rm tmp_dbus
-
-    # link to start_notebook.py
-    ln -s /vagrant/start_notebook.py
     
