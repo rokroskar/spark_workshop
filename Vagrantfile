@@ -8,7 +8,7 @@
 Vagrant.configure(2) do |config|
   config.vm.define "spark-wkshp" do |master|
     # use basic centos 6.5
-    master.vm.box = "chef/centos-6.6"
+    master.vm.box = "rrrrrok/centos-6.6-VBGuest4.3.28"
 
     # enable X11 forwarding
     master.ssh.forward_x11 = true

@@ -131,7 +131,7 @@ If you are using the VM and it is not running, start it with `vagrant up`.
 
 Go to the `notebooks` directory, set up the notebook and start the server
 ```
-$ cd spark_workshop/notebooks
+$ cd notebooks
 $ ./start_notebook.py --setup --launch
 ```
 
@@ -143,6 +143,10 @@ You will see a message with something like this
 ```
 
 The number at the end of `https://[all ip addresses on your system]:8889/` is the port number on which the notebook is running. You can access it by simply going to https://localhost:8889 in your local browser. This will bring up a menacing message about an untrusted certificate, which you can safely ignore (we created a self-signed certificate during the notebook setup) and either click "Advanced -> Proceed to localhost" (in Chrome) or "I understand the risks -> Add Exception" (in Firefox) or simply "Continue" (in Safari). 
+
+Note that the `--setup` option is only needed the first time you start the 
+notebook (to set up your SSL certificate and password) -- you can leave it out 
+when starting the notebook server up again at some later point. 
 
 The notebooks are organized in three directories: 
 

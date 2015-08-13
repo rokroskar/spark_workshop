@@ -28,6 +28,8 @@ home = expanduser("~")
 ipython_profile_path = "{home}/.ipython/profile_sparkbook".format(home=home)
 
 def setup_notebook(port):
+    import os
+        
     # if the profile doesn't exist, create it -- otherwise we've probably
     # already done this step
     if not exists(ipython_profile_path):
@@ -39,7 +41,6 @@ def setup_notebook(port):
         new_pass = passwd()
 
         # make an ssl certificate
-        import os
         certfile = "{home}/.ssh/notebook_cert.pem".format(home=home)
         os.system(
             "openssl req -x509 -nodes -days 365 -newkey rsa:1024 -keyout {certfile} -out {certfile} -batch".format(certfile=certfile))
