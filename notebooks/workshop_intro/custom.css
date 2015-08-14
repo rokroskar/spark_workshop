@@ -11,9 +11,20 @@ body {
 
 .reveal {
   font-family: Ubuntu, 'sans-serif';
-  font-size: 30px;
+  font-size: 28px;
   font-weight: normal;
-  color: #F1BF57; 
+  color: #F7D794; }
+
+.reveal p {
+  color: #F7D794;
+}
+
+.reveal ul, ol {
+  color: #F7D794;
+}
+
+.reveal table th, .reveal table td {
+  color: #F7D794;
 }
 
 .reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 { 

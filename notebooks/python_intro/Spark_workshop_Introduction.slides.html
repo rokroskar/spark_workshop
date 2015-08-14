@@ -244,9 +244,7 @@ div.output_prompt {
 
 </div>
 </div>
-</div></section>
-    </section><section>
-    <section>
+</div><div style=display:none>
     
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
@@ -257,7 +255,8 @@ div.output_prompt {
 <h4 id="3.-List-comprehensions-(and-Tuples)">3. <a href="#List-comprehension">List comprehensions</a> (and <a href="#Tuples">Tuples</a>)<a class="anchor-link" href="#3.-List-comprehensions-(and-Tuples)">&#182;</a></h4><h4 id="4.-Generator-expressions">4. <a href="#Generator-expressions">Generator expressions</a><a class="anchor-link" href="#4.-Generator-expressions">&#182;</a></h4><h4 id="5.-Generators">5. <a href="#Generators">Generators</a><a class="anchor-link" href="#5.-Generators">&#182;</a></h4>
 </div>
 </div>
-</div></section>
+</div>
+    </div></section>
     </section><section>
     <section>
     
@@ -375,12 +374,11 @@ div.output_prompt {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="kn">import</span> <span class="nn">random</span>
 <span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="c"># initialized to make sure we get the same numbers every time</span>
-
 <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="p">:</span> <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">100</span><span class="p">))</span>
 <span class="k">print</span> <span class="n">data</span>
@@ -577,6 +575,7 @@ div.output_prompt {
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="kn">from</span> <span class="nn">operator</span> <span class="kn">import</span> <span class="n">add</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="nb">reduce</span>
 <span class="nb">reduce</span><span class="p">(</span><span class="n">add</span><span class="p">,</span> <span class="n">dbl_data</span><span class="p">)</span>
 </pre></div>
 
@@ -1411,10 +1410,13 @@ div.output_prompt {
         
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[21]:</div>
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="nb">sum</span><span class="p">((</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000000</span><span class="p">)))</span>
+<div class=" highlight hl-ipython2"><pre><span class="k">print</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000000</span><span class="p">)))</span>
+
+<span class="c"># now summing only the even numbers -- conditionals work just like in list comprehension</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000000</span><span class="p">)</span> <span class="k">if</span> <span class="n">x</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">))</span>
 </pre></div>
 
 </div>
@@ -1425,13 +1427,12 @@ div.output_prompt {
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[21]:</div>
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>4999999950000000</pre>
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>499999500000
+249999500000
+</pre>
 </div>
-
 </div>
 
 </div>
@@ -1537,7 +1538,7 @@ div.output_prompt {
 <div class="prompt input_prompt">In&nbsp;[28]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="o">%</span><span class="k">load_ext</span> memory_profiler
+<div class=" highlight hl-ipython2"><pre><span class="o">%</span><span class="k">load_ext</span> memory_profiler # if this fails run &#39;pip install memory_profiler; pip install psutil&#39; in the terminal
 <span class="o">%</span><span class="k">memit</span> sum([x for x in range(100000000)])
 </pre></div>
 
