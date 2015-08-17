@@ -1,7 +1,7 @@
 
 # Distributed Data Analysis  
 
-(for scientists)
+(for scientists) <!-- .element: style="font-size:75%;text-align:center" -->
 
 ### Scientific IT Services // ETH Zürich
 
@@ -41,23 +41,22 @@ Hopefully we'll be able to address some of these problems!
 
 
 ## *Data exploration enables scientific discovery*
-Big or small data isn't the point: we want to enable scientific discovery
+Big or small data isn't the point: we want to enable scientific discovery <!-- .element: class="fragment" data-fragment-index="1" -->
 
-This happens through efficient data exploration, irrespective of size
+This happens through efficient data exploration, irrespective of size <!-- .element: class="fragment" data-fragment-index="2" -->
 
-Static, complicated, batch pipelines vs. limber, flexible, interactive analysis 
-
-
-
-### Unfortunately, our data outgrows our resources rather quickly...
-
-#### ... So we have to try and "scale" our workflows <!-- .element: class="fragment" data-fragment-index="1" -->
+Static, complicated, batch pipelines vs. limber, flexible, interactive analysis <!-- .element: class="fragment" data-fragment-index="3" -->
 
 
 
-First try: move from laptop to a workstation
+### Unfortunately, data outgrows resources rather quickly...
 
-<img src="https://raw.githubusercontent.com/rokroskar/spark_workshop/master/notebooks/figs/laptop_workstation.png?token=ADMr8uMMwA8iTKzHy4z2SAwdKuxTuWHhks5V10nZwA%3D%3D">
+#### ... so we have to try and "scale" our workflows <!-- .element: class="fragment" data-fragment-index="1" -->
+
+
+
+<!-- .slide: data-background="figs/laptop_workstation.svg" data-background-size="contain" -->
+First try: move from laptop to a workstation 
 
 * more memory! problem solved? handled by operating system...
 * more cores! special libraries can provide simple multithreading support
@@ -71,18 +70,18 @@ A single workstation will not cut it, and if it does for a problem today, it cer
 
 
 
-Next, move to a *cluster* 
+<!-- .slide: data-background="figs/cluster-computing.svg" data-background-size="contain"-->
+### Next, move to a *cluster* 
 
-a set of interconnected servers steered through some common gateway
+* a set of interconnected servers steered through some common gateway <!-- .element: class="fragment" data-fragment-index="1" -->
+* easy for "embarrasingly" parallel work-loads <!-- .element: class="fragment" data-fragment-index="1" -->
+* book-keeping nightmare (tons of files, intermediate products etc.) <!-- .element: class="fragment" data-fragment-index="1" -->
+* not so easy for really parallel computation <!-- .element: class="fragment" data-fragment-index="1" -->
+* definitely not easy for interactive use and data exploration <!-- .element: class="fragment" data-fragment-index="1" -->
 
-<img src="https://raw.githubusercontent.com/rokroskar/spark_workshop/master/notebooks/figs/cluster-computing.png?token=ADMr8vpYR6DRDeRu8zTuySiCGIIWdqUYks5V2JG2wA%3D%3D">
 
 
-* easy for "embarrasingly" parallel work-loads
-* book-keeping nightmare (tons of files, intermediate products etc.)
-* not so easy for really parallel computation 
-* definitely not easy for interactive use and data exploration
-
+<!-- .slide: data-state: "image" -->
 What's so hard about distributed analysis/computation? 
 
 * data and tasks need to be *coordinated* between the different machines
@@ -92,170 +91,45 @@ What's so hard about distributed analysis/computation?
 * no longer have one machine but many, potentially hundreds --> hard to debug/control!
 
 
+
 ## Liberation through limitation
 
-What if we only allowed the user a very rigid programming model? 
+#### What if we only allowed the user a very rigid programming model? 
 
 This makes a system more robust out-of-the-box, predictable, and easier to monitor, discover failures etc. 
 
-**MapReduce** is such a programming paradigm
 
-<img src="https://raw.githubusercontent.com/rokroskar/spark_workshop/master/notebooks/figs/mapreduce.png?token=ADMr8i8bUDYu28G-28pF9ivkU8whgCaTks5V2Ka6wA%3D%3D" width=850>
 
-We all know this to some extent --> it's all around us
+<!-- .slide: data-background="figs/mapreduce-background.svg" data-background-size="contain"-->
+####**MapReduce** is such a programming paradigm
 
-* Web 2.0
-    * multimedia content (images, video, music/audio)
-    * user activity tracking
-    * recommendation engines (shopping, movies, ads. etc.)
-* Sensors
-    * smartphone
-    * real-world, internet of things
-* Public infrastructure
+We all know this to some extent --> it's all around us <!-- .element class="fragment" data-fragment-index="1" -->
+
+* Web 2.0 <!-- .element class="fragment" data-fragment-index="2" -->
+    * multimedia content (images, video, music/audio) 
+    * user activity tracking 
+    * recommendation engines (shopping, movies, ads. etc.) 
+* Sensors <!-- .element class="fragment" data-fragment-index="3" -->
+    * smartphone 
+    * real-world, internet of things 
+* Public infrastructure <!-- .element class="fragment" data-fragment-index="4" -->
     * telecom
     * transportation (trains, traffic)
-* Science
+* Science <!-- .element class="fragment" data-fragment-index="5" -->
     * CERN 
     * astronomy sky surveys
     * medicine + genomics --> translational science
     * high-content screening, lightsheet microscopy
     * social science
 
-Many of these "production" systems based on MapReduce combined with efficient "data stores" (distributed databases etc)
+Many of these "production" systems based on MapReduce combined with efficient "data stores" (distributed databases etc) <!-- .element class="fragment" data-fragment-index="6" -->
 
-Most common is the open source Apache **Hadoop**
 
-* Java-based MR implementation
+<!-- .slide: data-background="figs/mapreduce-background.svg" data-background-size="contain"-->
+#### Most common is the open source Apache Hadoop <!-- .element style="background-color: rgba(0,0,0,0.3)" -->
+
+* Java-based MR implementation <!-- .element style="background-color: rgba(0,0,0,0.3)" -->
 * used together with the Hadoop Distributed File System (HDFS)
 * important feature: "bringing computation *to the data*"
 
-
-
-```python
-
-# THE LINES BELOW ARE JUST FOR STYLING THE CONTENT ABOVE !
-
-from IPython import utils
-from IPython.core.display import HTML
-import os
-def css_styling():
-    """Load default custom.css file from ipython profile"""
-    base = utils.path.get_ipython_dir()
-    styles = """<style>
     
-    @import url('http://fonts.googleapis.com/css?family=Source+Code+Pro');
-    
-    @import url('http://fonts.googleapis.com/css?family=Kameron');
-    @import url('http://fonts.googleapis.com/css?family=Crimson+Text');
-    
-    @import url('http://fonts.googleapis.com/css?family=Lato');
-    @import url('http://fonts.googleapis.com/css?family=Source+Sans+Pro');
-    
-    @import url('http://fonts.googleapis.com/css?family=Lora'); 
-    @import url(https://fonts.googleapis.com/css?family=Ubuntu:300,700,300italic,700italic);
-    
-    body {
-        font-family: Ubuntu, sans-serif;
-    }
-    .rendered_html code
-    {
-        color: black;
-        background: #eaf0ff;
-        padding: 1pt;
-        font-family:  'Source Code Pro', Consolas, monocco, monospace;
-    }
-    
-    .CodeMirror pre {
-    font-family: 'Source Code Pro', monocco, Consolas, monocco, monospace;
-    }
-    
-    .cm-s-ipython span.cm-keyword {
-        font-weight: normal;
-     }
-        
-    div #notebook {
-        font-size: 12pt; 
-        line-height: 145%;
-        }
-        
-    li {
-        line-heigt: 175%;
-    }
-
-    div.output_area pre {
-        background: #fffdf0;
-        padding: 3pt;
-    }
-    
-    h1, h2, h3, h4 {
-        font-family: Kameron, arial;
-    }
-    
-    div#maintoolbar {display: none !important;}
-    </style>"""
-    return HTML(styles)
-css_styling()
-```
-
-
-
-
-<style>
-    
-    @import url('http://fonts.googleapis.com/css?family=Source+Code+Pro');
-    
-    @import url('http://fonts.googleapis.com/css?family=Kameron');
-    @import url('http://fonts.googleapis.com/css?family=Crimson+Text');
-    
-    @import url('http://fonts.googleapis.com/css?family=Lato');
-    @import url('http://fonts.googleapis.com/css?family=Source+Sans+Pro');
-    
-    @import url('http://fonts.googleapis.com/css?family=Lora'); 
-    @import url(https://fonts.googleapis.com/css?family=Ubuntu:300,700,300italic,700italic);
-    
-    body {
-        font-family: Ubuntu, sans-serif;
-    }
-    .rendered_html code
-    {
-        color: black;
-        background: #eaf0ff;
-        padding: 1pt;
-        font-family:  'Source Code Pro', Consolas, monocco, monospace;
-    }
-    
-    .CodeMirror pre {
-    font-family: 'Source Code Pro', monocco, Consolas, monocco, monospace;
-    }
-    
-    .cm-s-ipython span.cm-keyword {
-        font-weight: normal;
-     }
-        
-    div #notebook {
-        font-size: 12pt; 
-        line-height: 145%;
-        }
-        
-    li {
-        line-heigt: 175%;
-    }
-
-    div.output_area pre {
-        background: #fffdf0;
-        padding: 3pt;
-    }
-    
-    h1, h2, h3, h4 {
-        font-family: Kameron, arial;
-    }
-    
-    div#maintoolbar {display: none !important;}
-    </style>
-
-
-
-
-```python
-
-```
