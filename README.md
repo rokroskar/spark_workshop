@@ -7,19 +7,36 @@ academia. To explore the possibilities of using such a framework, we make
 use of [Spark](http://spark.apache.org), which is a modern MR framework with a 
 rich API and properties attractive for data exploration. 
 
+
+
 ## Prerequisites
+
+### Git
+
+I strongly recommend that you install [git](https://git-scm.com/) if  you don't have it installed already. To check if you have it on your machine, open up a terminal and type
+
+```
+$ git --version
+```
+
+If this returns something other than an error message, you are all set! 
+
 
 ### Programming knowledge
 
 We assume fluency with basic programming constructs such as loops and functions. In the first session of the workshop, basics of functional programming and other python-specific constructs are introduced, as they are  useful for writing Spark applications. Knowing how to use the command line (or terminal) is also expected. 
 
+
 ### Python
 
 The language used in the workshop is python. If you are not familiar with python at all, we recommend finding a basic tutorial and working through some examples before participating in the workshop. In particular, make sure that you understand the various python data types, such as strings, lists, tuples, dictionaries, and sets. We will go over some of these in the workshop, but you should at least try to use them in simple ways before going through the workshop material. 
 
+
+
 ## Setting up
 
 There are quite a few requirements for all the software used in this workshop to function properly. You can either install it all by hand (or perhaps you have it installed already), but if you don't want to bother with the set up, you can simply use the virtual machine option. 
+
 
 ### Easiest Setup: use a Virtual Machine
 
@@ -29,14 +46,21 @@ workshop materials through the Virtual Machine (VM) environment set up specifica
 * install [Vagrant](https://www.vagrantup.com/downloads.html) 
 * install [VirtualBox](https://www.virtualbox.org/wiki/Downloads) 
 
-Then simply open up a terminal, clone this repository
+If you have `git` on your machine (see above), then simply open up a terminal and clone this repository
 
 ```
 $ git clone https://github.com/rokroskar/spark_workshop.git
 $ cd spark_workshop
 ```
 
-and spin up the VM 
+If you don't have git, [click to download the zip file](https://github.com/rokroskar/spark_workshop/archive/master.zip) and uncompress it somewhere on your hard-drive, e.g. 
+
+```
+$ unzip spark_workshop-master.zip
+$ cd spark_workshop-master
+```
+
+Go to the `spark_workshop` directory and spin up the VM 
 
 ```bash
 $ vagrant up
