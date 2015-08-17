@@ -31,9 +31,9 @@ Hopefully we'll be able to address some of these problems!
 ## Big Data 
 ### Everyone is talking about it... but no one knows what it is
 
-1 Gb? 50 Gb? 500 Gb? 500 Tb? 1 Pb? 
+1 Gb? 50 Gb? 500 Gb? 500 Tb? 1 Pb? <!-- .element: style="text-align:center" -->
 
-**It doesn't matter! ** <!-- .element: class="fragment" data-fragment-index="1" -->
+It doesn't matter! <!-- .element: style="text-align:center;font-weight:bold" class="fragment" data-fragment-index="1"-->
 
 * "Big data" is when you start to seriously worry that your analysis will never complete <!-- .element: class="fragment" data-fragment-index="2" -->
 * this could be due to memory or runtime <!-- .element: class="fragment" data-fragment-index="2" -->
@@ -45,7 +45,9 @@ Big or small data isn't the point: we want to enable scientific discovery <!-- .
 
 This happens through efficient data exploration, irrespective of size <!-- .element: class="fragment" data-fragment-index="2" -->
 
-Static, complicated, batch pipelines vs. limber, flexible, interactive analysis <!-- .element: class="fragment" data-fragment-index="3" -->
+Static batch pipelines (think endless scripts) <!-- .element: class="fragment" data-fragment-index="3" -->
+
+vs. limber, flexible, interactive, visual analysis <!-- .element: class="fragment" data-fragment-index="4" style="text-align:right"-->
 
 
 
@@ -56,7 +58,7 @@ Static, complicated, batch pipelines vs. limber, flexible, interactive analysis 
 
 
 <!-- .slide: data-background="figs/laptop_workstation.svg" data-background-size="contain" -->
-First try: move from laptop to a workstation 
+### First try: move from laptop to a workstation 
 
 * more memory! problem solved? handled by operating system...
 * more cores! special libraries can provide simple multithreading support
@@ -70,7 +72,7 @@ A single workstation will not cut it, and if it does for a problem today, it cer
 
 
 
-<!-- .slide: data-background="figs/cluster-computing.svg" data-background-size="contain"-->
+<!-- .slide: data-background="figs/cluster-computing.svg" data-background-size="contain" -->
 ### Next, move to a *cluster* 
 
 * a set of interconnected servers steered through some common gateway <!-- .element: class="fragment" data-fragment-index="1" -->
@@ -81,7 +83,6 @@ A single workstation will not cut it, and if it does for a problem today, it cer
 
 
 
-<!-- .slide: data-state: "image" -->
 What's so hard about distributed analysis/computation? 
 
 * data and tasks need to be *coordinated* between the different machines
@@ -94,16 +95,29 @@ What's so hard about distributed analysis/computation?
 
 ## Liberation through limitation
 
-#### What if we only allowed the user a very rigid programming model? 
+General multiprocessing/parallel libraries (e.g. MPI)
+* give the user a lot of control and flexibility
+* they are *very* hard to use and debug!
+* not great for fast turn-around of home-grown code!
 
-This makes a system more robust out-of-the-box, predictable, and easier to monitor, discover failures etc. 
+<hr class="fragment visible" data-fragment-index="0">
+
+<h4 class="fragment visible" data-fragment-index="0">What if we only allowed the user a very rigid programming model?</h4>
+
+<ul style="text-align:left" class="fragment visible" data-fragment-index="0">
+<li>more robust out-of-the-box</li>
+<li>predictable</li>
+<li>easier to monitor, discover failures etc.</li>
+</ul>
 
 
+<!-- .slide: data-background="figs/mapreduce-background.svg" data-background-size="contain" -->
 
-<!-- .slide: data-background="figs/mapreduce-background.svg" data-background-size="contain"-->
+
+<!-- .slide: data-background="figs/mapreduce-background.svg" data-background-size="contain" data-state="blur"-->
 ####**MapReduce** is such a programming paradigm
 
-We all know this to some extent --> it's all around us <!-- .element class="fragment" data-fragment-index="1" -->
+We all know this to some extent --> it's all around us <!-- .element class="fragment" data-fragment-index="1" style="text-align:center"-->
 
 * Web 2.0 <!-- .element class="fragment" data-fragment-index="2" -->
     * multimedia content (images, video, music/audio) 
@@ -125,11 +139,22 @@ We all know this to some extent --> it's all around us <!-- .element class="frag
 Many of these "production" systems based on MapReduce combined with efficient "data stores" (distributed databases etc) <!-- .element class="fragment" data-fragment-index="6" -->
 
 
-<!-- .slide: data-background="figs/mapreduce-background.svg" data-background-size="contain"-->
-#### Most common is the open source Apache Hadoop <!-- .element style="background-color: rgba(0,0,0,0.3)" -->
+<!-- .slide: data-background="figs/mapreduce-background.svg" data-background-size="contain" data-state="blur"-->
+### Basic building block: the Distributed Filesystem
 
-* Java-based MR implementation <!-- .element style="background-color: rgba(0,0,0,0.3)" -->
+#### Moving data around is very expensive! 
+
+* modern data centers consist of 1000s of machines
+* often, this is "commodity" hardware (not like our Brutus/Euler)
+* network between machines might be sluggish
+* bring computation/algorithm to the data
+
+
+
+
+#### Most common is the open source Apache Hadoop 
+
+* Java-based MR implementation 
 * used together with the Hadoop Distributed File System (HDFS)
 * important feature: "bringing computation *to the data*"
-
-    
+* computation and storage are on the same machines!

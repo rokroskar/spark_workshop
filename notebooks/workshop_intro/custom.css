@@ -11,6 +11,14 @@ html {
 }
 */
 
+html.blur .backgrounds {
+     -webkit-filter: blur(5px);
+     -moz-filter: blur(5px);
+     -o-filter: blur(5px);
+     -ms-filter: blur(5px);
+     filter: blur(5px);
+ }
+
 body {
   background: #0F545A;
   background-color: #0F545A; }
@@ -20,10 +28,22 @@ body {
   font-weight: normal;
   color: #F7D794; }
 
-.reveal p, ul {
+.reveal p, ul, li {
   color: #F7D794;
   text-align: left; 
   text-shadow: 1px 1px #222;
+}
+
+.reveal ul, li { 
+  margin: 0;
+  padding: 0;
+  text-align: left;
+}
+
+.reveal hr {
+  border-color: #F7D794;
+  border-top: 1px solid #ccc;
+  margin: 1em 0;
 }
 
 .reveal table th, .reveal table td {
@@ -155,6 +175,12 @@ div.output_prompt {
   -moz-transition: width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985);
   transition: width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985); }
 
+/*********************************************
+ * SLIDE NUMBER
+ *********************************************/
+.reveal .slide-number {
+  color: #F15F57;
+  font-size: 0.8em; }
 
 
 </style>
