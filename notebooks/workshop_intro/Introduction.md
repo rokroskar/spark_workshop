@@ -153,6 +153,48 @@ Many of these "production" systems based on MapReduce combined with efficient "d
 </ul>
 
 
+<!-- .slide: data-background="figs/hdfs.svg" data-background-size="contain"  -->
+
+
+<!-- .slide: data-background="figs/hdfs.svg" data-background-size="contain"  data-state="background-blur-animation"-->
+### Distributed filesystems
+
+#### Key features:
+
+* each machine contributes its hard-disk
+* replication (3x usually)
+* fault-tolerance (remember, cheap hardware!)
+* storage and task execution in the same place!
+* pioneered by Google Filesystem (Ghemawat et al. 2003)
+* currently popular Hadoop Distributed Filesystem (HDFS) 
+
+
+### How does this compare/contrast with Brutus/Euler?
+
+* first, top-notch (uniform) hardware! not commodity
+* generally no HDFS, but other high-performance FS 
+* high core-density vs. disk I/O 
+* importantly, a somewhat orthogonal software stack
+
+
+
+### Some goals for the next few days
+
+* get an intuition for working in a distributed manner
+* get an introduction to "big data" tools, notably HDFS and Spark
+* become familiar with how to use these tools on available resources
+* get ideas for your own workflows/projects
+
+
+
+### Outline
+
+* python intro (day 1)
+* Map/Reduce, functional programming (day 1,2)
+* Introduction to Spark (day 2)
+* Spark mini-project on Brutus (day 3)
+
+
 
 
 #### Most common is the open source Apache Hadoop 
