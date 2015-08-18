@@ -37,7 +37,7 @@ It doesn't matter! <!-- .element: style="text-align:center;font-weight:bold" cla
 
 * "Big data" is when you start to seriously worry that your analysis will never complete <!-- .element: class="fragment" data-fragment-index="2" -->
 * this could be due to memory or runtime <!-- .element: class="fragment" data-fragment-index="2" -->
-
+* good news: lots of people are doing it --> can't be that hard! <!-- .element: class="fragment" data-fragment-index="2" -->
 
 
 ## *Data exploration enables scientific discovery*
@@ -142,15 +142,15 @@ We all know this to some extent --> it's all around us <!-- .element class="frag
 Many of these "production" systems based on MapReduce combined with efficient "data stores" (distributed databases etc) <!-- .element class="fragment" data-fragment-index="6" -->
 
 
-<!-- .slide: data-background="figs/MapReduce.svg" data-background-size="contain" data-state="background-blur"-->
-### Basic building block: the Distributed Filesystem
+<!-- .slide: data-background="figs/datacenter.svg" data-background-size="300px"  data-state="background-blur" data-background-repeat="repeat"-->
+### modern data centers consist of 1000s of machines
 
-#### Moving data around is very expensive! 
-
-* modern data centers consist of 1000s of machines
-* often, this is "commodity" hardware (not like our Brutus/Euler)
-* network between machines might be sluggish
-* bring computation/algorithm to the data
+<ul style="text-align:left" class="fragment visible" data-fragment-index="0">
+<li> data movement is critical and often most expensive   </li>
+<li> often, this is "commodity" hardware (not like our Brutus/Euler)</li>
+<li> network between machines might be sluggish </li>
+<li> bring computation/algorithm to the data</li>
+</ul>
 
 
 

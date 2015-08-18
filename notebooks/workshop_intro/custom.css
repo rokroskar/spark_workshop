@@ -5,12 +5,6 @@ html {
   overflow-y: auto;
 }
 
-
-/*.reveal .slides  {
-  background-color: rgba(0,0,0,0.3);
-}
-*/
-
 @-webkit-keyframes blur-animation {
   0% {
     -webkit-filter: blur(0px) ;
@@ -21,7 +15,7 @@ html {
      
   }
   100% {
-    -webkit-filter: blur(4px) saturate(.7) brightness(.9);
+    -webkit-filter: blur(4px) saturate(.5) brightness(.8);
     -moz-filter: blur(5px) saturate(.7) brightness(.9);
     -o-filter: blur(5px) saturate(.7) brightness(.9);
     -ms-filter: blur(5px)saturate(.7) brightness(.9);
@@ -41,7 +35,7 @@ html.background-blur-animation .backgrounds {
  }
 
 html.background-blur .backgrounds {
-   -webkit-filter: blur(4px) saturate(.7) brightness(.9);
+   -webkit-filter: blur(4px) saturate(.5) brightness(.8);
    -moz-filter: blur(4px) saturate(.7) brightness(.9);
    -o-filter: blur(4px) saturate(.7) brightness(.9);
    -ms-filter: blur(4px) saturate(.7) brightness(.9);
