@@ -73,6 +73,9 @@ A single workstation will not cut it, and if it does for a problem today, it cer
 
 
 <!-- .slide: data-background="figs/cluster-computing.svg" data-background-size="contain" -->
+
+
+<!-- .slide: data-background="figs/cluster-computing.svg" data-background-size="contain"  data-state="background-blur-animation"-->
 ### Next, move to a *cluster* 
 
 * a set of interconnected servers steered through some common gateway <!-- .element: class="fragment" data-fragment-index="1" -->
@@ -111,10 +114,10 @@ General multiprocessing/parallel libraries (e.g. MPI)
 </ul>
 
 
-<!-- .slide: data-background="figs/mapreduce-background.svg" data-background-size="contain" -->
+<!-- .slide: data-background="figs/mapreduce.svg" data-background-size="contain" -->
 
 
-<!-- .slide: data-background="figs/mapreduce-background.svg" data-background-size="contain" data-state="blur"-->
+<!-- .slide: data-background="figs/mapreduce.svg" data-background-size="contain" data-state="background-blur-animation"-->
 ####**MapReduce** is such a programming paradigm
 
 We all know this to some extent --> it's all around us <!-- .element class="fragment" data-fragment-index="1" style="text-align:center"-->
@@ -139,7 +142,7 @@ We all know this to some extent --> it's all around us <!-- .element class="frag
 Many of these "production" systems based on MapReduce combined with efficient "data stores" (distributed databases etc) <!-- .element class="fragment" data-fragment-index="6" -->
 
 
-<!-- .slide: data-background="figs/mapreduce-background.svg" data-background-size="contain" data-state="blur"-->
+<!-- .slide: data-background="figs/MapReduce.svg" data-background-size="contain" data-state="background-blur"-->
 ### Basic building block: the Distributed Filesystem
 
 #### Moving data around is very expensive! 
