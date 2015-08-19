@@ -17,7 +17,7 @@ Vagrant.configure(2) do |config|
     master.ssh.forward_agent = true
 
     # provision necessary packages
-    master.vm.provision "shell", path: "provision_pyspark.sh"
+    master.vm.provision "shell", path: "scripts/provision_pyspark.sh"
 
     master.vm.hostname = "spark-wkshp"
 
