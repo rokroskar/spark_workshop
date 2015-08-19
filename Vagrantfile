@@ -22,7 +22,7 @@ Vagrant.configure(2) do |config|
     master.vm.hostname = "spark-wkshp"
 
     master.vm.synced_folder "./notebooks", "/home/vagrant/notebooks"
-
+    
     # set up port forwarding
     master.vm.network :forwarded_port, host: 8889, guest: 8889, auto_correct: true
     master.vm.network :forwarded_port, host: 4040, guest: 4040, auto_correct: true
