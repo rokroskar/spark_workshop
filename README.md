@@ -44,7 +44,7 @@ If you want to simply get up and running, then we recommend you use the
 workshop materials through the Virtual Machine (VM) environment set up specifically for this purpose. This way you will only have to deal with the minimal set of installations.
 
 * install [Vagrant](https://www.vagrantup.com/downloads.html) 
-* install [VirtualBox](https://www.virtualbox.org/wiki/Downloads) 
+* install [VirtualBox](https://www.virtualbox.org/wiki/Download_Old_Builds_4_3) - **must be v4.3.x (4.3.28 is strongly recommended)**
 
 If you have `git` on your machine (see above), then simply open up a terminal and clone this repository
 
@@ -158,18 +158,30 @@ First, clone this repository on your local disk (if you set up the VM above, you
 $ git clone https://github.com/rokroskar/spark_workshop.git
 ```
 
-If you are using the VM and it is not running, start it with `vagrant up`. 
+Here, the instructions diverge briefly depending on whether you are running in a VM or your own installation:
 
-(from here on, the instructions are the same whether you are using a VM or not)
+### Using the VM (vagrant)
 
-Go to the `notebooks` directory, set up the notebook and start the server
+If the VM is not running, start it with `vagrant up`. 
+
+Now we will launch the notebook server inside the VM
 
 ```
-$ cd notebooks
+$ vagrant ssh -c "notebooks/start_notebook.py --setup --launch
+```
+
+### Using your own installation
+
+Simply go into the `notebooks` directory and setup/launch the notebook server 
+
+```
 $ ./start_notebook.py --setup --launch
 ```
 
-You will see a message with something like this
+
+### Back on the same page
+
+From here the process is identical. The `start_notebook.py` script first sets up a secure notebook for you, so you will be prompted to enter a password. Finally, when it's finished you will see a message with something like this
 
 ```
 [I 15:32:11.906 NotebookApp] The IPython Notebook is running at: https://[all ip addresses on your system]:8889/
