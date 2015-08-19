@@ -25,17 +25,19 @@ import os
 from os.path import expanduser, exists
 home = expanduser("~")
 
-ipython_profile_path = "{home}/.ipython/profile_sparkbook".format(home=home)
+#ipython_profile_path = "{home}/.ipython/profile_sparkbook".format(home=home)
+
+jupyter_config_path = "{home}/.jupyter".format(home=home)
 
 def setup_notebook(port):
         
     # if the profile doesn't exist, create it -- otherwise we've probably
     # already done this step
-    if not exists(ipython_profile_path):
-        os.system("ipython profile create sparkbook")
+    if not exists(jupyter_config_path):
+        os.system("jupyter notebook --generate-config")
 
         # get a password
-        from IPython.lib import passwd
+        from notebook.auth import passwd
 
         new_pass = passwd()
 
@@ -45,12 +47,12 @@ def setup_notebook(port):
             "openssl req -x509 -nodes -days 365 -newkey rsa:1024 -keyout {certfile} -out {certfile} -batch".format(certfile=certfile))
 
         # write the notebook config
-        with open("{profile_path}/ipython_notebook_config.py".format(profile_path=ipython_profile_path), 'w') as f:
+        with open("{profile_path}/jupyter_notebook_config.py".format(profile_path=jupyter_config_path), 'w') as f:
             f.write(notebook_config_template.format(
                 password=new_pass, certfile=certfile, port=port))
 
     else:
-        print bc.WARNING+"The ipython notebook already looks set up -- if this is not the case, delete {dir} and run the script again.".format(dir=ipython_profile_path)+bc.ENDC
+        print bc.WARNING+"The jupyter notebook already looks set up -- if this is not the case, delete {dir} and run the script again.".format(dir=jupyter_config_path)+bc.ENDC
 
 
 def launch_notebook(port):
@@ -59,10 +61,9 @@ def launch_notebook(port):
     from IPython.terminal.ipapp import launch_new_instance
     argv = sys.argv[:1]
     argv.append('notebook')
-    argv.append('--profile=sparkbook')
 
     # check if we passed in a port that is different from the one in the configuration
-    with open("{profile_path}/ipython_notebook_config.py".format(profile_path=ipython_profile_path), 'r') as conf :
+    with open("{profile_path}/jupyter_notebook_config.py".format(profile_path=jupyter_config_path), 'r') as conf :
         conf_port = int(re.findall('port = (\d+)', conf.read())[0])
                   
     if conf_port != port :
