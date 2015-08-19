@@ -101,14 +101,17 @@ To get rid of the VM completely
 $ vagrant destroy
 ```
 
+
 ### Advanced setup 
 If you want to run Spark from your own machine and you really want to do 
 the setup yourself, or if you are an experienced user, you can follow 
 the instructions below. These are useful for Mac OSX and Linux, but perhaps less so for Windows. 
 
+
 #### Python dependencies
 
-The notebooks used for the tutorials have been tested with Python 2.7. The python installation should have the following packages: <mark>numpy, scipy, scikit-learn, pip, ipython, jupyter, matplotlib</mark>
+The notebooks used for the tutorials have been tested with Python 2.7. 
+The python installation should have the following packages: <mark>numpy, scipy, scikit-learn, pip, ipython, jupyter, matplotlib</mark>
 
 *Please note that we will be using the latest version of IPython (4.0) and the Jupyter notebooks. The notebooks developed for the workshop will not work with IPython < 3.0.*
 
@@ -120,8 +123,11 @@ $ conda update conda
 $ conda install -y numpy scipy scikit-learn pip ipython jupyter matplotlib
 ```
 
+
 #### Java
+
 Spark runs in a Java virtual machine, so you need to [install a Java distribution](https://java.com/en/download/). You might already have one on your machine, so first [check here](https://www.java.com/en/download/help/version_manual.xml).
+
 
 #### Spark
 
@@ -144,7 +150,7 @@ and try to run a basic spark example to see if everything is working:
 ## Using this material
 
 Notebooks can be downloaded and run on a local machine or any spark cluster. 
-The notebooks are created using `ipython` `v3.1.0` and will probably not work with earlier versions. 
+The notebooks require IPython > 3.0. 
 
 First, clone this repository on your local disk (if you set up the VM above, you've already done this):
 
@@ -157,6 +163,7 @@ If you are using the VM and it is not running, start it with `vagrant up`.
 (from here on, the instructions are the same whether you are using a VM or not)
 
 Go to the `notebooks` directory, set up the notebook and start the server
+
 ```
 $ cd notebooks
 $ ./start_notebook.py --setup --launch

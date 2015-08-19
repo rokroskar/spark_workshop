@@ -29,11 +29,12 @@ echo "updating and installing linux packages"
       chmod u+x Miniconda-latest-Linux-x86_64.sh
       ./Miniconda-latest-Linux-x86_64.sh -b -p /miniconda
       /miniconda/bin/conda update -y conda
-      /miniconda/bin/conda install -y numpy scipy scikit-learn pip ipython jupyter matplotlib
+      /miniconda/bin/conda install -y numpy scipy scikit-learn pip ipython ipython-notebook matplotlib
       rm Miniconda-latest-Linux-x86_64.sh
     else
       /miniconda/bin/conda update -y conda
-      /miniconda/bin/conda install -y numpy scipy scikit-learn pip ipython jupyter matplotlib
+      /miniconda/bin/conda install -y numpy scipy scikit-learn pip ipython ipython-notebook matplotlib
+      /miniconda/bin/pip install findspark
     fi
 
     # clean up

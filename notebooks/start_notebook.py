@@ -28,7 +28,6 @@ home = expanduser("~")
 ipython_profile_path = "{home}/.ipython/profile_sparkbook".format(home=home)
 
 def setup_notebook(port):
-    import os
         
     # if the profile doesn't exist, create it -- otherwise we've probably
     # already done this step
