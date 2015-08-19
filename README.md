@@ -68,6 +68,7 @@ $ vagrant up
 
 This will first download, configure, and boot the VM. The first time you do this, it has to download everything off the internet so it
 will take a few minutes. You'll see lots of messages about packages being installed. Once it's finished, you should see something like 
+
 ```
 ==> spark_wkshp: Machine 'spark_wkshp' has a post `vagrant up` message. This is a message
 ==> spark_wkshp: from the creator of the Vagrantfile, and not from Vagrant itself:
@@ -107,14 +108,16 @@ the instructions below. These are useful for Mac OSX and Linux, but perhaps less
 
 #### Python dependencies
 
-The python installation should have the following packages: numpy, scipy, scikit-learn, pip, ipython, ipython notebook, matplotlib
+The notebooks used for the tutorials have been tested with Python 2.7. The python installation should have the following packages: <mark>numpy, scipy, scikit-learn, pip, ipython, jupyter, matplotlib</mark>
+
+*Please note that we will be using the latest version of IPython (4.0) and the Jupyter notebooks. The notebooks developed for the workshop will not work with IPython < 3.0.*
 
 If you are not sure how to meet these dependency requirements, we recommend 
 that you [download the miniconda installer](http://conda.pydata.org/miniconda.html) appropriate for your system. Once it's installed, run the following commands: 
 
 ```
 $ conda update conda 
-$ conda install -y numpy scipy scikit-learn pip ipython ipython-notebook matplotlib
+$ conda install -y numpy scipy scikit-learn pip ipython jupyter matplotlib
 ```
 
 #### Java
