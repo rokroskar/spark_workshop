@@ -1,6 +1,6 @@
 #!/bin/sh
 
-echo "installing miniconda python"
+echo "setting up cluster python environment"
 	# install python
 	if [ ! -d ~/miniconda ]; then
 		cd ~

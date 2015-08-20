@@ -208,12 +208,41 @@ You should start by having a look at the python introduction notebook (where you
 
 ## Cluster setup
 
+### Getting the workshop repository
+
+Log in to your account on the cluster and clone the repository:
+
+```
+cluster~ $ git clone https://github.com/rokroskar/spark_workshop.git
+```
+
 ### Install python dependencies
 
 Once again, the python dependencies are the same as above. If you are a python user already and you know what you are doing, just install `python2.7`, `numpy`, `matplotlib`, and `ipython` (v4.0) and `jupyter`. 
 
-If you are not sure how to navigate the python universe, you can use the `setup_cluster.sh` script in the `scripts` directory. 
+If you are already a conda/miniconda user, you can simply do 
 
+```
+cluster~ $ conda -y create -n spark_workshop numpy pip ipython jupyter matplotlib
+cluster~ $ source activate spark_workshop
+``` 
+
+If you are not sure how to navigate the python universe, you can use the `setup_cluster.sh` script in the `scripts` directory like so:
+
+```
+cluster~ $ cd spark_workshop
+cluster~/spark_workshop $ scripts/setup_cluster.sh
+```
+
+You will see a lot of activity while the python packages are downloaded and configured. Finally, when the process is complete, you can set up the jupyter notebook just like we did before on the laptop/VM: 
+
+```
+cluster~ spark_workshop $ python notebooks/start_notebook.py --setup
+```
+
+### Set up a secure tunnel to the cluster
+
+In order to work with the cluster interactively, we need to set up a secure proxy to the cluster. This 
 
 ## Outline
 ### Basics
