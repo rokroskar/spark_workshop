@@ -6,9 +6,13 @@
 #####################################
 
 Vagrant.configure(2) do |config|
+    #config.vm.provider "virtualbox" do |v|  
+    #    v.gui = true
+    #end
   config.vm.define "spark-wkshp" do |master|
     # use basic centos 6.5
     master.vm.box = "rrrrrok/centos-6.6-VBGuest4.3.28"
+
 
     # enable X11 forwarding
     master.ssh.forward_x11 = true
