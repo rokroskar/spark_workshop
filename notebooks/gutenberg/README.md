@@ -1,6 +1,6 @@
 # Analyzing the Gutenberg Project book corpus
 
-The [Gutenberg Project](http://link) hosts books in the public domain in many languages. Here, we will first use the English book corpus to construct an "N-Gram viewer" and later we will combine this with the German book corpus to develop a language model. 
+The [Gutenberg Project](https://www.gutenberg.org/) hosts books in the public domain in many languages. Here, we will first use the English book corpus to construct an "N-Gram viewer" and later we will combine this with the German book corpus to develop a language model. 
 
 The corpus is not "Big Data" per-se, but it is big enough that it cannot be comfortably analyzed on a laptop. We will do the analysis using Spark running on nodes controlled by a YARN resource manager. Our analysis will be done interactively by spawning a Jupyter notebook on the remote cluster and connecting to it from the comfort of a browser on the laptop.
 
