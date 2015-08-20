@@ -8,7 +8,6 @@ use of [Spark](http://spark.apache.org), which is a modern MR framework with a
 rich API and properties attractive for data exploration. 
 
 
-
 ## Prerequisites
 
 ### Git
@@ -31,12 +30,17 @@ We assume fluency with basic programming constructs such as loops and functions.
 
 The language used in the workshop is python. If you are not familiar with python at all, we recommend finding a basic tutorial and working through some examples before participating in the workshop. In particular, make sure that you understand the various python data types, such as strings, lists, tuples, dictionaries, and sets. We will go over some of these in the workshop, but you should at least try to use them in simple ways before going through the workshop material. 
 
+### Firefox
+
+We will be using the firefox browser to work interactively with the cluster in the last part of the workshop. We use Firefox because it allows us to set up a proxy without needing to change the system-wide proxy settings, i.e. this lets you continue using all other applications with the local connection instead of through the proxy. If you don't have Firefox already, you should install it - if you have it already installed, please make sure you update it to the latest version. 
 
 
 ## Setting up
 
 There are quite a few requirements for all the software used in this workshop to function properly. You can either install it all by hand (or perhaps you have it installed already), but if you don't want to bother with the set up, you can simply use the virtual machine option. 
 
+
+*Note: While ssh is a standard feature of linux and mac os x operating systems, it is not so on Windows. If you are running windows, you will therefore need to install a [PuTTY client](http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html) or something similar that supports ssh tunneling*
 
 ### Easiest Setup: use a Virtual Machine
 
@@ -45,8 +49,6 @@ workshop materials through the Virtual Machine (VM) environment set up specifica
 
 * install [Vagrant](https://www.vagrantup.com/downloads.html) (please upgrade to the latest version, if you have a previous installation already)
 * install [VirtualBox](https://www.virtualbox.org/wiki/Download_Old_Builds_4_3) - **must be v4.3.x (4.3.28 is strongly recommended)**
-* on windows you will also require an ssh client of some sort, like [putty](http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html)
-
 
 If you have `git` on your machine (see above), then simply open up a terminal and clone this repository
 
@@ -169,15 +171,15 @@ If the VM is not running, start it with `vagrant up`.
 Now we will launch the notebook server inside the VM
 
 ```
-$ vagrant ssh -c "notebooks/start_notebook.py --setup --launch"
+$ vagrant ssh -c "scripts/start_notebook.py --setup --launch"
 ```
 
 ### Using your own installation
 
-Simply go into the `notebooks` directory and setup/launch the notebook server 
+Simply setup/launch the notebook server from the `scripts` directory
 
 ```
-$ ./start_notebook.py --setup --launch
+$ scripts/start_notebook.py --setup --launch
 ```
 
 
@@ -204,45 +206,6 @@ The notebooks are organized in three directories:
 
 You should start by having a look at the python introduction notebook (where you can also execute cells) which introduces some essential python concepts. When you open the notebooks running on the notebook server (i.e. in your browser at `localhost:8889`), you can execute any cell in the notebook by entering `Shift+Enter`. You can also modify any of the cells to experiment. Once you're happy with the python introduction, continue on to the notebook marked "EMPTY" in the same directory and complete the exercises.  
 
-
-
-## Cluster setup
-
-### Getting the workshop repository
-
-Log in to your account on the cluster and clone the repository:
-
-```
-cluster~ $ git clone https://github.com/rokroskar/spark_workshop.git
-```
-
-### Install python dependencies
-
-Once again, the python dependencies are the same as above. If you are a python user already and you know what you are doing, just install `python2.7`, `numpy`, `matplotlib`, and `ipython` (v4.0) and `jupyter`. 
-
-If you are already a conda/miniconda user, you can simply do 
-
-```
-cluster~ $ conda -y create -n spark_workshop numpy pip ipython jupyter matplotlib
-cluster~ $ source activate spark_workshop
-``` 
-
-If you are not sure how to navigate the python universe, you can use the `setup_cluster.sh` script in the `scripts` directory like so:
-
-```
-cluster~ $ cd spark_workshop
-cluster~/spark_workshop $ scripts/setup_cluster.sh
-```
-
-You will see a lot of activity while the python packages are downloaded and configured. Finally, when the process is complete, you can set up the jupyter notebook just like we did before on the laptop/VM: 
-
-```
-cluster~ spark_workshop $ python notebooks/start_notebook.py --setup
-```
-
-### Set up a secure tunnel to the cluster
-
-In order to work with the cluster interactively, we need to set up a secure proxy to the cluster. This 
 
 ## Outline
 ### Basics
