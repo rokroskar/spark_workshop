@@ -10,18 +10,26 @@ The corpus is not "Big Data" per-se, but it is big enough that it cannot be comf
 
 There are a few things we need to get configured before we can use the cluster for our interactive analysis. 
 
+First, set up some modules - if you add these to your `.bashrc` file you won't have to do this every time you log in: 
+
+```
+$ ssh username@cluster
+cluster~ $ module load python
+cluster~ $ module load hadoop
+cluster~ $ module load spark
+```
+
+where you replace "username" with your own username of course and "cluster" with the address of the cluster you are logging in to. 
+
 
 
 ### Getting the workshop repository
 
-Log in to your account on the cluster and clone the repository:
+Clone the repository:
 
 ```
-$ ssh username@cluster
 cluster~ $ git clone https://github.com/rokroskar/spark_workshop.git
 ```
-
-where you replace "username" with your own username of course and "cluster" with the address of the cluster you are logging in to. 
 
 
 
