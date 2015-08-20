@@ -174,7 +174,7 @@ def get_gid(html_path) :
     gid = digits.findall(os.path.splitext(os.path.basename(html_path))[0])[0]
     return int(gid)
 
-def get_metadata(gid, rdf_path = '/cluster/home03/sdid/roskarr/work/gutenberg/rdf-files/') :
+def get_metadata(gid, rdf_path = '/cluster/work/sdid/roskarr/gutenberg/rdf-files/') :
     """Extract the metadata from the Gutenberg book represented by the gid.
     
     Inputs:
