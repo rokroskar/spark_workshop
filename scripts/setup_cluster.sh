@@ -13,6 +13,7 @@ echo "installing miniconda python"
 	echo "prepending ~/miniconda/bin to PATH"
 	export PATH=~/miniconda/bin:$PATH
 	conda update -y conda
-	conda create -n -y spark_workshop numpy pip ipython jupyter matplotlib
+	conda create -y -n spark_workshop numpy pip ipython jupyter matplotlib
 	pip install findspark
+	source activate spark-workshop
 
