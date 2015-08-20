@@ -9,11 +9,11 @@ echo "installing miniconda python"
 		chmod u+x Miniconda-latest-Linux-x86_64.sh
 		./Miniconda-latest-Linux-x86_64.sh -b -p ~/miniconda
 		rm Miniconda-latest-Linux-x86_64.sh
+		conda update -y conda
+		conda create -y -n spark_workshop numpy pip ipython jupyter matplotlib
+		pip install findspark
 	fi
 	echo "prepending ~/miniconda/bin to PATH"
 	export PATH=~/miniconda/bin:$PATH
-	conda update -y conda
-	conda create -y -n spark_workshop numpy pip ipython jupyter matplotlib
-	pip install findspark
-	source activate spark-workshop
+	source activate spark_workshop
 
