@@ -25,13 +25,14 @@ Once again, the python dependencies are the same as above. If you are a python u
 If you are already a conda/miniconda user, you can simply do 
 
 ```
-cluster~ $ conda -y create -n spark_workshop numpy pip ipython jupyter matplotlib
+cluster~ $ conda -y create -n spark_workshop python>=2.7 numpy pip ipython jupyter matplotlib
 cluster~ $ source activate spark_workshop
 ```
 
 If you are not sure how to navigate the python universe, you can use the `setup_cluster.sh` script in the `scripts` directory like so:
 
 ```
+cluster~ $ module load python
 cluster~ $ cd spark_workshop
 cluster~/spark_workshop $ scripts/setup_cluster.sh
 ```
@@ -88,7 +89,7 @@ Every Spark job consists of a driver application and tasks running on executors.
 We obtain resources by requesting an interactive job in the normal job queue on the HPC cluster. In LSF, this is done with a line like
 
 ```
-cluster~/ $ bsub -Is -w 4:00 -n 12 bash
+cluster~/ $ bsub -Is -W 4:00 -n 12 bash
 ```
 
 After a brief while (hopefully not longer than a minute or two) the system will grant us the job and we will be given a bash prompt on one of the compute nodes, i.e. something like 

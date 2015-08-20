@@ -59,6 +59,7 @@ def launch_notebook(port):
     # launch the notebook
     import sys
     import re
+    import socket
     from IPython.terminal.ipapp import launch_new_instance
     argv = sys.argv[:1]
     argv.append('notebook')
@@ -72,8 +73,20 @@ def launch_notebook(port):
         print bc.WARNING + "Overriding the port found in the existing configuration" + bc.ENDC
         argv.append('--port={port}'.format(port=port))
 
+    # determine if we're running on a compute node
+    if os.environ['LSB_HOSTS'] is not None:
+        compute = True
+    else:
+        compute = False
+
     sys.argv = argv
-    print bc.BOLD + "To access the notebook, inspect the output below for the port number, then point your browser to https://localhost:<port_number>" + bc.ENDC
+
+    if compute:
+        ip = socket.gethostbyname(socket.gethostname())
+    else:
+        ip = 'localhost'
+
+    print bc.BOLD + "To access the notebook, inspect the output below for the port number, then point your browser to https://{ip}:<port_number>".format(ip=ip) + bc.ENDC
     launch_new_instance()
 
 
