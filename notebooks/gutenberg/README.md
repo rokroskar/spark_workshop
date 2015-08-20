@@ -21,6 +21,7 @@ $ ssh username@cluster
 cluster~ $ git clone https://github.com/rokroskar/spark_workshop.git
 ```
 
+where you replace "username" with your own username of course and "cluster" with the address of the cluster you are logging in to. 
 
 
 
