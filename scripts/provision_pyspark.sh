@@ -14,10 +14,10 @@ echo "updating and installing linux packages"
     # install spark
     if [ ! -d spark ]; then
       echo "installing spark"
-      wget -nv http://d3kbcqa49mib13.cloudfront.net/spark-1.4.0-bin-hadoop2.6.tgz
-      tar -zxf spark-1.4.0-bin-hadoop2.6.tgz -C /
-      ln -s /spark-1.4.0-bin-hadoop2.6 spark
-      rm spark-1.4.0-bin-hadoop2.6.tgz
+      wget -nv http://d3kbcqa49mib13.cloudfront.net/spark-1.4.1-bin-hadoop2.6.tgz
+      tar -zxf spark-1.4.1-bin-hadoop2.6.tgz -C /
+      ln -s /spark-1.4.1-bin-hadoop2.6 spark
+      rm spark-1.4.1-bin-hadoop2.6.tgz
     else
       echo "spark already installed"
     fi
@@ -29,11 +29,13 @@ echo "updating and installing linux packages"
       chmod u+x Miniconda-latest-Linux-x86_64.sh
       ./Miniconda-latest-Linux-x86_64.sh -b -p /miniconda
       /miniconda/bin/conda update -y conda
-      /miniconda/bin/conda install -y numpy scipy scikit-learn pip ipython ipython-notebook matplotlib
+      /miniconda/bin/conda install -y numpy scipy scikit-learn pip ipython jupyter matplotlib
       rm Miniconda-latest-Linux-x86_64.sh
+      /miniconda/bin/pip install findspark
     else
       /miniconda/bin/conda update -y conda
-      /miniconda/bin/conda install -y numpy scipy scikit-learn pip ipython ipython-notebook matplotlib
+      /miniconda/bin/conda install -y numpy scipy scikit-learn pip ipython jupyter matplotlib
+      /miniconda/bin/pip install findspark
     fi
 
     # clean up

@@ -7,19 +7,36 @@ academia. To explore the possibilities of using such a framework, we make
 use of [Spark](http://spark.apache.org), which is a modern MR framework with a 
 rich API and properties attractive for data exploration. 
 
+
+
 ## Prerequisites
+
+### Git
+
+I strongly recommend that you install [git](https://git-scm.com/) if  you don't have it installed already. To check if you have it on your machine, open up a terminal and type
+
+```
+$ git --version
+```
+
+If this returns something other than an error message, you are all set! 
+
 
 ### Programming knowledge
 
 We assume fluency with basic programming constructs such as loops and functions. In the first session of the workshop, basics of functional programming and other python-specific constructs are introduced, as they are  useful for writing Spark applications. Knowing how to use the command line (or terminal) is also expected. 
 
+
 ### Python
 
 The language used in the workshop is python. If you are not familiar with python at all, we recommend finding a basic tutorial and working through some examples before participating in the workshop. In particular, make sure that you understand the various python data types, such as strings, lists, tuples, dictionaries, and sets. We will go over some of these in the workshop, but you should at least try to use them in simple ways before going through the workshop material. 
 
+
+
 ## Setting up
 
 There are quite a few requirements for all the software used in this workshop to function properly. You can either install it all by hand (or perhaps you have it installed already), but if you don't want to bother with the set up, you can simply use the virtual machine option. 
+
 
 ### Easiest Setup: use a Virtual Machine
 
@@ -27,16 +44,23 @@ If you want to simply get up and running, then we recommend you use the
 workshop materials through the Virtual Machine (VM) environment set up specifically for this purpose. This way you will only have to deal with the minimal set of installations.
 
 * install [Vagrant](https://www.vagrantup.com/downloads.html) 
-* install [VirtualBox](https://www.virtualbox.org/wiki/Downloads) 
+* install [VirtualBox](https://www.virtualbox.org/wiki/Download_Old_Builds_4_3) - **must be v4.3.x (4.3.28 is strongly recommended)**
 
-Then simply open up a terminal, clone this repository
+If you have `git` on your machine (see above), then simply open up a terminal and clone this repository
 
 ```
 $ git clone https://github.com/rokroskar/spark_workshop.git
 $ cd spark_workshop
 ```
 
-and spin up the VM 
+If you don't have git, [click to download the zip file](https://github.com/rokroskar/spark_workshop/archive/master.zip) and uncompress it somewhere on your hard-drive, e.g. 
+
+```
+$ unzip spark_workshop-master.zip
+$ cd spark_workshop-master
+```
+
+Go to the `spark_workshop` directory and spin up the VM 
 
 ```bash
 $ vagrant up
@@ -44,6 +68,7 @@ $ vagrant up
 
 This will first download, configure, and boot the VM. The first time you do this, it has to download everything off the internet so it
 will take a few minutes. You'll see lots of messages about packages being installed. Once it's finished, you should see something like 
+
 ```
 ==> spark_wkshp: Machine 'spark_wkshp' has a post `vagrant up` message. This is a message
 ==> spark_wkshp: from the creator of the Vagrantfile, and not from Vagrant itself:
@@ -76,25 +101,33 @@ To get rid of the VM completely
 $ vagrant destroy
 ```
 
+
 ### Advanced setup 
 If you want to run Spark from your own machine and you really want to do 
 the setup yourself, or if you are an experienced user, you can follow 
 the instructions below. These are useful for Mac OSX and Linux, but perhaps less so for Windows. 
 
+
 #### Python dependencies
 
-The python installation should have the following packages: numpy, scipy, scikit-learn, pip, ipython, ipython notebook, matplotlib
+The notebooks used for the tutorials have been tested with Python 2.7. 
+The python installation should have the following packages: <mark>numpy, scipy, scikit-learn, pip, ipython, jupyter, matplotlib</mark>
+
+*Please note that we will be using the latest version of IPython (4.0) and the Jupyter notebooks. The notebooks developed for the workshop will not work with IPython < 3.0.*
 
 If you are not sure how to meet these dependency requirements, we recommend 
 that you [download the miniconda installer](http://conda.pydata.org/miniconda.html) appropriate for your system. Once it's installed, run the following commands: 
 
 ```
 $ conda update conda 
-$ conda install -y numpy scipy scikit-learn pip ipython ipython-notebook matplotlib
+$ conda install -y numpy scipy scikit-learn pip ipython jupyter matplotlib
 ```
 
+
 #### Java
+
 Spark runs in a Java virtual machine, so you need to [install a Java distribution](https://java.com/en/download/). You might already have one on your machine, so first [check here](https://www.java.com/en/download/help/version_manual.xml).
+
 
 #### Spark
 
@@ -117,7 +150,7 @@ and try to run a basic spark example to see if everything is working:
 ## Using this material
 
 Notebooks can be downloaded and run on a local machine or any spark cluster. 
-The notebooks are created using `ipython` `v3.1.0` and will probably not work with earlier versions. 
+The notebooks require IPython > 3.0. 
 
 First, clone this repository on your local disk (if you set up the VM above, you've already done this):
 
@@ -125,24 +158,41 @@ First, clone this repository on your local disk (if you set up the VM above, you
 $ git clone https://github.com/rokroskar/spark_workshop.git
 ```
 
-If you are using the VM and it is not running, start it with `vagrant up`. 
+Here, the instructions diverge briefly depending on whether you are running in a VM or your own installation:
 
-(from here on, the instructions are the same whether you are using a VM or not)
+### Using the VM (vagrant)
 
-Go to the `notebooks` directory, set up the notebook and start the server
+If the VM is not running, start it with `vagrant up`. 
+
+Now we will launch the notebook server inside the VM
+
 ```
-$ cd spark_workshop/notebooks
+$ vagrant ssh -c "notebooks/start_notebook.py --setup --launch
+```
+
+### Using your own installation
+
+Simply go into the `notebooks` directory and setup/launch the notebook server 
+
+```
 $ ./start_notebook.py --setup --launch
 ```
 
-You will see a message with something like this
+
+### Back on the same page
+
+From here the process is identical. The `start_notebook.py` script first sets up a secure notebook for you, so you will be prompted to enter a password. Finally, when it's finished you will see a message with something like this
 
 ```
 [I 15:32:11.906 NotebookApp] The IPython Notebook is running at: https://[all ip addresses on your system]:8889/
 [I 15:32:11.906 NotebookApp] Use Control-C to stop this server and shut down all kernels (twice to skip confirmation).
 ```
 
-The number at the end of `https://[all ip addresses on your system]:8889/` is the port number on which the notebook is running. You can access it by simply going to https://localhost:8889 in your local browser. This will bring up a menacing message about an untrusted certificate, which you can safely ignore (we created a self-signed certificate during the notebook setup) and either click "Advanced -> Proceed to localhost" (in Chrome) or "I understand the risks -> Add Exception" (in Firefox) or simply "Continue" (in Safari). 
+The number at the end of `https://[all ip addresses on your system]:8889/` is the port number on which the notebook is running. You can access it by simply going to https://localhost:8889 in your local browser. **Make sure you specify https and not just http!** This will bring up a menacing message about an untrusted certificate, which you can safely ignore (we created a self-signed certificate during the notebook setup) and either click "Advanced -> Proceed to localhost" (in Chrome) or "I understand the risks -> Add Exception" (in Firefox) or simply "Continue" (in Safari). 
+
+Note that the `--setup` option is only needed the first time you start the 
+notebook (to set up your SSL certificate and password) -- you can leave it out 
+when starting the notebook server up again at some later point. 
 
 The notebooks are organized in three directories: 
 
@@ -150,7 +200,7 @@ The notebooks are organized in three directories:
 * [spark_intro](https://github.com/rokroskar/spark_workshop/tree/master/notebooks/spark_intro) - essential Spark skills
 * [gutenberg](https://github.com/rokroskar/spark_workshop/tree/master/notebooks/gutenberg) - "project" notebook building up an analysis of the Gutenberg books corpus
 
-You should start by having a look at the first lecture notebook (where you can also execute cells) which introduces some essential python concepts. When you open the notebooks running on the notebook server (i.e. in your browser at `localhost:8889`), you can execute any cell in the notebook by entering `Shift+Enter`. You can also modify any of the cells to experiment. Once you're happy with the python introduction, continue on to the notebook marked "EMPTY" and complete the exercises.  
+You should start by having a look at the python introduction notebook (where you can also execute cells) which introduces some essential python concepts. When you open the notebooks running on the notebook server (i.e. in your browser at `localhost:8889`), you can execute any cell in the notebook by entering `Shift+Enter`. You can also modify any of the cells to experiment. Once you're happy with the python introduction, continue on to the notebook marked "EMPTY" in the same directory and complete the exercises.  
 
 
 ## Outline

@@ -6,9 +6,13 @@
 #####################################
 
 Vagrant.configure(2) do |config|
+    #config.vm.provider "virtualbox" do |v|  
+    #    v.gui = true
+    #end
   config.vm.define "spark-wkshp" do |master|
     # use basic centos 6.5
-    master.vm.box = "chef/centos-6.6"
+    master.vm.box = "rrrrrok/centos-6.6-VBGuest4.3.28"
+
 
     # enable X11 forwarding
     master.ssh.forward_x11 = true
@@ -17,12 +21,12 @@ Vagrant.configure(2) do |config|
     master.ssh.forward_agent = true
 
     # provision necessary packages
-    master.vm.provision "shell", path: "provision_pyspark.sh"
+    master.vm.provision "shell", path: "scripts/provision_pyspark.sh"
 
     master.vm.hostname = "spark-wkshp"
 
     master.vm.synced_folder "./notebooks", "/home/vagrant/notebooks"
-
+    
     # set up port forwarding
     master.vm.network :forwarded_port, host: 8889, guest: 8889, auto_correct: true
     master.vm.network :forwarded_port, host: 4040, guest: 4040, auto_correct: true
