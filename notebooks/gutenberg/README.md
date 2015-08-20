@@ -2,7 +2,7 @@
 
 The [Gutenberg Project](https://www.gutenberg.org/) hosts books in the public domain in many languages. Here, we will first use the English book corpus to construct an "N-Gram viewer" and later we will combine this with the German book corpus to develop a language model. 
 
-The corpus is not "Big Data" per-se, but it is big enough that it cannot be comfortably analyzed on a laptop. We will do the analysis using Spark running on nodes controlled by a YARN resource manager. Our analysis will be done interactively by spawning a Jupyter notebook on the remote cluster and connecting to it from the comfort of a browser on the laptop.
+The corpus is about 10 Gb of raw html, which is not "Big Data" per-se but it is big enough that it is uncomfortable to analyze it on a laptop. Instead, we will do the analysis using Spark running on nodes controlled by a YARN resource manager. Our analysis will be done interactively by spawning a Jupyter notebook on the remote cluster and connecting to it from the comfort of a browser on the laptop.
 
 
 
@@ -111,22 +111,26 @@ Every Spark job consists of a driver application and tasks running on executors.
 We obtain resources by requesting an interactive job in the normal job queue on the HPC cluster. In LSF, this is done with a line like
 
 ```
-cluster~/ $ bsub -Is -W 4:00 -n 12 bash
+cluster~ $ bsub -Is -W 4:00 -n 2 bash
 ```
 
 
 After a brief while (hopefully not longer than a minute or two) the system will grant us the job and we will be given a bash prompt on one of the compute nodes, i.e. something like 
 
 ```
-a6583~/ $ 
+Generic job.
+Job <94883470> is submitted to queue <pub.1h>.
+<<Waiting for dispatch ...>>
+<<Starting on a6583>>
+a6583~ $ 
 ```
 
 
 First, make sure your python environment is set up correctly by running the `setup_cluster.sh` script. Then we can launch the jupyter notebook using the same script as before
 
 ```
-a6583~/ $ source spark_workshop/scripts/setup_cluster.sh
-a6583~/ $ spark_workshop/scripts/start_notebook.py --launch
+a6583~ $ source spark_workshop/scripts/setup_cluster.sh
+a6583~ $ spark_workshop/scripts/start_notebook.py --launch
 
 To access the notebook, inspect the output below for the port number, then point your browser to https://10.201.7.30:<port_number>
 [I 22:30:09.555 NotebookApp] Serving notebooks from local directory: /cluster/home03/sdid/roskarr/spark_workshop
