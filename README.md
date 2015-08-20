@@ -43,8 +43,10 @@ There are quite a few requirements for all the software used in this workshop to
 If you want to simply get up and running, then we recommend you use the 
 workshop materials through the Virtual Machine (VM) environment set up specifically for this purpose. This way you will only have to deal with the minimal set of installations.
 
-* install [Vagrant](https://www.vagrantup.com/downloads.html) 
+* install [Vagrant](https://www.vagrantup.com/downloads.html) (please upgrade to the latest version, if you have a previous installation already)
 * install [VirtualBox](https://www.virtualbox.org/wiki/Download_Old_Builds_4_3) - **must be v4.3.x (4.3.28 is strongly recommended)**
+* on windows you will also require an ssh client of some sort, like [putty](http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html)
+
 
 If you have `git` on your machine (see above), then simply open up a terminal and clone this repository
 
@@ -167,7 +169,7 @@ If the VM is not running, start it with `vagrant up`.
 Now we will launch the notebook server inside the VM
 
 ```
-$ vagrant ssh -c "notebooks/start_notebook.py --setup --launch
+$ vagrant ssh -c "notebooks/start_notebook.py --setup --launch"
 ```
 
 ### Using your own installation
@@ -181,7 +183,7 @@ $ ./start_notebook.py --setup --launch
 
 ### Back on the same page
 
-From here the process is identical. The `start_notebook.py` script first sets up a secure notebook for you, so you will be prompted to enter a password. Finally, when it's finished you will see a message with something like this
+From here the process is identical. The `start_notebook.py` script first sets up a secure notebook for you, so you will be prompted to enter a password (this is just for you, so pick anything you want). Finally, when it's finished you will see a message with something like this
 
 ```
 [I 15:32:11.906 NotebookApp] The IPython Notebook is running at: https://[all ip addresses on your system]:8889/
@@ -201,6 +203,16 @@ The notebooks are organized in three directories:
 * [gutenberg](https://github.com/rokroskar/spark_workshop/tree/master/notebooks/gutenberg) - "project" notebook building up an analysis of the Gutenberg books corpus
 
 You should start by having a look at the python introduction notebook (where you can also execute cells) which introduces some essential python concepts. When you open the notebooks running on the notebook server (i.e. in your browser at `localhost:8889`), you can execute any cell in the notebook by entering `Shift+Enter`. You can also modify any of the cells to experiment. Once you're happy with the python introduction, continue on to the notebook marked "EMPTY" in the same directory and complete the exercises.  
+
+
+
+## Cluster setup
+
+### Install python dependencies
+
+Once again, the python dependencies are the same as above. If you are a python user already and you know what you are doing, just install `python2.7`, `numpy`, `matplotlib`, and `ipython` (v4.0) and `jupyter`. 
+
+If you are not sure how to navigate the python universe, you can use the `setup_cluster.sh` script in the `scripts` directory. 
 
 
 ## Outline
