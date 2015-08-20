@@ -12,7 +12,7 @@ echo "setting up cluster python environment"
 		echo "prepending ~/miniconda/bin to PATH"
 		export PATH=~/miniconda/bin:$PATH
 		conda update -y conda
-		conda create -y -n spark_workshop numpy pip ipython jupyter matplotlib
+		conda create -y -n spark_workshop numpy pip ipython jupyter matplotlib beautiful-soup bokeh pandas scipy
 		source activate spark_workshop
 		pip install findspark
 	fi
