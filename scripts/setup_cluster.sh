@@ -15,5 +15,5 @@ echo "installing miniconda python"
 	conda update -y conda
 	conda create -y -n spark_workshop numpy pip ipython jupyter matplotlib
 	pip install findspark
-	source activate spark-workshop
+	source activate spark_workshop
 
