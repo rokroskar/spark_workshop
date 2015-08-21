@@ -68,6 +68,25 @@ Only run the setup part now -- we will launch it later from an interactive job r
 
 
 
+## Setting up your laptop
+
+A few special tricks are required also on the local side to enable an interactive experience with the cluster. 
+
+
+### <a name="firefox-proxy"></a>Configuring the Firefox browser
+
+Go to the `Settings` or `Preferences` --> `Advanced`, and click on `Network`: 
+
+![firefox_settings](../figs/firefox_settings.png)
+
+Click on `Settings` and configure the proxy settings as shown here: 
+
+![firefox_proxy](../figs/firefox_proxy.png)
+
+Now your Firefox browser's traffic is being routed through the cluster head node. This makes the otherwise inaccessible compute nodes available. 
+
+
+
 ### <a name="tunnel-setup"></a>Set up a secure tunnel to the cluster
 
 In order to work with the cluster interactively, we need to set up a secure proxy to the cluster. Once this channel is open, we will then instruct the Firefox browser to direct all traffic over this secure channel. This way, we will be able to access our notebook that is running on the firewalled cluster. 
@@ -86,21 +105,18 @@ You might be prompted for a password, but then nothing much will happen: the tun
 
 #### On Windows
 
-Start up PuTTY and enter your cluster name into the host field. On the left, scroll down to "SSH" options and find "Tunnel". Check the "Dynamic" radio button, enter 9999 into the "Host Port" field and click "Add" so that the window shows "D9999". Then connect to the host and enter your user credentials. You must keep the PuTTY window open to maintain the connection. 
+Start up PuTTY and enter your cluster name into the host field. On the left, scroll down to "SSH" options and find "Tunnel". Check the "Dynamic" radio button, enter 9999 into the "Host Port" field and click "Add" so that the window shows "D9999". The filled-out options should look something like this: 
+
+![putty_tunnel](../figs/putty_tunnel.png)
 
 
-#### <a name="firefox-proxy"></a>Configuring the Firefox browser
+Then connect to the host and enter your user credentials. You must keep the PuTTY window open to maintain the connection. 
 
-Go to the `Settings` or `Preferences` --> `Advanced`, and click on `Network`: 
 
-![firefox_settings](../figs/firefox_settings.png)
 
-Click on `Settings` and configure the proxy settings as shown here: 
+## Putting it all together
 
-![firefox_proxy](../figs/firefox_proxy.png)
-
-Now your Firefox browser's traffic is being routed through the cluster head node. This makes the otherwise inaccessible compute nodes available. 
-
+Now we have a tunnel to the cluster, Firefox is set up to communciate with the cluster via the tunnel, and the notebook on the cluster side is configured. All we need is an interactive job to run the driver program and we are set. 
 
 
 ### Obtain an interactive job on the cluster
