@@ -11,7 +11,7 @@ Vagrant.configure(2) do |config|
     #end
   config.vm.define "spark-wkshp" do |master|
     # use basic centos 6.5
-    master.vm.box = "rrrrrok/sis_spark_workshop"
+    master.vm.box = "rrrrrok/centos-6.6-VBGuest4.3.28"
 
 
     # enable X11 forwarding
@@ -21,7 +21,7 @@ Vagrant.configure(2) do |config|
     master.ssh.forward_agent = true
 
     # provision necessary packages
-#    master.vm.provision "shell", path: "scripts/provision_pyspark.sh"
+    master.vm.provision "shell", path: "scripts/provision_pyspark.sh"
 
     master.vm.hostname = "spark-wkshp"
 
