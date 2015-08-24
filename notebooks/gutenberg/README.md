@@ -61,7 +61,7 @@ You will see a lot of activity while the python packages are downloaded and conf
 When the python installation process is complete, you can set up the jupyter notebook just like we did before on the laptop/VM: 
 
 ```
-cluster~ spark_workshop $ scripts/start_notebook.py --setup
+cluster~/spark_workshop $ notebooks/start_notebook.py --setup
 ```
 
 Only run the setup part now -- we will launch it later from an interactive job running on one of the compute nodes of the cluster. 

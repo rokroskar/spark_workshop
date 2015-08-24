@@ -171,15 +171,15 @@ If the VM is not running, start it with `vagrant up`.
 Now we will launch the notebook server inside the VM
 
 ```
-$ vagrant ssh -c "scripts/start_notebook.py --setup --launch"
+$ vagrant ssh -c "notebooks/start_notebook.py --setup --launch"
 ```
 
 ### Using your own installation
 
-Simply setup/launch the notebook server from the `scripts` directory
+Simply setup/launch the notebook server from the `notebooks` directory
 
 ```
-$ scripts/start_notebook.py --setup --launch
+$ notebooks/start_notebook.py --setup --launch
 ```
 
 
