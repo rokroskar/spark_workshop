@@ -10,8 +10,10 @@ Vagrant.configure(2) do |config|
     #    v.gui = true
     #end
   config.vm.define "spark-wkshp" do |master|
-    # use basic centos 6.5
-    master.vm.box = "rrrrrok/centos-6.6-VBGuest4.3.28"
+    # if provisioning from the base centos 6.6 box, uncomment line below and 
+    # comment out the sis-spark-workshop line
+    # master.vm.box = "rrrrrok/centos-6.6-VBGuest4.3.28"
+    master.vm.box = "rrrrrok/sis-spark-workshop"
 
 
     # enable X11 forwarding

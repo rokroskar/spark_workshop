@@ -74,7 +74,7 @@ def launch_notebook(port):
         argv.append('--port={port}'.format(port=port))
 
     # determine if we're running on a compute node
-    if os.environ['LSB_HOSTS'] is not None:
+    if 'LSB_HOSTS' in os.environ:
         compute = True
     else:
         compute = False
