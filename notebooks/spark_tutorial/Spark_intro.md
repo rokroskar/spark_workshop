@@ -58,7 +58,7 @@ The user's access point to this Spark universe is the **Spark Context** which pr
 (in a very abbreviated form) 
 <img src="http://qph.is.quoracdn.net/main-qimg-89845fb3187dbbc7a49a9d1c8840ddaa?convert_to_webp=true">
 
-![Spark Universe](https://raw.githubusercontent.com/rokroskar/spark_workshop/master/notebooks/figs/spark_universe.png?token=ADMr8k8fyK2y0lUyYQLOQKjttlBeCfU4ks5V1ywawA%3D%3D)
+![Spark Universe](../figs/spark_universe.png)
 
 
 
@@ -83,7 +83,7 @@ In addition, you can run applications on any of these platforms either
 
 
 
-##RDD transformations/actions
+##RDD transformations and actions
 
 Once an RDD is created, it is **immutable** - it can only be modified via a *transformation*
 
@@ -96,7 +96,8 @@ Transformations include:
 * `mapPartitions` -- similar to `map` but done on a per-partition basis (requires a generator function)
 * `sortBy` -- sort using the provided function
 
-Transformations are "lazy" evaluated - only executed once an *action* is performed. 
+Transformations are evaluated "lazily" - only executed once an *action* is performed. 
+
 
 Actions include: 
 * `collect` -- pulls all elements of the RDD to the driver (often a bad idea!!)
