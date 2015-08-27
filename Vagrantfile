@@ -24,7 +24,6 @@ Vagrant.configure(2) do |config|
     # enable SSH key forwarding
     master.ssh.forward_agent = true
 
-
     master.vm.hostname = "spark-wkshp"
 
     master.vm.synced_folder "./notebooks", "/home/vagrant/notebooks"
@@ -37,6 +36,10 @@ Vagrant.configure(2) do |config|
     # change the name of the VM
     config.vm.provider "virtualbox" do |v|
       v.name = master.vm.hostname.to_s
+
+      v.memory = 1024
+      v.cpus = 4
+      
     end
   end
   config.vm.post_up_message = "VM for Spark workshop is running -- login in with 'vagrant ssh' "
