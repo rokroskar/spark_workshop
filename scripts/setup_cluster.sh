@@ -6,4 +6,7 @@ export PATH=/cluster/apps/spark/miniconda/bin:$PATH
 source activate spark_workshop
 echo "removing everything from the PYTHONPATH"
 unset PYTHONPATH
+echo "loading hadoop and spark modules"
+module load spark
+module load hadoop
 
