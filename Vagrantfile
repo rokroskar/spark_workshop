@@ -10,20 +10,19 @@ Vagrant.configure(2) do |config|
     #    v.gui = true
     #end
   config.vm.define "spark-wkshp" do |master|
-    # if provisioning from the base centos 6.6 box, uncomment line below and 
-    # comment out the sis-spark-workshop line
-    # master.vm.box = "rrrrrok/centos-6.6-VBGuest4.3.28"
-    master.vm.box = "rrrrrok/sis-spark-workshop"
+    # if provisioning from a clean centos 6.6 box, uncomment the next two lines below and 
+    # comment out the "rrrrrok/sis-spark-workshop" line
 
+    # master.vm.box = "rrrrrok/centos-6.6-VBGuest4.3.28"
+    # master.vm.provision "shell", path: "scripts/provision_pyspark.sh"
+
+    master.vm.box = "rrrrrok/sis-spark-workshop"
 
     # enable X11 forwarding
     master.ssh.forward_x11 = true
 
     # enable SSH key forwarding
     master.ssh.forward_agent = true
-
-    # provision necessary packages
-    master.vm.provision "shell", path: "scripts/provision_pyspark.sh"
 
     master.vm.hostname = "spark-wkshp"
 
@@ -37,6 +36,10 @@ Vagrant.configure(2) do |config|
     # change the name of the VM
     config.vm.provider "virtualbox" do |v|
       v.name = master.vm.hostname.to_s
+
+      v.memory = 1024
+      v.cpus = 4
+      
     end
   end
   config.vm.post_up_message = "VM for Spark workshop is running -- login in with 'vagrant ssh' "
