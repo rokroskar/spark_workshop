@@ -116,6 +116,9 @@ Actions include:
 * this allows one to build up a complex "pipeline" and easily tweak/rerun it in its entirety 
 
 
+![parallelize](../figs/parallelize.svg)
+
+
 
 ## Partitioning
 
