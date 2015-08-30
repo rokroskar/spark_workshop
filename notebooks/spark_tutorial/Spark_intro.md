@@ -116,7 +116,19 @@ Actions include:
 * this allows one to build up a complex "pipeline" and easily tweak/rerun it in its entirety 
 
 
+### Parallelize
+```python
+rdd = sc.parallelize(data)
+```
 ![parallelize](../figs/parallelize.svg)
+
+
+### Map
+```python
+rdd = sc.parallelize(data)
+rdd2 = rdd.map(function)
+```
+![map](../figs/map.svg)
 
 
 
