@@ -118,6 +118,7 @@ html {
 .reveal pre code {
   padding: 0px;
 }
+
 .reveal section img {
   border: 0px solid black;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0);
@@ -206,5 +207,25 @@ div.output_prompt {
   color: #F15F57;
   font-size: 0.8em; }
 
+.rendered_html code {
+  background-color: inherit; 
+  color: inherit;
+}
 
+.reveal a:not(.image) {
+  color: #F15F57;
+}
+
+.reveal a:not(.image):hover {
+  color: #F15F57;
+}
+
+div.prompt {
+  color: #F15F57;
+}
+
+div.output_area pre {
+  /*color: #F7D794;*/
+  background-color: #f7f7f7;
+}
 </style>

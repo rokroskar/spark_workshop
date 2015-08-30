@@ -246,3 +246,10 @@ Many of these "production" systems based on MapReduce combined with efficient "d
 * Introduction to Spark (day 1, 2)
 * Spark mini-project on Brutus (day 2, 3)
 * Own work (day 3, 4?)
+
+
+
+### github repository for this workshop: 
+
+#### https://github.com/rokroskar/spark_workshop
+
