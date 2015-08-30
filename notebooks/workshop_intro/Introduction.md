@@ -47,7 +47,7 @@ This happens through efficient data exploration, irrespective of size <!-- .elem
 
 Static batch pipelines (think endless scripts) <!-- .element: class="fragment" data-fragment-index="3" -->
 
-vs. limber, flexible, interactive, visual analysis <!-- .element: class="fragment" data-fragment-index="4" style="text-align:right"-->
+vs. flexible, interactive, visual analysis <!-- .element: class="fragment" data-fragment-index="4" style="text-align:right"-->
 
 
 
@@ -80,7 +80,7 @@ A single workstation will not cut it, and if it does for a problem today, it cer
 
 * a set of interconnected servers steered through some common gateway <!-- .element: class="fragment" data-fragment-index="1" -->
 * easy for "embarrasingly" parallel work-loads <!-- .element: class="fragment" data-fragment-index="1" -->
-* book-keeping nightmare (tons of files, intermediate products etc.) <!-- .element: class="fragment" data-fragment-index="1" -->
+* book-keeping nightmare (tons of files, but helped with workflow managers) <!-- .element: class="fragment" data-fragment-index="1" -->
 * not so easy for really parallel computation <!-- .element: class="fragment" data-fragment-index="1" -->
 * definitely not easy for interactive use and data exploration <!-- .element: class="fragment" data-fragment-index="1" -->
 
@@ -178,9 +178,61 @@ Many of these "production" systems based on MapReduce combined with efficient "d
 
 
 
+## Where are we in all of this? 
+
+### Typical academic computing landscape
+
+1. individual workstations
+2. group/lab/institute resources
+3. University-wide computing infrastructure, usually geared for HPC
+
+<hr class="fragment visible" data-fragment-index="0">
+
+<h3  class="fragment visible" data-fragment-index="0">Some issues</h3>
+
+<ol class="fragment visible" data-fragment-index="0">
+<li>first two are hard to scale -- expensive to buy/maintain</li>
+<li>HPC not geared for interactive analysis (exceptions: some matlab functionality, R and Python parallelization w/ MPI, specialized domain-specific analysis codes)</li>
+</ol>
+
+
+## What we are trying to do
+
+### We see a need for scalable analysis in many fields! <!-- .element class="fragment" data-fragment-index="0" style="text-align:center"-->
+
+#### Could "Big Data" tools lend a hand? <!-- .element class="fragment" data-fragment-index="1" style="text-align:center"-->
+
+#### Is there a Big Data need? <!-- .element class="fragment" data-fragment-index="1" style="text-align:center"-->
+
+#### To try and answer this, we brought you here :) <!-- .element class="fragment" data-fragment-index="2" style="text-align:center"-->
+
+
+## The status and the plan
+
+* we have developed some "prototype" deployments of the big data stack on existing HPC infrastructure
+* two possibilities: dedicated hadoop cluster on Brutus or batch queue on Euler
+
+
+### Hadoop cluster on Brutus 
+
+* ~250 nodes out of service contract 
+* 4 cores, 4 Gb/core, 1 Tb disk
+* In total, 1000 cores, ~250 Tb HDFS and ~3 Tb application RAM **dedicated** to this use-case
+
+![resourcemanager](figs/resourcemanager.png)
+
+
+### Spark on Euler
+
+* run through the batch queue
+* deploy a "standalone" Spark cluster each time on assigned nodes
+* access to newer hardware, more resources, but also resource contention
+
+
+
 ### Some goals for the next few days
 
-* get an intuition for working in a distributed manner
+* get an intuition for working on data in a distributed way
 * get an introduction to "big data" tools, notably HDFS and Spark
 * become familiar with how to use these tools on available resources
 * get ideas for your own workflows/projects
@@ -190,16 +242,7 @@ Many of these "production" systems based on MapReduce combined with efficient "d
 ### Outline
 
 * python intro (day 1)
-* Map/Reduce, functional programming (day 1,2)
-* Introduction to Spark (day 2)
-* Spark mini-project on Brutus (day 3)
-
-
-
-
-#### Most common is the open source Apache Hadoop 
-
-* Java-based MR implementation 
-* used together with the Hadoop Distributed File System (HDFS)
-* important feature: "bringing computation *to the data*"
-* computation and storage are on the same machines!
+* Map/Reduce, functional programming (day 1, 2)
+* Introduction to Spark (day 1, 2)
+* Spark mini-project on Brutus (day 2, 3)
+* Own work (day 3, 4?)
