@@ -206,6 +206,8 @@ Many of these "production" systems based on MapReduce combined with efficient "d
 
 #### To try and answer this, we brought you here :) <!-- .element class="fragment" data-fragment-index="2" style="text-align:center"-->
 
+#### You can actually have an influence on where this type of infrastructure develops in the future! <!-- .element class="fragment" data-fragment-index="2" style="text-align:center"-->
+
 
 ## The status and the plan
 
