@@ -26,15 +26,14 @@ class bc:
 # get home directory
 home = expanduser("~")
 
-jupyter_config_path = "{home}/.jupyter".format(home=home)
+jupyter_config_path = "{home}/.jupyter_spark_workshop".format(home=home)
 
 
 def setup_notebook(port):
     # if the profile doesn't exist, create it -- otherwise we've probably
     # already done this step
     if not exists(jupyter_config_path):
-        os.system("jupyter notebook --generate-config")
-
+        os.makedirs(jupyter_config_path)
         # get a password
         from notebook.auth import passwd
 
@@ -63,6 +62,8 @@ def launch_notebook(port):
     from IPython.terminal.ipapp import launch_new_instance
     argv = sys.argv[:1]
     argv.append('notebook')
+
+    argv.append('--config={profile_path}/jupyter_notebook_config.py'.format(profile_path=jupyter_config_path))
 
     # check if we passed in a port that is different from the one in the
     # configuration

@@ -25,7 +25,10 @@ An RDD is the essential building block of every Spark application.
 
 
 
-![Basic RDD diagram](https://raw.githubusercontent.com/rokroskar/spark_workshop/master/figs/basic_rdd.png)
+![Basic RDD diagram](https://raw.githubusercontent.com/rokroskar/spark_workshop/master/notebooks/figs/basic_rdd.png)
+
+
+
 
 ## Spark Architecture Overview
 
@@ -33,12 +36,14 @@ A very abbreviated and naive description of how Spark works:
 
 The runtime system consists of a **driver** and **workers** (there are more specific components like schedulers and memory managers, but those are details). 
 
+
 **Driver**
 
 * coordinates the work to be done  
 * keeps track of tasks
 * collects metrics about the tasks (disk IO, memory, etc.) 
 * communicates with the workers (and the user) 
+
 
 **Workers**  
 
@@ -53,10 +58,9 @@ The user's access point to this Spark universe is the **Spark Context** which pr
 
 
 
-### The Spark Architecture
+<!-- .slide: data-background="../figs/spark_architecture.svg" data-background-size="contain" -->
 
-(in a very abbreviated form) 
-<img src="http://qph.is.quoracdn.net/main-qimg-89845fb3187dbbc7a49a9d1c8840ddaa?convert_to_webp=true">
+
 
 ![Spark Universe](../figs/spark_universe.png)
 
@@ -87,6 +91,7 @@ In addition, you can run applications on any of these platforms either
 
 Once an RDD is created, it is **immutable** - it can only be modified via a *transformation*
 
+
 Transformations include: 
 * `map` -- the most basic component of map/reduce with 1:1 correspondence to original data
 * `flatMap` -- returns a number of items different from the original data
@@ -116,12 +121,19 @@ Actions include:
 * this allows one to build up a complex "pipeline" and easily tweak/rerun it in its entirety 
 
 
+### Parallelize
+```python
+rdd = sc.parallelize(data)
+```
+![parallelize](../figs/parallelize.svg)
 
-## Partitioning
 
-* data of each RDD is partitioned and each partition is assigned to an executor
-* each partition in a transformation results in a task
-* there may be many more tasks than cores in the system, which allows for good utilization by fine-graining the overall load.
+### Map
+```python
+rdd = sc.parallelize(data)
+rdd2 = rdd.map(function)
+```
+![map](../figs/map.svg)
 
 
 
@@ -131,6 +143,15 @@ Actions include:
 * whenever an action is performed, the entire lineage graph is recalculated
 * unless! an intermediate RDD is cached -- then it is only calculated once and reused from memory each subsequent time
 * this allows for good performance when iterating on an RDD is required 
+![cache](../figs/cache.svg)
+
+
+
+## Partitioning
+
+* data of each RDD is partitioned and each partition is assigned to an executor
+* each partition in a transformation results in a task
+* there may be many more tasks than cores in the system, which allows for good utilization by fine-graining the overall load.
 
 
 
@@ -142,15 +163,13 @@ Spark separates execution into stages consisting of many narrow dependencies bet
 
 ** Wide ** : `join`, `groupBy`
 
+
 If some parts of the RDD were to be lost due to executor failure, the missing pieces are automatically recomputed via the appropriate stages. 
 
 Here we have a few things going on: 
 
-* the elements of RDD $A$ are grouped by key yielding RDD $B$
-* $C$ is mapped to $D$ and unioned with $E$ resulting in $F$
-* $B$ and $F$ are joined together
+* the elements of RDD `A` are grouped by key yielding RDD `B`
+* `C` is mapped to `D` and unioned with `E` resulting in `F`
+* `B` and `F` are joined together
 
 <img src="http://qph.is.quoracdn.net/main-qimg-d2eaaaad37ec65f2b21f6a6cc9f35ae8?convert_to_webp=true">
-
-
-    
