@@ -127,7 +127,7 @@ Every Spark job consists of a driver application and tasks running on executors.
 We obtain resources by requesting an interactive job in the normal job queue on the HPC cluster. In LSF, this is done with a line like
 
 ```
-cluster~ $ bsub -Is -W 4:00 -n 2 bash
+cluster~ $ bsub -Is -W 4:00 -n 2 -U hadoop1 bash
 ```
 
 
