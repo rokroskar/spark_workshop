@@ -128,7 +128,7 @@ First, make sure your python environment is set up correctly by running the `set
 ```
 a6583~ $ cd spark_workshop
 a6583~ $ source scripts/setup_cluster.sh
-a6583~ $ scripts/start_notebook.py --launch
+a6583~ $ notebooks/start_notebook.py --launch
 
 To access the notebook, inspect the output below for the port number, then point your browser to https://10.201.7.30:<port_number>
 [I 22:30:09.555 NotebookApp] Serving notebooks from local directory: /cluster/home03/sdid/roskarr/spark_workshop
