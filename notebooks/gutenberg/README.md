@@ -10,20 +10,14 @@ The corpus is about 10 Gb of raw html, which is not "Big Data" per-se but it is 
 
 There are a few things we need to get configured before we can use the cluster for our interactive analysis. 
 
-First, set up some modules - if you add these to your `.bashrc` file you won't have to do this every time you log in: 
+Log in to the cluster:
 
 ```
 $ ssh username@cluster
-cluster~ $ module load python
-cluster~ $ module load hadoop
-cluster~ $ module load spark
 ```
 
 where you replace "username" with your own username of course and "cluster" with the address of the cluster you are logging in to. 
 
-
-
-### Getting the workshop repository
 
 Clone the repository:
 
@@ -32,8 +26,7 @@ cluster~ $ git clone https://github.com/rokroskar/spark_workshop.git
 ```
 
 
-
-### configure cluster environment
+### Configure cluster environment
 
 ```
 cluster~ $ cd spark_workshop
