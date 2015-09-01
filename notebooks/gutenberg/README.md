@@ -36,7 +36,6 @@ cluster~ $ git clone https://github.com/rokroskar/spark_workshop.git
 ### configure cluster environment
 
 ```
-cluster~ $ module load python
 cluster~ $ cd spark_workshop
 cluster~/spark_workshop $ source scripts/setup_cluster.sh
 ```
