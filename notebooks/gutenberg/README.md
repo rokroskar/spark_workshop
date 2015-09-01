@@ -1,5 +1,10 @@
 # Analyzing the Gutenberg Project book corpus
 
+Use this to set the PYTHONPATH: 
+
+conf.set('spark.executorEnv.PYTHONPATH', 
+         '/cluster/apps/spark/spark-1.4.1-bin-hadoop2.6/python/lib/py4j-0.8.2.1-src.zip:/cluster/apps/spark/spark-1.4.1-bin-hadoop2.6/python/:/cluster/home04/biol/pepatric/Software/Spark_class/spark_workshop/gutenberg')
+
 The [Gutenberg Project](https://www.gutenberg.org/) hosts books in the public domain in many languages. Here, we will first use the English book corpus to construct an "N-Gram viewer" and later we will combine this with the German book corpus to develop a language model. 
 
 The corpus is about 10 Gb of raw html, which is not "Big Data" per-se but it is big enough that it is uncomfortable to analyze it on a laptop. Instead, we will do the analysis using Spark running on nodes controlled by a YARN resource manager. Our analysis will be done interactively by spawning a Jupyter notebook on the remote cluster and connecting to it from the comfort of a browser on the laptop.
@@ -10,20 +15,14 @@ The corpus is about 10 Gb of raw html, which is not "Big Data" per-se but it is 
 
 There are a few things we need to get configured before we can use the cluster for our interactive analysis. 
 
-First, set up some modules - if you add these to your `.bashrc` file you won't have to do this every time you log in: 
+Log in to the cluster:
 
 ```
 $ ssh username@cluster
-cluster~ $ module load python
-cluster~ $ module load hadoop
-cluster~ $ module load spark
 ```
 
 where you replace "username" with your own username of course and "cluster" with the address of the cluster you are logging in to. 
 
-
-
-### Getting the workshop repository
 
 Clone the repository:
 
@@ -32,22 +31,9 @@ cluster~ $ git clone https://github.com/rokroskar/spark_workshop.git
 ```
 
 
-
-### Install python dependencies
-
-Once again, the python dependencies are the same as above. If you are a python user already and you know what you are doing, just install `python2.7`, `numpy`, `matplotlib`, and `ipython` (v4.0) and `jupyter`. 
-
-If you are already a conda/miniconda user, you can simply do 
+### Configure cluster environment
 
 ```
-cluster~ $ conda -y create -n spark_workshop python>=2.7 numpy pip ipython beautiful-soup jupyter matplotlib bokeh pandas scipy
-cluster~ $ source activate spark_workshop
-```
-
-If you are not sure how to navigate the python universe, you can use the `setup_cluster.sh` script in the `scripts` directory like so:
-
-```
-cluster~ $ module load python
 cluster~ $ cd spark_workshop
 cluster~/spark_workshop $ source scripts/setup_cluster.sh
 ```
@@ -127,7 +113,7 @@ Every Spark job consists of a driver application and tasks running on executors.
 We obtain resources by requesting an interactive job in the normal job queue on the HPC cluster. In LSF, this is done with a line like
 
 ```
-cluster~ $ bsub -Is -W 4:00 -n 2 bash
+cluster~ $ bsub -Is -W 4:00 -n 2 -U hadoop1 bash
 ```
 
 
@@ -145,8 +131,9 @@ a6583~ $
 First, make sure your python environment is set up correctly by running the `setup_cluster.sh` script. Then we can launch the jupyter notebook using the same script as before
 
 ```
-a6583~ $ source spark_workshop/scripts/setup_cluster.sh
-a6583~ $ spark_workshop/scripts/start_notebook.py --launch
+a6583~ $ cd spark_workshop
+a6583~ $ source scripts/setup_cluster.sh
+a6583~ $ notebooks/start_notebook.py --launch
 
 To access the notebook, inspect the output below for the port number, then point your browser to https://10.201.7.30:<port_number>
 [I 22:30:09.555 NotebookApp] Serving notebooks from local directory: /cluster/home03/sdid/roskarr/spark_workshop
@@ -158,7 +145,7 @@ To access the notebook, inspect the output below for the port number, then point
 Now you can open the Firefox browser on your laptop, which should be [configured to use a proxy](#firefox-proxy) through an [ssh tunnel](#tunnel-setup) and point it to the IP address printed in bold on the screen, i.e. https://10.201.7.30:8889 in this case. 
 
 
-After the usual warnings about the SSL Certificate, which you can safely ignore, you'll be prompted for your notebook password and that's it! Navigate to the `notebooks/gutenberg` directory and open up the `gutenberg_ngrams-EMPTY.ipynb` notebook to get started. 
+After the usual warnings about the SSL Certificate, which you can safely ignore, you'll be prompted for your notebook password and that's it! Navigate to the `notebooks/gutenberg` directory and open up the `part1-preprocessing-EMPTY.ipynb` notebook to get started. 
 
 
 
