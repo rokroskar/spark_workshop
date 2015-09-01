@@ -140,7 +140,7 @@ To access the notebook, inspect the output below for the port number, then point
 Now you can open the Firefox browser on your laptop, which should be [configured to use a proxy](#firefox-proxy) through an [ssh tunnel](#tunnel-setup) and point it to the IP address printed in bold on the screen, i.e. https://10.201.7.30:8889 in this case. 
 
 
-After the usual warnings about the SSL Certificate, which you can safely ignore, you'll be prompted for your notebook password and that's it! Navigate to the `notebooks/gutenberg` directory and open up the `gutenberg_ngrams-EMPTY.ipynb` notebook to get started. 
+After the usual warnings about the SSL Certificate, which you can safely ignore, you'll be prompted for your notebook password and that's it! Navigate to the `notebooks/gutenberg` directory and open up the `part1-preprocessing-EMPTY.ipynb` notebook to get started. 
 
 
 
