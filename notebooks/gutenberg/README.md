@@ -10,49 +10,29 @@ The corpus is about 10 Gb of raw html, which is not "Big Data" per-se but it is 
 
 There are a few things we need to get configured before we can use the cluster for our interactive analysis. 
 
-First, set up some modules - if you add these to your `.bashrc` file you won't have to do this every time you log in: 
-
-```
-$ ssh username@cluster
-cluster~ $ module load python
-cluster~ $ module load hadoop
-cluster~ $ module load spark
-```
-
-where you replace "username" with your own username of course and "cluster" with the address of the cluster you are logging in to. 
-
-
 
 ### Getting the workshop repository
 
-Clone the repository:
+First, log in to the cluster and clone the repository:
 
 ```
+$ ssh username@cluster
 cluster~ $ git clone https://github.com/rokroskar/spark_workshop.git
 ```
+
+where "username" is your username and "cluster" is the address of the cluster. 
 
 
 
 ### Install python dependencies
 
-Once again, the python dependencies are the same as above. If you are a python user already and you know what you are doing, just install `python2.7`, `numpy`, `matplotlib`, and `ipython` (v4.0) and `jupyter`. 
-
-If you are already a conda/miniconda user, you can simply do 
-
-```
-cluster~ $ conda -y create -n spark_workshop python>=2.7 numpy pip ipython beautiful-soup jupyter matplotlib bokeh pandas scipy
-cluster~ $ source activate spark_workshop
-```
-
-If you are not sure how to navigate the python universe, you can use the `setup_cluster.sh` script in the `scripts` directory like so:
+To set up your environment for using spark, run the `setup_cluster.sh` script in the `scripts` directory like so:
 
 ```
 cluster~ $ module load python
 cluster~ $ cd spark_workshop
 cluster~/spark_workshop $ source scripts/setup_cluster.sh
 ```
-
-You will see a lot of activity while the python packages are downloaded and configured. 
 
 
 
@@ -119,6 +99,7 @@ Then connect to the host and enter your user credentials. You must keep the PuTT
 Now we have a tunnel to the cluster, Firefox is set up to communciate with the cluster via the tunnel, and the notebook on the cluster side is configured. All we need is an interactive job to run the driver program and we are set. 
 
 
+
 ### Obtain an interactive job on the cluster
 
 Every Spark job consists of a driver application and tasks running on executors. The driver orchestrates the flow of the analysis and can sometimes consume significant resources. When we run applications in interactive mode, it is therefore imperative to first obtain resources for the driver, and then use it to start the Spark job. 
@@ -127,9 +108,10 @@ Every Spark job consists of a driver application and tasks running on executors.
 We obtain resources by requesting an interactive job in the normal job queue on the HPC cluster. In LSF, this is done with a line like
 
 ```
-cluster~ $ bsub -Is -W 4:00 -n 2 bash
+cluster~ $ bsub -Is -W 4:00 -n 2 -U hadoop1 bash
 ```
 
+(the `-U hadoop1` requests resources reserved for the workshop).
 
 After a brief while (hopefully not longer than a minute or two) the system will grant us the job and we will be given a bash prompt on one of the compute nodes, i.e. something like 
 
@@ -142,11 +124,12 @@ a6583~ $
 ```
 
 
-First, make sure your python environment is set up correctly by running the `setup_cluster.sh` script. Then we can launch the jupyter notebook using the same script as before
+First, make sure your python environment is set up correctly by sourcing the `setup_cluster.sh` script in the `spark_workshop` directory. Then we can launch the jupyter notebook using the same script as before
 
 ```
-a6583~ $ source spark_workshop/scripts/setup_cluster.sh
-a6583~ $ spark_workshop/scripts/start_notebook.py --launch
+a6583~ $ cd spark_workshop
+a6583~ $ source scripts/setup_cluster.sh
+a6583~ $ scripts/start_notebook.py --launch
 
 To access the notebook, inspect the output below for the port number, then point your browser to https://10.201.7.30:<port_number>
 [I 22:30:09.555 NotebookApp] Serving notebooks from local directory: /cluster/home03/sdid/roskarr/spark_workshop
@@ -158,7 +141,4 @@ To access the notebook, inspect the output below for the port number, then point
 Now you can open the Firefox browser on your laptop, which should be [configured to use a proxy](#firefox-proxy) through an [ssh tunnel](#tunnel-setup) and point it to the IP address printed in bold on the screen, i.e. https://10.201.7.30:8889 in this case. 
 
 
-After the usual warnings about the SSL Certificate, which you can safely ignore, you'll be prompted for your notebook password and that's it! Navigate to the `notebooks/gutenberg` directory and open up the `gutenberg_ngrams-EMPTY.ipynb` notebook to get started. 
-
-
-
+After the usual warnings about the SSL Certificate, which you can safely ignore, you'll be prompted for your notebook password and that's it! Navigate to the `notebooks/gutenberg` directory and open up the `gutenberg-preprocessing-EMPTY.ipynb` notebook to get started. 
