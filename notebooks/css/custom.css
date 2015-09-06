@@ -104,9 +104,11 @@ body {
 html {
   overflow-y: auto;
 }
+
 .reveal {
-  font-size: 200%;
+  font-size: 150%;
 }
+
 .reveal pre {
   width: inherit;
   padding: 0.4em;
