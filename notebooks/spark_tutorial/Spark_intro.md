@@ -24,8 +24,7 @@ An RDD is the essential building block of every Spark application.
 ** As a Spark user, you write applications that feed data into RDDs and subsequently transform them into something useful **
 
 
-
-![Basic RDD diagram](https://raw.githubusercontent.com/rokroskar/spark_workshop/master/notebooks/figs/basic_rdd.png)
+<!-- .slide: data-background="../figs/parallelize.svg" data-background-size="contain" -->
 
 
 
@@ -37,14 +36,20 @@ A very abbreviated and naive description of how Spark works:
 The runtime system consists of a **driver** and **workers** (there are more specific components like schedulers and memory managers, but those are details). 
 
 
+<!-- .slide: data-background="../figs/spark_architecture.svg" data-background-size="contain" -->
+
+
+<!-- .slide: data-background="../figs/spark_architecture.svg" data-background-size="contain" data-state="background-blur-animation"-->
 **Driver**
 
 * coordinates the work to be done  
 * keeps track of tasks
 * collects metrics about the tasks (disk IO, memory, etc.) 
 * communicates with the workers (and the user) 
+* in our case, this will be the notebook 
 
 
+<!-- .slide: data-background="../figs/spark_architecture.svg" data-background-size="contain" data-state="background-blur-animation"-->
 **Workers**  
 
 * receive tasks to be done from the driver
@@ -56,9 +61,6 @@ The user's access point to this Spark universe is the **Spark Context** which pr
 
 ** The only point of contact with the Spark "universe" is the Spark Context and the RDDs via the driver **
 
-
-
-<!-- .slide: data-background="../figs/spark_architecture.svg" data-background-size="contain" -->
 
 
 
@@ -89,7 +91,7 @@ In addition, you can run applications on any of these platforms either
 
 ##RDD transformations and actions
 
-Once an RDD is created, it is **immutable** - it can only be modified via a *transformation*
+Once an RDD is created, it is **immutable** - it can only be transformed into a new RDD via a *transformation*
 
 
 Transformations include: 
@@ -102,6 +104,18 @@ Transformations include:
 * `sortBy` -- sort using the provided function
 
 Transformations are evaluated "lazily" - only executed once an *action* is performed. 
+
+
+<!-- .slide: data-background="../figs/map_example.svg" data-background-size="contain"-->
+
+
+<!-- .slide: data-background="../figs/flatMap_example.svg" data-background-size="contain"-->
+
+
+<!-- .slide: data-background="../figs/filter_example.svg" data-background-size="contain"-->
+
+
+<!-- .slide: data-background="../figs/reduceByKey_example.svg" data-background-size="contain"-->
 
 
 Actions include: 
@@ -125,7 +139,7 @@ Actions include:
 ```python
 rdd = sc.parallelize(data)
 ```
-![parallelize](../figs/parallelize.svg)
+<img src="../figs/parallelize.svg" width=600px>
 
 
 ### Map
@@ -133,7 +147,7 @@ rdd = sc.parallelize(data)
 rdd = sc.parallelize(data)
 rdd2 = rdd.map(function)
 ```
-![map](../figs/map.svg)
+<img src="../figs/map_lineage.svg" height=500px>
 
 
 
@@ -143,8 +157,23 @@ rdd2 = rdd.map(function)
 * whenever an action is performed, the entire lineage graph is recalculated
 * unless! an intermediate RDD is cached -- then it is only calculated once and reused from memory each subsequent time
 * this allows for good performance when iterating on an RDD is required 
-![cache](../figs/cache.svg)
 
+
+```python
+rdd = sc.parallelize(data)
+rdd2 = rdd.map(function)
+rdd2.cache()
+```
+<img src="../figs/cache.svg" height=500px>
+
+
+```python
+rdd = sc.parallelize(data)
+rdd2 = rdd.map(function)
+rdd2.cache()
+rdd3 = rdd2.map()
+```
+<img src="../figs/cache_map.svg" height=500px>
 
 
 ## Partitioning
@@ -155,21 +184,25 @@ rdd2 = rdd.map(function)
 
 
 
-### A typical execution path
+<!-- .slide: data-background="../figs/hdfs.svg" data-background-size="contain"  data-state="background-blur-animation"-->
+### Distributed filesystems
 
-Spark separates execution into stages consisting of many narrow dependencies between partitions. 
+#### Key features:
 
-** Narrow ** : `map`, `filter`
+* each machine contributes its hard-disk
+* replication (3x usually)
+* fault-tolerance (remember, cheap hardware!)
+* storage and task execution in the same place!
+* pioneered by Google Filesystem (Ghemawat et al. 2003)
+* currently popular Hadoop Distributed Filesystem (HDFS) 
 
-** Wide ** : `join`, `groupBy`
+
+<!-- .slide: data-background="../figs/hdfs.svg" data-background-size="contain"  -->
 
 
-If some parts of the RDD were to be lost due to executor failure, the missing pieces are automatically recomputed via the appropriate stages. 
+### How does this compare/contrast with Brutus/Euler?
 
-Here we have a few things going on: 
-
-* the elements of RDD `A` are grouped by key yielding RDD `B`
-* `C` is mapped to `D` and unioned with `E` resulting in `F`
-* `B` and `F` are joined together
-
-<img src="http://qph.is.quoracdn.net/main-qimg-d2eaaaad37ec65f2b21f6a6cc9f35ae8?convert_to_webp=true">
+* first, top-notch (uniform) hardware! not commodity
+* generally no HDFS, but other high-performance FS 
+* high core-density vs. disk I/O 
+* importantly, a somewhat orthogonal software stack

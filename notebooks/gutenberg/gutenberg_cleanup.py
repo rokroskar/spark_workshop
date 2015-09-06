@@ -151,9 +151,11 @@ def get_text(html_path) :
     no_numbers = re.compile('[0-9]+')
     cleaned = no_numbers.sub('', cleaned)
    
-    # remove empty white space and numbers
     no_empty_space = re.compile('\s+')
     cleaned = no_empty_space.sub(' ', cleaned) 
+
+    # remove mdash
+    cleaned = cleaned.replace('mdash', ' ')
      
     # when returning, remove also the left and right space padding
     return cleaned.strip()

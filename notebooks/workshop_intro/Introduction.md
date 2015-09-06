@@ -124,7 +124,6 @@ We all know this to some extent --> it's all around us <!-- .element class="frag
 
 * Web 2.0 <!-- .element class="fragment" data-fragment-index="2" -->
     * multimedia content (images, video, music/audio) 
-    * user activity tracking 
     * recommendation engines (shopping, movies, ads. etc.) 
 * Sensors <!-- .element class="fragment" data-fragment-index="3" -->
     * smartphone 
@@ -135,10 +134,8 @@ We all know this to some extent --> it's all around us <!-- .element class="frag
 * Science <!-- .element class="fragment" data-fragment-index="5" -->
     * CERN 
     * astronomy sky surveys
-    * medicine + genomics --> translational science
-    * high-content screening, lightsheet microscopy
-    * social science
-
+    * translational medicine
+    
 Many of these "production" systems based on MapReduce combined with efficient "data stores" (distributed databases etc) <!-- .element class="fragment" data-fragment-index="6" -->
 
 
@@ -151,30 +148,6 @@ Many of these "production" systems based on MapReduce combined with efficient "d
 <li> network between machines might be sluggish </li>
 <li> bring computation/algorithm to the data</li>
 </ul>
-
-
-<!-- .slide: data-background="figs/hdfs.svg" data-background-size="contain"  -->
-
-
-<!-- .slide: data-background="figs/hdfs.svg" data-background-size="contain"  data-state="background-blur-animation"-->
-### Distributed filesystems
-
-#### Key features:
-
-* each machine contributes its hard-disk
-* replication (3x usually)
-* fault-tolerance (remember, cheap hardware!)
-* storage and task execution in the same place!
-* pioneered by Google Filesystem (Ghemawat et al. 2003)
-* currently popular Hadoop Distributed Filesystem (HDFS) 
-
-
-### How does this compare/contrast with Brutus/Euler?
-
-* first, top-notch (uniform) hardware! not commodity
-* generally no HDFS, but other high-performance FS 
-* high core-density vs. disk I/O 
-* importantly, a somewhat orthogonal software stack
 
 
 
@@ -244,10 +217,10 @@ Many of these "production" systems based on MapReduce combined with efficient "d
 ### Outline
 
 * python intro (day 1)
-* Map/Reduce, functional programming (day 1, 2)
+* Map/Reduce, functional programming (day 1)
 * Introduction to Spark (day 1, 2)
 * Spark mini-project on Brutus (day 2, 3)
-* Own work (day 3, 4?)
+* Own work (day 3?)
 
 
 
