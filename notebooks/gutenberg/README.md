@@ -1,10 +1,5 @@
 # Analyzing the Gutenberg Project book corpus
 
-Use this to set the PYTHONPATH: 
-
-conf.set('spark.executorEnv.PYTHONPATH', 
-         '/cluster/apps/spark/spark-1.4.1-bin-hadoop2.6/python/lib/py4j-0.8.2.1-src.zip:/cluster/apps/spark/spark-1.4.1-bin-hadoop2.6/python/:/cluster/home04/biol/pepatric/Software/Spark_class/spark_workshop/gutenberg')
-
 The [Gutenberg Project](https://www.gutenberg.org/) hosts books in the public domain in many languages. Here, we will first use the English book corpus to construct an "N-Gram viewer" and later we will combine this with the German book corpus to develop a language model. 
 
 The corpus is about 10 Gb of raw html, which is not "Big Data" per-se but it is big enough that it is uncomfortable to analyze it on a laptop. Instead, we will do the analysis using Spark running on nodes controlled by a YARN resource manager. Our analysis will be done interactively by spawning a Jupyter notebook on the remote cluster and connecting to it from the comfort of a browser on the laptop.
