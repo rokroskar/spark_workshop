@@ -9,4 +9,5 @@ unset PYTHONPATH
 echo "loading hadoop and spark modules"
 module load spark
 module load hadoop
+export _JAVA_OPTIONS="-Xmx1024m -Xms256m -XX:ParallelGCThreads=1"
 
