@@ -1,14 +1,29 @@
 # Distributed data analysis
+
 This workshop demonstrates some techniques for pre/post processing large 
 data sets, which do not fit onto a single machine. While there are many 
 methods to accomplish such a task, here we focus on the *map/reduce* (MR) 
-paradigm that has gained a lot of traction in industry, but only seldom in 
-academia. To explore the possibilities of using such a framework, we make 
-use of [Spark](http://spark.apache.org), which is a modern MR framework with a 
-rich API and properties attractive for data exploration. 
+paradigm through the  use of the [Spark framework](http://spark.apache.org). Spark is a "successor" to Hadoop with a rich API and properties attractive for data exploration. 
+
+## The structure
+
+The course is split into two hands-on components: 
+
+* The first consists of two sets of exercises demonstrating some features of the Python language useful for Spark applications, and a brief introduction to using Spark. 
+* The second part is a "mini-project" to do some basic analysis of a text corpus, in this case the Gutenberg books project. This second part is meant to be run remotely on a Hadoop cluster with an underlying Hadoop Distributed Filesystem (HDFS). 
+
+I recommend that you do the tutorial exercises first before attempting the Gutenberg corpus notebooks!
 
 
-## Prerequisites
+### Programming knowledge
+
+We assume fluency with basic programming constructs such as loops and functions. In the first session of the workshop, basics of functional programming and other python-specific constructs are introduced, as they are  useful for writing Spark applications. Knowing how to use the command line (or terminal) is also expected. 
+
+
+### Python
+
+The language used in the workshop is python. If you are not familiar with python at all, we recommend finding a basic tutorial and working through some examples before participating in the workshop. In particular, make sure that you understand the various python data types, such as strings, lists, tuples, dictionaries, and sets. We will go over some of these in the workshop, but you should at least try to use them in simple ways before going through the workshop material. 
+
 
 ### Git
 
@@ -21,21 +36,12 @@ $ git --version
 If this returns something other than an error message, you are all set! 
 
 
-### Programming knowledge
-
-We assume fluency with basic programming constructs such as loops and functions. In the first session of the workshop, basics of functional programming and other python-specific constructs are introduced, as they are  useful for writing Spark applications. Knowing how to use the command line (or terminal) is also expected. 
-
-
-### Python
-
-The language used in the workshop is python. If you are not familiar with python at all, we recommend finding a basic tutorial and working through some examples before participating in the workshop. In particular, make sure that you understand the various python data types, such as strings, lists, tuples, dictionaries, and sets. We will go over some of these in the workshop, but you should at least try to use them in simple ways before going through the workshop material. 
-
 ### Firefox
 
 We will be using the firefox browser to work interactively with the cluster in the last part of the workshop. We use Firefox because it allows us to set up a proxy without needing to change the system-wide proxy settings, i.e. this lets you continue using all other applications with the local connection instead of through the proxy. If you don't have Firefox already, you should install it - if you have it already installed, please make sure you update it to the latest version. 
 
 
-## Setting up
+## Setting up the local machine for hands-on tutorials
 
 There are quite a few requirements for all the software used in this workshop to function properly. You can either install it all by hand (or perhaps you have it installed already), but if you don't want to bother with the set up, you can simply use the virtual machine option. 
 
@@ -204,9 +210,9 @@ when starting the notebook server up again at some later point.
 
 The notebooks are organized in three directories: 
 
-* [python_intro](https://github.com/rokroskar/spark_workshop/tree/master/notebooks/python_intro) - basic introduction to Big Data and python concepts
-* [spark_intro](https://github.com/rokroskar/spark_workshop/tree/master/notebooks/spark_intro) - essential Spark skills
-* [gutenberg](https://github.com/rokroskar/spark_workshop/tree/master/notebooks/gutenberg) - "project" notebook building up an analysis of the Gutenberg books corpus
+* [python_tutorial](https://github.com/rokroskar/spark_workshop/tree/master/notebooks/python_intro) - basic introduction to Big Data and python concepts
+* [spark_tutorial](https://github.com/rokroskar/spark_workshop/tree/master/notebooks/spark_intro) - essential Spark skills
+* [gutenberg](https://github.com/rokroskar/spark_workshop/tree/master/notebooks/gutenberg) - "project" notebooks building up an analysis of the Gutenberg books corpus
 
 You should start by having a look at the python introduction notebook (where you can also execute cells) which introduces some essential python concepts. When you open the notebooks running on the notebook server (i.e. in your browser at `localhost:8889`), you can execute any cell in the notebook by entering `Shift+Enter`. You can also modify any of the cells to experiment. Once you're happy with the python introduction, continue on to the notebook marked "EMPTY" in the same directory and complete the exercises.  
 
