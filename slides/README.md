@@ -40,4 +40,14 @@ If you have the server running now and the `reveal.js` library installed, you ca
 
 [Introduction to the Spark Framework](http://localhost:8000/spark_intro/Spark_intro.html)
 
+## Rebuilding slides out of a notebook
+
+If you need to rebuild the slides in `python_intro` (or for any other notebook in this tutorial), do not use the `reveal.js` library included here (there is a [version compatibility problem](http://stackoverflow.com/questions/30125373/ipython-notebook-to-slides-reveal-is-not-defined)).
+
+To use a specific version and load it dynamically, build the python introduction slides like so: 
+
+```
+spark_workshop/slides/python_intro > jupyter nbconvert --to slides --reveal-prefix "http://cdn.jsdelivr.net/reveal.js/2.6.2" Python_concepts.ipynb
+```
+
 
