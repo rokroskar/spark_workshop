@@ -49,11 +49,11 @@ A few special tricks are required also on the local side to enable an interactiv
 
 Go to the `Settings` or `Preferences` --> `Advanced`, and click on `Network`: 
 
-![firefox_settings](../figs/firefox_settings.png)
+![firefox_settings](../../slides/figs/firefox_settings.png)
 
 Click on `Settings` and configure the proxy settings as shown here: 
 
-![firefox_proxy](../figs/firefox_proxy.png)
+![firefox_proxy](../../slides/figs/firefox_proxy.png)
 
 Now your Firefox browser's traffic is being routed through the cluster head node. This makes the otherwise inaccessible compute nodes available. 
 
@@ -79,7 +79,7 @@ You might be prompted for a password, but then nothing much will happen: the tun
 
 Start up PuTTY and enter your cluster name into the host field. On the left, scroll down to "SSH" options and find "Tunnel". Check the "Dynamic" radio button, enter 9999 into the "Host Port" field and click "Add" so that the window shows "D9999". The filled-out options should look something like this: 
 
-![putty_tunnel](../figs/putty_tunnel.png)
+![putty_tunnel](../../slides/figs/putty_tunnel.png)
 
 
 Then connect to the host and enter your user credentials. You must keep the PuTTY window open to maintain the connection. 
