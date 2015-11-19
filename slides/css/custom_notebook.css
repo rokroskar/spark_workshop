@@ -1,0 +1,233 @@
+@import url(https://fonts.googleapis.com/css?family=Ubuntu:300,700,300italic,700italic);
+<style type="text/css">
+/* Overrides of notebook CSS for static HTML export */
+html {
+  overflow-y: auto;
+}
+
+@-webkit-keyframes blur-animation {
+  0% {
+    -webkit-filter: blur(0px) ;
+    -moz-filter: blur(0px);
+    -o-filter: blur(0px);
+    -ms-filter: blur(0px);
+    filter: blur(0px);
+     
+  }
+  100% {
+    -webkit-filter: blur(4px) saturate(.5) brightness(.8);
+    -moz-filter: blur(5px) saturate(.7) brightness(.9);
+    -o-filter: blur(5px) saturate(.7) brightness(.9);
+    -ms-filter: blur(5px)saturate(.7) brightness(.9);
+    filter: blur(5px) saturate(.7) brightness(.9);
+     
+  }
+}
+
+html.background-blur-animation .backgrounds {
+   -webkit-animation-name: blur-animation;
+   -webkit-animation-duration: 1s;
+   -webkit-animation-iteration-count: 1;
+   -webkit-animation-direction: alternate;
+   -webkit-animation-timing-function: ease-out;
+   -webkit-animation-fill-mode: forwards;
+   -webkit-animation-delay: 0s;
+ }
+
+html.background-blur .backgrounds {
+   -webkit-filter: blur(4px) saturate(.5) brightness(.8);
+   -moz-filter: blur(4px) saturate(.7) brightness(.9);
+   -o-filter: blur(4px) saturate(.7) brightness(.9);
+   -ms-filter: blur(4px) saturate(.7) brightness(.9);
+   filter: blur(4px) saturate(.7) brightness(.9);
+     
+}
+
+body {
+  background: #0F545A;
+  background-color: #0F545A; }
+
+.reveal {
+  font-family: Ubuntu, 'sans-serif';
+  font-weight: normal;
+  color: #F7D794; }
+
+.reveal p, ul, li {
+  color: #F7D794;
+  text-align: left; 
+  text-shadow: 1px 1px #222;
+}
+
+.reveal ul, li { 
+  margin: 0;
+  padding: 0;
+  text-align: left;
+}
+
+.reveal hr {
+  border-color: #F7D794;
+  border-top: 1px solid #ccc;
+  margin: 1em 0;
+}
+
+.reveal table th, .reveal table td {
+  color: #F7D794;
+}
+
+/*********************************************
+ * HEADINGS
+ *********************************************/
+
+.reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 { 
+  font-family: Ubuntu, 'sans-serif';
+  color: #F1BF57;
+  text-shadow: 2px 2px #222;
+}
+
+.reveal h1{
+  font-size: 2.5em;
+}
+
+.reveal h2{
+  font-size: 2em;
+}
+
+.reveal h3{
+  font-size: 1.5em;
+}
+
+.reveal h4{
+  font-size: 1.2em;
+}
+
+/* Overrides of notebook CSS for static HTML export */
+html {
+  overflow-y: auto;
+}
+
+.reveal {
+  font-size: 180%;
+}
+
+.reveal pre {
+  width: inherit;
+  padding: 0.4em;
+  margin: 0px;
+  font-family: monospace, sans-serif;
+  font-size: 80%;
+  box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
+}
+.reveal pre code {
+  padding: 0px;
+}
+
+.reveal section img {
+  border: 0px solid black;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0);
+}
+.reveal i {
+  font-style: normal;
+  font-family: FontAwesome;
+  font-size: 2em;
+}
+
+.reveal.fade {
+  opacity: 1;
+}
+.reveal .progress {
+  position: static;
+}
+div.input_area {
+  padding: 0.06em;
+}
+div.code_cell {
+  background-color: transparent;
+}
+div.prompt {
+  width: 11ex;
+  padding: 0.4em;
+  margin: 0px;
+  font-family: monospace, sans-serif;
+  font-size: 80%;
+  text-align: right;
+}
+div.output_area pre {
+  font-family: monospace, sans-serif;
+  font-size: 80%;
+}
+div.output_prompt {
+  /* 5px right shift to account for margin in parent container */
+  margin: 5px 5px 0 0;
+}
+.rendered_html p {
+  text-align: inherit;
+}
+
+/*********************************************
+ * NAVIGATION CONTROLS
+ *********************************************/
+.reveal .controls div.navigate-left, .reveal .controls div.navigate-left.enabled {
+  border-right-color: #F15F57; }
+
+.reveal .controls div.navigate-right, .reveal .controls div.navigate-right.enabled {
+  border-left-color: #F15F57; }
+
+.reveal .controls div.navigate-up, .reveal .controls div.navigate-up.enabled {
+  border-bottom-color: #F15F57; }
+
+.reveal .controls div.navigate-down, .reveal .controls div.navigate-down.enabled {
+  border-top-color: #F15F57; }
+
+.reveal .controls div.navigate-left.enabled:hover {
+  border-right-color: #F79994; }
+
+.reveal .controls div.navigate-right.enabled:hover {
+  border-left-color: #F79994; }
+
+.reveal .controls div.navigate-up.enabled:hover {
+  border-bottom-color: #F79994; }
+
+.reveal .controls div.navigate-down.enabled:hover {
+  border-top-color: #F79994; }
+  
+/*********************************************
+ * PROGRESS BAR
+ *********************************************/
+.reveal .progress {
+  background: rgba(0, 0, 0, 0.2); }
+
+.reveal .progress span {
+  background: #F15F57;
+  -webkit-transition: width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985);
+  -moz-transition: width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985);
+  transition: width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985); }
+
+/*********************************************
+ * SLIDE NUMBER
+ *********************************************/
+.reveal .slide-number {
+  color: #F15F57;
+  font-size: 0.8em; }
+
+.rendered_html code {
+  background-color: inherit; 
+  color: inherit;
+}
+
+.reveal a:not(.image) {
+  color: #F15F57;
+}
+
+.reveal a:not(.image):hover {
+  color: #F15F57;
+}
+
+div.prompt {
+  color: #F15F57;
+}
+
+div.output_area pre {
+  /*color: #F7D794;*/
+  background-color: #f7f7f7;
+}
+</style>
