@@ -235,7 +235,7 @@ div.output_prompt {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Outline">Outline<a class="anchor-link" href="#Outline">&#182;</a></h2><h4 id="1.-MapReduce">1. <a href="#Map-reduce">MapReduce</a><a class="anchor-link" href="#1.-MapReduce">&#182;</a></h4><h4>2. <a href="#"Lambda"-functions">Lambda functions</a></h4>
+<h2 id="Outline">Outline<a class="anchor-link" href="#Outline">&#182;</a></h2><h4 id="0.-Notebook-demo">0. <a href="#Notebook-intro">Notebook demo</a><a class="anchor-link" href="#0.-Notebook-demo">&#182;</a></h4><h4 id="1.-Functional-programming-and-MapReduce">1. <a href="#Map-reduce">Functional programming and MapReduce</a><a class="anchor-link" href="#1.-Functional-programming-and-MapReduce">&#182;</a></h4><h4>2. <a href="#"Lambda"-functions">Lambda functions</a></h4>
 <h4 id="3.-List-comprehensions-(and-Tuples)">3. <a href="#List-comprehension">List comprehensions</a> (and <a href="#Tuples">Tuples</a>)<a class="anchor-link" href="#3.-List-comprehensions-(and-Tuples)">&#182;</a></h4><h4 id="4.-Generator-expressions">4. <a href="#Generator-expressions">Generator expressions</a><a class="anchor-link" href="#4.-Generator-expressions">&#182;</a></h4><h4 id="5.-Generators">5. <a href="#Generators">Generators</a><a class="anchor-link" href="#5.-Generators">&#182;</a></h4>
 </div>
 </div>
@@ -248,9 +248,50 @@ div.output_prompt {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>People have been doing this (using many machines for computation) for decades!</p>
-<p>But mostly for <em>creating</em> data on various HPC platforms, not processing it!</p>
-<p>Some interactive tools exist, but are often specialized and hard to taylor to specific needs</p>
+<p>Before we get started, we need to get set up. If you have <code>git</code>, check out the repository:</p>
+<div class="highlight"><pre><span class="nv">$ </span>git clone git@github.com:rokroskar/spark_workshop.git
+</pre></div>
+<p>If you don't have <code>git</code> (why don't you?) download the zip file:</p>
+<div class="highlight"><pre><span class="nv">$ </span>wget https://github.com/rokroskar/spark_workshop/archive/master.zip
+<span class="nv">$ </span>unzip spark_workshop-master.zip
+</pre></div>
+<p>(or if you don't have <code>wget</code> just go to <a href="http://github.com/rokroskar/spark_workshop">http://github.com/rokroskar/spark_workshop</a> and download from there)</p>
+
+</div>
+</div>
+</div></section><section>
+    
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="If-you-are-using-Vagrant:">If you are using Vagrant:<a class="anchor-link" href="#If-you-are-using-Vagrant:">&#182;</a></h3><div class="highlight"><pre><span class="nv">$ </span><span class="nb">cd </span>spark_workshop
+<span class="nv">$ </span>vagrant up
+<span class="nv">$ </span>vagrant ssh -c <span class="s2">&quot;notebooks/start_notebook.py --setup --launch</span>
+</pre></div>
+<p>If running your own installation:</p>
+<div class="highlight"><pre><span class="nv">$ </span><span class="nb">cd </span>spark_workshop
+<span class="nv">$ </span>notebooks/start_notebook.py --setup --launch
+</pre></div>
+
+</div>
+</div>
+</div></section><section>
+    
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Look for output like this:</p>
+<div class="highlight"><pre>To access the notebook, inspect the output below <span class="k">for</span> the port number, <span class="k">then</span> point your browser to https://localhost:&lt;port_number&gt;
+<span class="o">[</span>I 00:20:18.462 NotebookApp<span class="o">]</span> Serving notebooks from <span class="nb">local </span>directory: /Users/rokstar/spark_workshop
+<span class="o">[</span>I 00:20:18.462 NotebookApp<span class="o">]</span> <span class="m">0</span> active kernels
+<span class="o">[</span>I 00:20:18.462 NotebookApp<span class="o">]</span> The IPython Notebook is running at: https://<span class="o">[</span>all ip addresses on your system<span class="o">]</span>:8889/
+</pre></div>
+<p>and go to <a href="https://localhost:8889">https://localhost:8889</a> (or whatever port it says the server is running on)</p>
+<p>You can now actually follow this notebook by going to <code>slides/python_intro/Python concepts.ipynb</code></p>
 
 </div>
 </div>
@@ -263,10 +304,62 @@ div.output_prompt {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Distributed data processing has really been driven by <em>industry</em> for the past decade or so.</p>
-<p>Enormous amounts of data in data warehouses needed a sensible way to chug through it all as cheaply as possible</p>
-<p>---&gt; <a href="http://research.google.com/archive/mapreduce.html">MapReduce (Dean &amp; Gemawat 2004)</a> was born</p>
+<h2 id="Notebook-intro">Notebook intro<a class="anchor-link" href="#Notebook-intro">&#182;</a></h2><p>This is a Jupyter notebook... you can use it to, for example, run some python code...</p>
+<h4 id="To-run-the-code-below:">To run the code below:<a class="anchor-link" href="#To-run-the-code-below:">&#182;</a></h4><ol>
+<li>Click on the cell to select it.</li>
+<li>Press <kbd>SHIFT+ENTER</kbd> on your keyboard or press the play button in the toolbar above.</li>
+</ol>
+<p>Before going on to work on the <code>python</code> and <code>spark</code> tutorials yourself, do check out the <a href="http://nbviewer.ipython.org/github/ipython/ipython/blob/2.x/examples/Notebook/User%20Interface.ipynb">user interface tutorial</a>.</p>
 
+</div>
+</div>
+</div></section><section>
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="n">a</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">b</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">a</span><span class="o">+</span><span class="n">b</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div></section><section>
+    
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Some of the most important keyboard shortcuts to make your life easier:</p>
+<ul>
+<li>to insert a new cell below the current cell, push <kbd>b</kbd>. </li>
+<li>to insert a cell above, push <kbd>a</kbd> </li>
+<li>to delete a cell, push <kbd>d</kbd> <em>twice</em></li>
+<li>to undo a cell operation, push <kbd>z</kbd></li>
+<li>to change a cell to "markdown" (i.e. text, like this one) push <kbd>m</kbd></li>
+<li>to change a cell to "code" (i.e. to run python code, like the cell above) push <kbd>y</kbd></li>
+</ul>
+<p>Try it!</p>
+<p>To see the keyboard shortcuts, click on "Help" in the toolbar and select "Keyboard Shortcuts"</p>
+
+</div>
+</div>
+</div></section>
+    </section><section>
+    <section>
+    
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Ok,-now-we're-ready-to-continue...">Ok, now we're ready to continue...<a class="anchor-link" href="#Ok,-now-we're-ready-to-continue...">&#182;</a></h4>
 </div>
 </div>
 </div></section>
@@ -298,65 +391,10 @@ div.output_prompt {
 <p>A few things to note:</p>
 <ol>
 <li>this is an extremely limiting programming model (compare to MPI where anything is possible)</li>
-<li>strictly task-parallel --&gt; individual tasks <em>never</em> communicate to each other (except maybe via shared variables)</li>
+<li>from user's viewpoint strictly task-parallel --&gt; can't make tasks communicate to each other </li>
 <li>very clear on intent <em>because</em> it is so limiting</li>
 </ol>
 <p>Let's see how this works through a simple example.</p>
-
-</div>
-</div>
-</div></section>
-    </section><section>
-    <section>
-    
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Before we get started, we need to get set up. If you have <code>git</code>, check out the repository:</p>
-<div class="highlight"><pre>&gt; git clone git@github.com:rokroskar/spark_workshop.git
-</pre></div>
-<p>If you don't have <code>git</code> (why don't you?) download the zip file:</p>
-<div class="highlight"><pre>&gt; wget https://github.com/rokroskar/spark_workshop/archive/master.zip
-&gt; unzip spark_workshop-master.zip
-</pre></div>
-<p>(or if you don't have <code>wget</code> just go to <a href="http://github.com/rokroskar/spark_workshop">http://github.com/rokroskar/spark_workshop</a> and download from there)</p>
-
-</div>
-</div>
-</div></section><section>
-    
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="If-you-are-using-Vagrant:">If you are using Vagrant:<a class="anchor-link" href="#If-you-are-using-Vagrant:">&#182;</a></h3><div class="highlight"><pre>&gt; <span class="nb">cd </span>spark_workshop
-&gt; vagrant up
-&gt; vagrant ssh -c <span class="s2">&quot;notebooks/start_notebook.py --setup --launch</span>
-</pre></div>
-<p>If running your own installation:</p>
-<div class="highlight"><pre>&gt; <span class="nb">cd </span>spark_workshop
-&gt; notebooks/start_notebook.py --setup --launch
-</pre></div>
-
-</div>
-</div>
-</div></section><section>
-    
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Look for output like this:</p>
-<div class="highlight"><pre>To access the notebook, inspect the output below <span class="k">for</span> the port number, <span class="k">then</span> point your browser to https://localhost:&lt;port_number&gt;
-<span class="o">[</span>I 00:20:18.462 NotebookApp<span class="o">]</span> Serving notebooks from <span class="nb">local </span>directory: /Users/rokstar/spark_workshop
-<span class="o">[</span>I 00:20:18.462 NotebookApp<span class="o">]</span> <span class="m">0</span> active kernels
-<span class="o">[</span>I 00:20:18.462 NotebookApp<span class="o">]</span> The IPython Notebook is running at: https://<span class="o">[</span>all ip addresses on your system<span class="o">]</span>:8889/
-</pre></div>
-<p>and go to <a href="https://localhost:8889">https://localhost:8889</a> (or whatever port it says the server is running on)</p>
 
 </div>
 </div>
@@ -411,7 +449,7 @@ div.output_prompt {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Lets say now that we wanted to compute the total sum of all the values doubled. The most obvious choice for this would be some sort of a loop, in this case a <code>for</code> loop:</p>
+<p>Lets say that we wanted to compute the total sum of all the values after applying some function $f(x)$ to them. We'll say for now that $$f(x) = 2x.$$ The most obvious choice for this would be to apply $f(x)$ in some sort of a loop, and add the results to an aggregation variable:</p>
 
 </div>
 </div>
@@ -446,7 +484,7 @@ div.output_prompt {
 </div>
 </div>
 
-</div><div class="fragment" data-fragment-index="13">
+</div><div class="fragment" data-fragment-index="15">
     
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
@@ -467,11 +505,11 @@ div.output_prompt {
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>But the two stages are separable:</p>
-<p>we might <em>first</em> double all the elements in <code>data</code> and then sum them all together.</p>
+<p>we might <em>first</em> double all the elements in <code>data</code> - apply $f(x)$ - and then sum them all together.</p>
 <p>This is exactly a map-reduce operation:</p>
 <ol>
-<li><em>map</em> the values to be double the original</li>
-<li><em>reduce</em> them to a single number by summing them together. </li>
+<li><em>map</em> the values using a function ($f(x) = 2x$) </li>
+<li><em>reduce</em> them to a single number (sum) </li>
 </ol>
 
 </div>
@@ -487,7 +525,7 @@ div.output_prompt {
 
 </div>
 </div>
-</div><div class="fragment" data-fragment-index="16">
+</div><div class="fragment" data-fragment-index="18">
     
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
@@ -503,7 +541,7 @@ div.output_prompt {
 </div>
 
 </div>
-    </div><div class="fragment" data-fragment-index="17">
+    </div><div class="fragment" data-fragment-index="19">
     
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
@@ -515,7 +553,7 @@ div.output_prompt {
 </div>
 </div>
 </div>
-    </div><div class="fragment" data-fragment-index="17">
+    </div><div class="fragment" data-fragment-index="19">
         
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
@@ -545,7 +583,7 @@ div.output_prompt {
 </div>
 
 </div>
-        </div><div class="fragment" data-fragment-index="17">
+        </div><div class="fragment" data-fragment-index="19">
         
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
@@ -557,7 +595,7 @@ div.output_prompt {
 </div>
 </div>
 </div>
-        </div><div class="fragment" data-fragment-index="20">
+        </div></section><section>
     
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
@@ -569,8 +607,6 @@ div.output_prompt {
 </div>
 </div>
 </div>
-    </div><div class="fragment" data-fragment-index="20">
-        
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[5]:</div>
@@ -601,8 +637,18 @@ div.output_prompt {
 </div>
 </div>
 
+</div></section><section>
+    
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
 </div>
-        </div></section>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="alert alert-info" style="margin: 10px"><strong>Note:</strong> what we are doing here is *functional* programming - we use a function to transform the data, but the original data remains untouched. The Spark programming model is heavily based on this concept. 
+</div>
+</div>
+</div>
+</div></section>
     </section><section>
     <section>
     
@@ -628,22 +674,23 @@ div.output_prompt {
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Basic idea:</p>
 <ul>
-<li>the lambda function gets its items from an <em>iterable</em> object (list, dictionary, tuple, etc.)</li>
+<li>the lambda function consumes items and returns a value</li>
+<li>it can get items from an iterable (a list, dictionary, tuple, etc.)</li>
 <li>it returns one element for each element it takes in  </li>
 </ul>
-<p>Here's how we can write the above using a lambda function:</p>
+<p>Here are two simple examples:</p>
 
 </div>
 </div>
-</div><div class="fragment" data-fragment-index="24">
+</div><div class="fragment" data-fragment-index="27">
     
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="n">dbl_data</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">*</span><span class="mi">2</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
-<span class="n">dbl_data</span>
+<div class=" highlight hl-ipython2"><pre><span class="n">double_lambda</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">*</span><span class="mi">2</span>
+<span class="n">double_lambda</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -658,6 +705,80 @@ div.output_prompt {
 
 
 <div class="output_text output_subarea output_execute_result">
+<pre>8</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    </div><div class="fragment" data-fragment-index="27">
+        
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="n">add_two_numbers</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">:</span> <span class="n">x</span><span class="o">+</span><span class="n">y</span>
+<span class="n">add_two_numbers</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[7]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>3</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+        </div></section><section>
+    
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We can use our <code>lambda</code> function as the function we pass to <code>map</code>:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="n">dbl_data</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">*</span><span class="mi">2</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+<span class="n">dbl_data</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[8]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
 <pre>[26, 170, 154, 50, 100, 90, 130, 158, 18, 4]</pre>
 </div>
 
@@ -667,8 +788,6 @@ div.output_prompt {
 </div>
 
 </div>
-    </div><div class="fragment" data-fragment-index="24">
-        
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
@@ -679,8 +798,7 @@ div.output_prompt {
 
 </div>
 </div>
-</div>
-        </div></section><section>
+</div></section><section>
     
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
@@ -694,7 +812,7 @@ div.output_prompt {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="n">double_lambda</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">*</span><span class="mi">2</span>
@@ -750,7 +868,7 @@ div.output_prompt {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="n">my_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
@@ -771,7 +889,7 @@ div.output_prompt {
 
 </div>
 </div>
-</div><div class="fragment" data-fragment-index="32">
+</div><div class="fragment" data-fragment-index="38">
     
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
@@ -783,14 +901,14 @@ div.output_prompt {
 </div>
 </div>
 </div>
-    </div><div class="fragment" data-fragment-index="32">
+    </div><div class="fragment" data-fragment-index="38">
         
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="n">simple_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)]</span>
+<div class=" highlight hl-ipython2"><pre><span class="n">simple_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">my_list</span><span class="p">]</span>
 <span class="n">simple_list</span>
 </pre></div>
 
@@ -802,11 +920,11 @@ div.output_prompt {
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[9]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[11]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]</pre>
+<pre>[1, 2, 3, 4, 5]</pre>
 </div>
 
 </div>
@@ -815,7 +933,7 @@ div.output_prompt {
 </div>
 
 </div>
-        </div><div class="fragment" data-fragment-index="32">
+        </div><div class="fragment" data-fragment-index="38">
         
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
@@ -827,7 +945,7 @@ div.output_prompt {
 </div>
 </div>
 </div>
-        </div><div class="fragment" data-fragment-index="35">
+        </div><div class="fragment" data-fragment-index="41">
     
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
@@ -839,15 +957,15 @@ div.output_prompt {
 </div>
 </div>
 </div>
-    </div><div class="fragment" data-fragment-index="35">
+    </div><div class="fragment" data-fragment-index="41">
         
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="n">simple_list</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="p">:</span> 
+<span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">my_list</span><span class="p">:</span> 
     <span class="n">simple_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="n">simple_list</span>
 </pre></div>
@@ -860,11 +978,11 @@ div.output_prompt {
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[10]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[12]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]</pre>
+<pre>[1, 2, 3, 4, 5]</pre>
 </div>
 
 </div>
@@ -888,13 +1006,13 @@ div.output_prompt {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="c"># only even numbers</span>
 <span class="n">simple_list</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="p">:</span> 
-    <span class="k">if</span> <span class="n">x</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">:</span>
+<span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">my_list</span><span class="p">:</span> 
+    <span class="k">if</span> <span class="n">x</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="n">simple_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="n">simple_list</span>
 </pre></div>
@@ -907,11 +1025,11 @@ div.output_prompt {
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[11]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[13]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>[0, 2, 4, 6, 8]</pre>
+<pre>[2, 4]</pre>
 </div>
 
 </div>
@@ -922,10 +1040,10 @@ div.output_prompt {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="prompt input_prompt">In&nbsp;[14]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="k">if</span> <span class="n">x</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span>
+<div class=" highlight hl-ipython2"><pre><span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">my_list</span> <span class="k">if</span> <span class="n">x</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span>
 </pre></div>
 
 </div>
@@ -936,11 +1054,11 @@ div.output_prompt {
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[12]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[14]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>[0, 2, 4, 6, 8]</pre>
+<pre>[2, 4]</pre>
 </div>
 
 </div>
@@ -981,7 +1099,7 @@ div.output_prompt {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="n">tuple_list</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">],</span> <span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">,</span><span class="s">&#39;b&#39;</span><span class="p">,</span><span class="s">&#39;c&#39;</span><span class="p">,</span><span class="s">&#39;d&#39;</span><span class="p">])</span>
@@ -996,7 +1114,7 @@ div.output_prompt {
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[13]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[15]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -1008,7 +1126,7 @@ div.output_prompt {
 </div>
 </div>
 
-</div><div class="fragment" data-fragment-index="43">
+</div><div class="fragment" data-fragment-index="49">
     
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
@@ -1020,11 +1138,11 @@ div.output_prompt {
 </div>
 </div>
 </div>
-    </div><div class="fragment" data-fragment-index="43">
+    </div><div class="fragment" data-fragment-index="49">
         
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[14]:</div>
+<div class="prompt input_prompt">In&nbsp;[16]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">tuple_list</span><span class="p">]</span>
@@ -1038,7 +1156,7 @@ div.output_prompt {
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[14]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[16]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -1051,7 +1169,7 @@ div.output_prompt {
 </div>
 
 </div>
-        </div><div class="fragment" data-fragment-index="45">
+        </div><div class="fragment" data-fragment-index="51">
     
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
@@ -1063,11 +1181,11 @@ div.output_prompt {
 </div>
 </div>
 </div>
-    </div><div class="fragment" data-fragment-index="45">
+    </div><div class="fragment" data-fragment-index="51">
         
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[15]:</div>
+<div class="prompt input_prompt">In&nbsp;[17]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="p">[</span><span class="n">letter</span> <span class="k">for</span> <span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="n">letter</span><span class="p">)</span> <span class="ow">in</span> <span class="n">tuple_list</span><span class="p">]</span>
@@ -1081,7 +1199,7 @@ div.output_prompt {
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[15]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[17]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -1094,7 +1212,7 @@ div.output_prompt {
 </div>
 
 </div>
-        </div><div class="fragment" data-fragment-index="45">
+        </div><div class="fragment" data-fragment-index="51">
         
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
@@ -1130,7 +1248,7 @@ div.output_prompt {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[16]:</div>
+<div class="prompt input_prompt">In&nbsp;[18]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="p">[</span><span class="n">letter</span> <span class="k">for</span> <span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="n">letter</span><span class="p">)</span> <span class="ow">in</span> <span class="n">tuple_list</span> <span class="k">if</span> <span class="n">num</span><span class="o">%</span><span class="k">2</span> == 0]
@@ -1144,7 +1262,7 @@ div.output_prompt {
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[16]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[18]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -1176,7 +1294,7 @@ div.output_prompt {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[17]:</div>
+<div class="prompt input_prompt">In&nbsp;[19]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="k">def</span> <span class="nf">filter_func</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="p">:</span>
@@ -1195,7 +1313,7 @@ div.output_prompt {
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[17]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[19]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -1207,7 +1325,7 @@ div.output_prompt {
 </div>
 </div>
 
-</div><div class="fragment" data-fragment-index="53">
+</div><div class="fragment" data-fragment-index="59">
     
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
@@ -1219,11 +1337,11 @@ div.output_prompt {
 </div>
 </div>
 </div>
-    </div><div class="fragment" data-fragment-index="53">
+    </div><div class="fragment" data-fragment-index="59">
         
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[18]:</div>
+<div class="prompt input_prompt">In&nbsp;[20]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="p">[</span><span class="n">letter</span> <span class="k">for</span> <span class="p">(</span><span class="n">num</span><span class="p">,</span><span class="n">letter</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">filter</span><span class="p">(</span><span class="n">filter_func</span><span class="p">,</span> <span class="n">tuple_list</span><span class="p">)]</span>
@@ -1237,7 +1355,7 @@ div.output_prompt {
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[18]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[20]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -1271,7 +1389,7 @@ div.output_prompt {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[19]:</div>
+<div class="prompt input_prompt">In&nbsp;[21]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="c"># error</span>
@@ -1291,7 +1409,7 @@ div.output_prompt {
 <pre>
 <span class="ansired">---------------------------------------------------------------------------</span>
 <span class="ansired">TypeError</span>                                 Traceback (most recent call last)
-<span class="ansigreen">&lt;ipython-input-19-cefd26cb6b0b&gt;</span> in <span class="ansicyan">&lt;module&gt;</span><span class="ansiblue">()</span>
+<span class="ansigreen">&lt;ipython-input-21-cefd26cb6b0b&gt;</span> in <span class="ansicyan">&lt;module&gt;</span><span class="ansiblue">()</span>
 <span class="ansigreen">      1</span> <span class="ansired"># error</span><span class="ansiblue"></span><span class="ansiblue"></span>
 <span class="ansigreen">----&gt; 2</span><span class="ansired"> </span>filter<span class="ansiblue">(</span><span class="ansigreen">lambda</span> x<span class="ansiblue">,</span>y<span class="ansiblue">:</span> x<span class="ansiblue">%</span><span class="ansicyan">2</span><span class="ansiblue">==</span><span class="ansicyan">0</span><span class="ansiblue">,</span> tuple_list<span class="ansiblue">)</span><span class="ansiblue"></span>
 
@@ -1305,7 +1423,7 @@ div.output_prompt {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[20]:</div>
+<div class="prompt input_prompt">In&nbsp;[22]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="c"># correct syntax</span>
@@ -1320,7 +1438,7 @@ div.output_prompt {
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[20]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[22]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -1360,7 +1478,7 @@ div.output_prompt {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[21]:</div>
+<div class="prompt input_prompt">In&nbsp;[23]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="nb">sum</span><span class="p">([</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000000</span><span class="p">)])</span>
@@ -1374,7 +1492,7 @@ div.output_prompt {
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[21]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[23]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -1413,7 +1531,7 @@ div.output_prompt {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[22]:</div>
+<div class="prompt input_prompt">In&nbsp;[24]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="k">print</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000000</span><span class="p">)))</span>
@@ -1455,7 +1573,7 @@ div.output_prompt {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[23]:</div>
+<div class="prompt input_prompt">In&nbsp;[25]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="n">list_expression</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">)]</span>
@@ -1470,7 +1588,7 @@ div.output_prompt {
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[23]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[25]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -1482,11 +1600,11 @@ div.output_prompt {
 </div>
 </div>
 
-</div><div class="fragment" data-fragment-index="66">
+</div><div class="fragment" data-fragment-index="72">
     
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[24]:</div>
+<div class="prompt input_prompt">In&nbsp;[26]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="n">gen_expression</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">))</span>
@@ -1506,7 +1624,7 @@ div.output_prompt {
 <pre>
 <span class="ansired">---------------------------------------------------------------------------</span>
 <span class="ansired">TypeError</span>                                 Traceback (most recent call last)
-<span class="ansigreen">&lt;ipython-input-24-7946e8f635be&gt;</span> in <span class="ansicyan">&lt;module&gt;</span><span class="ansiblue">()</span>
+<span class="ansigreen">&lt;ipython-input-26-7946e8f635be&gt;</span> in <span class="ansicyan">&lt;module&gt;</span><span class="ansiblue">()</span>
 <span class="ansigreen">      1</span> gen_expression <span class="ansiblue">=</span> <span class="ansiblue">(</span>x <span class="ansigreen">for</span> x <span class="ansigreen">in</span> range<span class="ansiblue">(</span><span class="ansicyan">100</span><span class="ansiblue">)</span><span class="ansiblue">)</span><span class="ansiblue"></span>
 <span class="ansigreen">----&gt; 2</span><span class="ansired"> </span>gen_expression<span class="ansiblue">[</span><span class="ansicyan">5</span><span class="ansiblue">]</span><span class="ansiblue"></span>
 
@@ -1534,7 +1652,7 @@ div.output_prompt {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[25]:</div>
+<div class="prompt input_prompt">In&nbsp;[27]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="o">%</span><span class="k">load_ext</span> memory_profiler
@@ -1551,7 +1669,7 @@ div.output_prompt {
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>peak memory: 3197.58 MiB, increment: 3149.74 MiB
+<pre>peak memory: 3509.68 MiB, increment: 3460.50 MiB
 </pre>
 </div>
 </div>
@@ -1562,7 +1680,7 @@ div.output_prompt {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[26]:</div>
+<div class="prompt input_prompt">In&nbsp;[28]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="o">%</span><span class="k">memit</span> sum(x for x in xrange(100000000))
@@ -1578,7 +1696,7 @@ div.output_prompt {
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>peak memory: 51.28 MiB, increment: 0.06 MiB
+<pre>peak memory: 47.73 MiB, increment: 0.04 MiB
 </pre>
 </div>
 </div>
@@ -1608,7 +1726,7 @@ div.output_prompt {
     
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[27]:</div>
+<div class="prompt input_prompt">In&nbsp;[29]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="k">def</span> <span class="nf">my_xrange</span><span class="p">(</span><span class="n">N</span><span class="p">)</span> <span class="p">:</span>
@@ -1625,7 +1743,7 @@ div.output_prompt {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[28]:</div>
+<div class="prompt input_prompt">In&nbsp;[30]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="n">gen</span> <span class="o">=</span> <span class="n">my_xrange</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
@@ -1640,11 +1758,11 @@ div.output_prompt {
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[28]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[30]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>&lt;generator object my_xrange at 0x1045771e0&gt;</pre>
+<pre>&lt;generator object my_xrange at 0x103a830a0&gt;</pre>
 </div>
 
 </div>
@@ -1655,7 +1773,7 @@ div.output_prompt {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[29]:</div>
+<div class="prompt input_prompt">In&nbsp;[31]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="k">print</span> <span class="s">&#39;first value&#39;</span><span class="p">,</span> <span class="n">gen</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
@@ -1684,7 +1802,7 @@ next value 1
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[30]:</div>
+<div class="prompt input_prompt">In&nbsp;[32]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">gen</span><span class="p">]</span>
@@ -1698,7 +1816,7 @@ next value 1
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[30]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[32]:</div>
 
 
 <div class="output_text output_subarea output_execute_result">
@@ -1713,7 +1831,7 @@ next value 1
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[31]:</div>
+<div class="prompt input_prompt">In&nbsp;[33]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="c"># exhausted iterator</span>
@@ -1733,7 +1851,7 @@ next value 1
 <pre>
 <span class="ansired">---------------------------------------------------------------------------</span>
 <span class="ansired">StopIteration</span>                             Traceback (most recent call last)
-<span class="ansigreen">&lt;ipython-input-31-4e0a0c01742f&gt;</span> in <span class="ansicyan">&lt;module&gt;</span><span class="ansiblue">()</span>
+<span class="ansigreen">&lt;ipython-input-33-4e0a0c01742f&gt;</span> in <span class="ansicyan">&lt;module&gt;</span><span class="ansiblue">()</span>
 <span class="ansigreen">      1</span> <span class="ansired"># exhausted iterator</span><span class="ansiblue"></span><span class="ansiblue"></span>
 <span class="ansigreen">----&gt; 2</span><span class="ansired"> </span>gen<span class="ansiblue">.</span>next<span class="ansiblue">(</span><span class="ansiblue">)</span><span class="ansiblue"></span>
 
