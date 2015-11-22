@@ -120,7 +120,13 @@ General multiprocessing/parallel libraries (e.g. MPI)
 <!-- .slide: data-background="figs/mapreduce.svg" data-background-size="contain" data-state="background-blur-animation"-->
 ####**MapReduce** is such a programming paradigm
 
-We all know this to some extent --> it's all around us <!-- .element class="fragment" data-fragment-index="1" style="text-align:center"-->
+* not just the combination of map and reduce tasks...
+* fault-tolerance (expect nodes to go down all the time)
+* data replication
+* data locality
+
+
+### We all know this to some extent --> it's all around us 
 
 * Web 2.0 <!-- .element class="fragment" data-fragment-index="2" -->
     * multimedia content (images, video, music/audio) 
@@ -155,7 +161,7 @@ Many of these "production" systems based on MapReduce combined with efficient "d
 
 ### Typical academic computing landscape
 
-1. individual workstations
+1. individual workstations/laptops
 2. group/lab/institute resources
 3. University-wide computing infrastructure, usually geared for HPC
 
@@ -164,7 +170,7 @@ Many of these "production" systems based on MapReduce combined with efficient "d
 <h3  class="fragment visible" data-fragment-index="0">Some issues</h3>
 
 <ol class="fragment visible" data-fragment-index="0">
-<li>first two are hard to scale -- expensive to buy/maintain</li>
+<li>first two are hard to scale and/or expensive to buy/maintain</li>
 <li>HPC not geared for interactive analysis (exceptions: some matlab functionality, R and Python parallelization w/ MPI, specialized domain-specific analysis codes)</li>
 </ol>
 
@@ -177,15 +183,43 @@ Many of these "production" systems based on MapReduce combined with efficient "d
 
 #### Is there a Big Data need? <!-- .element class="fragment" data-fragment-index="1" style="text-align:center"-->
 
-#### To try and answer this, we brought you here :) <!-- .element class="fragment" data-fragment-index="2" style="text-align:center"-->
 
-#### You can actually have an influence on where this type of infrastructure develops in the future! <!-- .element class="fragment" data-fragment-index="2" style="text-align:center"-->
+
+## "Big Data" software stack
+
+* big data tools --> Hadoop ecosystem under Apache (Hadoop, Pig, Hive, Mahout, etc.)
+* a whole zoo of tools for various stages of data processing
+* stable, reliable, used in businesses all over the world daily
+
+<hr class="fragment visible" data-fragment-index="0">
+
+<ul class="fragment visible" data-fragment-index="0">
+<li>a pain to use, not easy to set up, requires specialized configurations</li>
+<li>Hadoop handles fault tolerance by dumping all intermediate results to disk and replicating; lots of I/O at every stage</li>
+<li>heavy use of Java...</li>
+</ul>
+
+
+<!-- .slide: data-background="http://spark.apache.org/images/spark-logo.png" data-background-size="contain" data-state="background-blur"-->
+## Enter... Spark
+
+### a general-purpose distributed computation framework 
+
+* performs calculations using a directed acyclic graph (DAG) instead of strictly map and reduce stages <!-- .element class="fragment" data-fragment-index="1" -->
+* DAG allows for in-memory caching and fault-tolerance without disk I/O <!-- .element class="fragment" data-fragment-index="2" -->
+* does not require specialized infrastructure, can run without Hadoop/HDFS <!-- .element class="fragment" data-fragment-index="4" -->
+* has a rich feature-set to make programming easier (in Scala, Java, Python, R) <!-- .element class="fragment" data-fragment-index="5" -->
+* includes a machine learning library with increasingly useful features <!-- .element class="fragment" data-fragment-index="6" -->
+* the most active Apache BD project <!-- .element class="fragment" data-fragment-index="7" -->
+* heavy industry backing - IBM commited 3500 (!?) developers to open source effort worldwide, dozens of other companies contributing <!-- .element class="fragment" data-fragment-index="8" -->
 
 
 ## The status and the plan
 
-* we have developed some "prototype" deployments of the big data stack on existing HPC infrastructure
-* two possibilities: dedicated hadoop cluster on Brutus or batch queue on Euler
+* we have developed some prototype deployments of the "big data stack" on existing HPC infrastructure
+* two possibilities: 
+  1. dedicated hadoop cluster on Brutus 
+  2. batch queues on Brutus or Euler
 
 
 ### Hadoop cluster on Brutus 
@@ -197,19 +231,19 @@ Many of these "production" systems based on MapReduce combined with efficient "d
 ![resourcemanager](figs/resourcemanager.png)
 
 
-### Spark on Euler
+### "standalone" Spark on Brutus/Euler batch queue
 
 * run through the batch queue
-* deploy a "standalone" Spark cluster each time on assigned nodes
+* deploy a "standalone" Spark cluster each time on assigned nodes (simple with some generic scripts)
 * access to newer hardware, more resources, but also resource contention
 
 
 
 ### Some goals for the next few days
 
-* get an intuition for working on data in a distributed way
+* get an intuition for working on data in a distributed way (where is my data? how do I compute on it?)
 * get an introduction to "big data" tools, notably HDFS and Spark
-* become familiar with how to use these tools on available resources
+* become familiar with how to use these tools on currently available resources
 * get ideas for your own workflows/projects
 
 
@@ -217,14 +251,6 @@ Many of these "production" systems based on MapReduce combined with efficient "d
 ### Outline
 
 * python intro (day 1)
-* Map/Reduce, functional programming (day 1)
-* Introduction to Spark (day 1, 2)
-* Spark mini-project on Brutus (day 2, 3)
-* Own work (day 3?)
-
-
-
-### github repository for this workshop: 
-
-#### https://github.com/rokroskar/spark_workshop
-
+* Map/Reduce, functional programming, intro to Spark (day 1)
+* Processing the Gutenberg corpus with Spark on Brutus (day 2)
+* Analyzing Twitter with Spark DataFrames (day 3)

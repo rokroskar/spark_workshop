@@ -2,7 +2,7 @@
 
 ![Apache Spark](http://spark.apache.org/images/spark-logo.png)
 
-In the [previous session](../intro/Spark_workshop_Introduction.ipynb) we discussed some basics of the map/reduce programming paradigm. 
+In the [previous session](../workshop_intro/Introduction.html) we discussed some basics of the map/reduce programming paradigm. 
 
 Now, we'll see how we can "scale up" these ideas to distribute the workload among many machines.
 
@@ -11,29 +11,56 @@ the [Apache Hadoop](http://hadoop.apache.org) ecosystem.
 
 
 
-## Basic Data Abstraction: the Resilient Distributed Dataset
+## What is Spark?
 
-An RDD is the essential building block of every Spark application. 
+### a general-purpose distributed computation framework
 
-* keeps track of data distribution across the workers  
-* provides an interface to the user to access and operate on the data
-* can rebuild data upon failure
-* keeps track of lineage 
-* ** is immutable **
+a few key features: 
 
-** As a Spark user, you write applications that feed data into RDDs and subsequently transform them into something useful **
+* interactive data exploration
+* keeps data in-memory - good for loop-intensive algorithms
+
+where is it being used? 
+
+* mostly internet applications (recommendation engines, usage analysis etc.)
+* classic Big Data use cases e.g. text analysis
+* some academia, notably neuroscience
+
+<img src="../figs/spark_commits.png">
 
 
-<!-- .slide: data-background="../figs/parallelize.svg" data-background-size="contain" -->
+## Flexibility of Spark runtime
 
+A few points before we get our feet wet with doing some basic data massaging in Spark. 
 
+The spark runtime can be deployed on: 
+* a single machine (local)
+* a set of pre-defined machines (stand-alone)
+* a dedicated Hadoop-aware scheduler (YARN/Mesos )
+* "cloud", e.g. Amazon EC2 
+
+The development workflow is that you start small (local) and scale up to one of the other solutions, depending on your needs and resources. 
+
+In addition, you can run applications on any of these platforms either
+
+* interactively through a shell (or an ipython notebook as we'll see)
+* batch mode 
+
+** Often, you don't need to change *any* code to go between these methods of deployment! **
 
 
 ## Spark Architecture Overview
 
-A very abbreviated and naive description of how Spark works: 
 
-The runtime system consists of a **driver** and **workers** (there are more specific components like schedulers and memory managers, but those are details). 
+### Remember what was hard about distributed computing:
+
+1. distributing work to the available resources
+2. orchestrating task execution
+3. collecting results
+
+This is what a "framework" like Spark does for us
+
+At its most basic, it consists of a **driver** and **workers** 
 
 
 <!-- .slide: data-background="../figs/spark_architecture.svg" data-background-size="contain" -->
@@ -59,34 +86,23 @@ The runtime system consists of a **driver** and **workers** (there are more spec
 
 The user's access point to this Spark universe is the **Spark Context** which provides an interface to generate RDDs. 
 
-** The only point of contact with the Spark "universe" is the Spark Context and the RDDs via the driver **
 
 
+## Basic Data Abstraction: 
+## the RDD (Resilient Distributed Dataset)
+
+An RDD is the primary interface of every Spark application. 
+
+* keeps track of data distribution across the workers  
+* provides an interface to the user to access and operate on the data
+* can rebuild data upon failure
+* keeps track of lineage 
+* ** is immutable **
+
+** As a Spark user, you write applications that feed data into RDDs and subsequently transform them into something useful **
 
 
-![Spark Universe](../figs/spark_universe.png)
-
-
-
-## Flexibility of Spark runtime
-
-A few points before we get our feet wet with doing some basic data massaging in Spark. 
-
-The spark runtime can be deployed on: 
-* a single machine (local)
-* a set of pre-defined machines (stand-alone)
-* a dedicated Hadoop-aware scheduler (YARN/Mesos )
-* "cloud", e.g. Amazon EC2 
-
-The development workflow is that you start small (local) and scale up to one of the other solutions, depending on your needs and resources. 
-
-In addition, you can run applications on any of these platforms either
-
-* interactively through a shell (or an ipython notebook as we'll see)
-* batch mode 
-
-** Often, you don't need to change *any* code to go between these methods of deployment! **
-
+<!-- .slide: data-background="../figs/parallelize.svg" data-background-size="contain" -->
 
 
 ##RDD transformations and actions
@@ -181,6 +197,18 @@ rdd3 = rdd2.map()
 * data of each RDD is partitioned and each partition is assigned to an executor
 * each partition in a transformation results in a task
 * there may be many more tasks than cores in the system, which allows for good utilization by fine-graining the overall load.
+
+
+#### Time for the basic Spark tutorial
+
+Start up the notebook 
+
+```
+$ vagrant ssh -c "notebooks/start_notebook.py --launch
+```
+
+and open `notebooks/spark_tutorial/spark_intro`
+
 
 
 

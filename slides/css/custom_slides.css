@@ -119,6 +119,7 @@ html {
 }
 .reveal pre code {
   padding: 0px;
+  font-size: 150%;
 }
 
 .reveal section img {
