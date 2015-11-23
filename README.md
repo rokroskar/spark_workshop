@@ -200,7 +200,7 @@ From here the process is identical. The `start_notebook.py` script first sets up
 
 The number at the end of `https://[all ip addresses on your system]:8889/` is the port number on which the notebook is running. You can access it by simply going to https://localhost:8889 in your local browser. **Make sure you specify https and not just http!** This will bring up a menacing message like this
 
-![firefox_warning](notebooks/figs/firefox_warning.png)
+![firefox_warning](slides/figs/firefox_warning.png)
 
 about an untrusted certificate (we created a self-signed certificate during the notebook setup). You can safely ignore this and either click "Advanced -> Proceed to localhost" (in Chrome) or "I understand the risks -> Add Exception" (in Firefox) or simply "Continue" (in Safari). 
 
