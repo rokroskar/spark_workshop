@@ -133,6 +133,11 @@ $ conda update conda
 $ conda install -y numpy scipy scikit-learn pip ipython jupyter matplotlib
 ```
 
+We will also use a little package called `findspark` to simplify the setup a bit: 
+
+```
+$ pip install findspark
+```
 
 #### Java
 
