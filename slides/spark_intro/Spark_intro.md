@@ -211,6 +211,19 @@ and open `notebooks/spark_tutorial/spark_intro`
 
 
 
+## Spark on a dedicated Hadoop cluster alongside Brutus
+
+* a separate cluster of nodes dedicated to Hadoop/Spark
+* controlled via YARN (Yet Another Resource Negotiator)
+* obtain a job in the "batch" queue for the driver process, and request resource from YARN for the Spark job
+* interactive control via tunneling
+
+
+<!-- .slide: data-background="../figs/brutus_hadoop.svg" data-background-size="contain"-->
+
+
+<!-- .slide: data-background="../figs/brutus_hadoop_job.svg" data-background-size="contain"-->
+
 
 <!-- .slide: data-background="../figs/hdfs.svg" data-background-size="contain"  data-state="background-blur-animation"-->
 ### Distributed filesystems
@@ -228,9 +241,65 @@ and open `notebooks/spark_tutorial/spark_intro`
 <!-- .slide: data-background="../figs/hdfs.svg" data-background-size="contain"  -->
 
 
-### How does this compare/contrast with Brutus/Euler?
 
-* first, top-notch (uniform) hardware! not commodity
-* generally no HDFS, but other high-performance FS 
-* high core-density vs. disk I/O 
-* importantly, a somewhat orthogonal software stack
+### Working with the Gutenberg Project Corpus
+
+* collection of thousands of books
+* each book (object) consists of: 
+    - metadata
+    - text
+
+Metadata includes things like:
+* gutenberg book ID (important!)
+* author name
+* date of birth/death
+
+
+### Accessing data
+
+* You will start with an RDD of `(metadata, text)` tuples
+* `metadata` is a *dictionary*, so access like
+
+```
+first_name = metadata['first_name']
+```
+
+Remember, to operate on either metadata or text, you need lambda functions like:
+
+```
+text_rdd = raw_rdd.map(lambda (meta, text): text)
+```
+
+Useful here are the `values()` and `keys()` methods 
+
+At some point, scan through the [documentation!](http://spark.apache.org/docs/latest/)
+
+
+### Brutus setup: http://github.com/rokroskar/spark_workshop/
+### --> notebooks/gutenberg
+
+
+
+## Spark `DataFrame`
+
+A new API for computing with *structured* data (if it's a table, it fits)
+
+Some key points: 
+
+* does not require using basic RDD methods (`map`, `reduce` etc.) for many common operations
+* data in a `DataFrame` follows a specified "schema" that tells Spark which kinds of data are in each column
+* the basic data unit is a `Row` which contains a value for each of the columns
+* automatically read data from a variety of formats, e.g. json, parquet, some database formats (through plugins)
+
+
+#### Can give some nice performance improvements
+
+* Spark can optimize the execution because it knows more about the data layout
+* most of the work can take place in the JVM without need to ship to python
+* operations can be 'pushed down', e.g. filtering (demo?)
+
+
+```
+brutus~$ cd spark_workshop
+brutus~/spark_workshop$ git pull
+```

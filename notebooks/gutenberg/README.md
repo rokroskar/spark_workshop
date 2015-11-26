@@ -74,6 +74,20 @@ $ ssh -Nf -D 9999 username@cluster
 
 You might be prompted for a password, but then nothing much will happen: the tunnel will work in the background and will remain active as long as you maintain an internet connection. This is especially nice if you have a long working session and you don't want to worry about accidentaly closing a terminal window. If you want the prompt for some reason, ommit the `-Nf` flags.
 
+**Pro tip**: you can create an alias in your `.bashrc` to make this a bit easier, e.g. 
+
+```
+alias brutus_tunnel="ssh -Nf -D 9999 roskarr@brutus.ethz.ch" 
+```
+
+then all you need to do at the terminal is
+
+```
+$ brutus_tunnel
+```
+
+and it's all done. 
+
 
 #### On Windows
 
