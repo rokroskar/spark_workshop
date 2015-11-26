@@ -24,7 +24,7 @@ where "username" is your username and "cluster" is the address of the cluster.
 
 ```
 cluster~ $ cd spark_workshop
-cluster~/spark_workshop $ source scripts/setup_cluster.sh
+cluster~/spark_workshop $ source scripts/setup_spark.sh
 ```
 
 
@@ -66,10 +66,10 @@ In order to work with the cluster interactively, we need to set up a secure prox
 
 #### On Linux or Mac OS X
 
-Open up the terminal/console and open a dynamic port forward to the cluster head node:
+Open up the terminal/console and open a dynamic port forward to the cluster head node (this will also forward any error messages to `ssh_errors`):
 
 ```
-$ ssh -Nf -D 9999 username@cluster
+$ ssh -Nf -D 9999 username@cluster >& ssh_errors
 ```
 
 You might be prompted for a password, but then nothing much will happen: the tunnel will work in the background and will remain active as long as you maintain an internet connection. This is especially nice if you have a long working session and you don't want to worry about accidentaly closing a terminal window. If you want the prompt for some reason, ommit the `-Nf` flags.
