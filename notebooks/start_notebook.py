@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import os
 from os.path import expanduser, exists
+import sys
 import subprocess
 
 #
@@ -118,7 +119,7 @@ def launch_spark(port, spark_options, spark_conf):
     import subprocess
 
     # set this to whatever python executable you want to use
-    os.environ['PYSPARK_PYTHON'] = subprocess.check_output('which python', shell=True).rstrip()
+    os.environ['PYSPARK_PYTHON'] = sys.executable
 
     os.environ['PYSPARK_DRIVER_PYTHON'] = "jupyter"
     os.environ['PYSPARK_DRIVER_PYTHON_OPTS'] = \
