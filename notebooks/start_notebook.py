@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+from __future__ import print_function
 import os
 from os.path import expanduser, exists
 import subprocess
@@ -50,6 +51,7 @@ def setup_notebook(port):
         new_pass = passwd()
 
         print(bc.WARNING + '[setup_notebook] '+bc.ENDC+'Creating an SSL certificate to enable a secure connection\nThe certificate will be in your ~/.ssh directory\n')
+
         # make an ssl certificate
         certfile = "{home}/.ssh/notebook_cert.pem".format(home=home)
 
@@ -58,6 +60,7 @@ def setup_notebook(port):
         lines = out.split('\n')
         for l in lines : 
             print(bc.OKGREEN + '[openssl] ' + bc.ENDC + l)
+            print bc.OKGREEN + '[openssl] ' + bc.ENDC + l
         
         # write the notebook config
 
@@ -71,7 +74,6 @@ def setup_notebook(port):
             
     else:
         print(bc.FAIL + "The jupyter notebook already looks set up -- if this is not the case, delete {dir} and run the script again.".format(dir=jupyter_config_path) + bc.ENDC)
-
 
 def launch_notebook(port):
     # launch the notebook
