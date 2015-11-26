@@ -60,7 +60,6 @@ def setup_notebook(port):
         lines = out.split('\n')
         for l in lines : 
             print(bc.OKGREEN + '[openssl] ' + bc.ENDC + l)
-            print bc.OKGREEN + '[openssl] ' + bc.ENDC + l
         
         # write the notebook config
 
