@@ -131,6 +131,7 @@ Job <94883470> is submitted to queue <pub.1h>.
 a6583~ $ 
 ```
 
+### Set up the environment and launch the notebook
 
 First, make sure your python environment is set up correctly by sourcing the `setup_cluster.sh` script in the `spark_workshop` directory. Then we can launch the jupyter notebook using the same script as before
 
