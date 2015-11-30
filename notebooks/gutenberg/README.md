@@ -104,7 +104,11 @@ Then connect to the host and enter your user credentials. You must keep the PuTT
 
 Now we have a tunnel to the cluster, Firefox is set up to communciate with the cluster via the tunnel, and the notebook on the cluster side is configured. All we need is an interactive job to run the driver program and we are set. 
 
-
+1. make a tunnel to the cluster
+2. log in to the cluster
+3. start an interactive job (see below)
+4. set-up your environment
+5. launch the notebook
 
 ### Obtain an interactive job on the cluster
 
