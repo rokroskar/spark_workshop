@@ -52,6 +52,12 @@ def setup_notebook(port):
 
         print(bc.WARNING + '[setup_notebook] '+bc.ENDC+'Creating an SSL certificate to enable a secure connection\nThe certificate will be in your ~/.ssh directory\n')
 
+        # make sure the .ssh directory is there before continuing
+        sshdir = '{home}/.ssh'.format(home=home)
+        if not os.path.exists(sshdir):
+            os.makedirs(sshdir)
+            os.fchmod(sshdir, 700)                        
+
         # make an ssl certificate
         certfile = "{home}/.ssh/notebook_cert.pem".format(home=home)
 
@@ -119,7 +125,7 @@ def launch_spark(port, spark_options, spark_conf):
     import subprocess
 
     # set this to whatever python executable you want to use
-    os.environ['PYSPARK_PYTHON'] = subprocess.check_output('which python', shell=True).rstrip()
+    os.environ['PYSPARK_PYTHON'] = sys.executable
 
     os.environ['PYSPARK_DRIVER_PYTHON'] = "jupyter"
     os.environ['PYSPARK_DRIVER_PYTHON_OPTS'] = \
