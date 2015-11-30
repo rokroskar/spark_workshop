@@ -15,20 +15,20 @@ You should start by having a look at the python introduction notebook (where you
 
 The two introductory tutorials cover the basics to get you started with Spark using Python. The Gutenberg tutorials are the start of the more advanced content. Part 1 focuses on basic data manipulation in RDDs. Parts 2 and 3 cover the following:
 
-* Part 2: Gutenberg N-gram Viewer: 
+* [Part 2: Gutenberg N-gram Viewer](https://github.com/rokroskar/spark_workshop/blob/master/notebooks/gutenberg/part2-ngram-viewer-EMPTY.ipynb): 
   * using broadcast variables as lookup tables
   * use of `mapPartitions` to reduce memory pressure
   * using `reduceByKey` to gain insight of the data content
   * efficient use of pre-partitioning to reduce shuffle and lookup times
   * using vectors in `(key, value)` pair RDDs
   * aggregation using custom aggregators 
-* Part 3: Building a language model: 
+* [Part 3: Building a language model](https://github.com/rokroskar/spark_workshop/blob/master/notebooks/gutenberg/part3-lang-classification-EMPTY.ipynb): 
   * identifying and correcting data skew
   * using generator functions to lower the memory footprint
   * using broadcast variables as lookup tables
   * preparing data for use with [MLlib](http://spark.apache.org/docs/latest/mllib-guide.html)
   * training a classification model and assessing its performance
-* Twitter DataFrames
+* [Twitter DataFrames](https://github.com/rokroskar/spark_workshop/blob/master/notebooks/twitter_dataframes/twitter_dataframes-EMPTY.ipynb)
   * using the `DataFrame` API to process twitter data
   * contrasting `DataFrame` `groupBy` with RDD `reduceByKey` methods
   * using simple and not-so-simple window functions on time-series data
