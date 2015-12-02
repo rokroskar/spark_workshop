@@ -1,4 +1,4 @@
-# Distributed data analysis
+# "Big" Data analysis using Apache Spark
 
 This workshop demonstrates some techniques for pre/post processing large 
 data sets, which do not fit onto a single machine. While there are many 
