@@ -41,7 +41,7 @@ The two introductory tutorials cover the basics to get you started with Spark us
   * efficient use of pre-partitioning to reduce shuffle and lookup times
   * using vectors in `(key, value)` pair RDDs
   * aggregation using custom aggregators 
-* [Part 3: Building a language model](notebooks/gutenberg/part3-lang-classification-EMPTY.ipynb): 
+* [Part 3: Building a language prediction model from English and German books](notebooks/gutenberg/part3-lang-classification-EMPTY.ipynb): 
   * identifying and correcting data skew
   * using generator functions to lower the memory footprint
   * using broadcast variables as lookup tables
