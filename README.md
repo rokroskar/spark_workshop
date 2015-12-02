@@ -5,6 +5,13 @@ data sets, which do not fit onto a single machine. While there are many
 methods to accomplish such a task, here we focus on the *map/reduce* (MR) 
 paradigm through the  use of the [Spark framework](http://spark.apache.org). Spark is a "successor" to Hadoop with a rich API and properties attractive for data exploration. 
 
+A brief outline of the material here: 
+
+* [Structure of the workshop material](#the-structure)
+* [Overview of hands-on tutorials](#tutorial-content)
+* [Background knowledge](#programming-knowledge)
+* [Instructions to set up your local machine for the tutorial](#setting-up-the-local-machine-for-hands-on-tutorials)
+
 ## The structure
 
 The course is split into two hands-on components: 
@@ -12,10 +19,44 @@ The course is split into two hands-on components:
 * The first part consists of two sets of exercises demonstrating some features of the Python language useful for Spark applications and a brief introduction to using Spark. 
 * The second part is a series of "mini-projects" analyzing a text corpus, in this case the Gutenberg books project, and a Twitter dataset. This second part is meant to be run remotely on a Hadoop cluster with an underlying Hadoop Distributed Filesystem (HDFS). 
 
-I recommend that you do the tutorial exercises first before attempting the Gutenberg corpus notebooks!
+I recommend that you do the introductory tutorial exercises first before attempting the Gutenberg corpus or Twitter analysis notebooks!
 
+## Tutorial content
 
-### Programming knowledge
+All of the hands-on instruction of the course takes place in IPython notebooks. They are organized into several topics:
+
+* [Python concepts introduction](notebooks/python_intro) - basic introduction to Big Data and python concepts
+* [Introduction to Spark](notebooks/spark_intro) - essential Spark skills
+* [Analyzing the Gutenberg Corpus](notebooks/gutenberg) - "project" notebook building up an analysis of the Gutenberg books corpus
+* [Using DataFrames to analyze Twitter](notebooks/twitter_dataframes)
+
+You should start by having a look at the python introduction notebook (where you can also execute cells) which introduces some essential python concepts. When you open the notebooks running on the notebook server (i.e. in your browser at `localhost:8889`), you can execute any cell in the notebook by entering `Shift+Enter`. You can also modify any of the cells to experiment. Once you're happy with the python introduction, continue on to the notebook marked "EMPTY" in the same directory and complete the exercises.  
+
+The two introductory tutorials cover the basics to get you started with Spark using Python. The more advanced content begins with the Gutenberg tutorials. [Part 1](notebooks/gutenberg/part1-preprocessing-EMPTY.ipynb) focuses on basic data manipulation in RDDs. [Part 2](notebooks/gutenberg/part2-ngram-viewer-EMPTY.ipynb) and [Part 3](notebooks/gutenberg/part3-lang-classification-EMPTY.ipynb) cover the following:
+
+* [Part 2: Gutenberg N-gram Viewer](notebooks/gutenberg/part2-ngram-viewer-EMPTY.ipynb): 
+  * using broadcast variables as lookup tables
+  * use of `mapPartitions` to reduce memory pressure
+  * using `reduceByKey` to gain insight of the data content
+  * efficient use of pre-partitioning to reduce shuffle and lookup times
+  * using vectors in `(key, value)` pair RDDs
+  * aggregation using custom aggregators 
+* [Part 3: Building a language model](notebooks/gutenberg/part3-lang-classification-EMPTY.ipynb): 
+  * identifying and correcting data skew
+  * using generator functions to lower the memory footprint
+  * using broadcast variables as lookup tables
+  * preparing data for use with [MLlib](http://spark.apache.org/docs/latest/mllib-guide.html)
+  * training a classification model and assessing its performance
+ 
+In addition, there is a tutorial covering Spark [`DataFrame`](https://databricks.com/blog/2015/02/17/introducing-dataframes-in-spark-for-large-scale-data-science.html) functionality, which makes using Spark for structured data a bit easier. The
+[Twitter DataFrames](https://github.com/rokroskar/spark_workshop/blob/master/notebooks/twitter_dataframes/twitter_dataframes-EMPTY.ipynb) covers the following:
+
+  * using the `DataFrame` API to process twitter data
+  * contrasting `DataFrame` `groupBy` with RDD `reduceByKey` methods
+  * using simple and not-so-simple window functions on time-series data
+  * switching between `RDD` and `DataFrame` methods 
+
+## Programming knowledge
 
 We assume fluency with basic programming constructs such as loops and functions. In the first session of the workshop, basics of functional programming and other python-specific constructs are introduced, as they are  useful for writing Spark applications. Knowing how to use the command line (or terminal) is also expected. 
 
@@ -36,17 +77,16 @@ $ git --version
 If this returns something other than an error message, you are all set! 
 
 
-### Firefox
-
-We will be using the firefox browser to work interactively with the cluster in the last part of the workshop. We use Firefox because it allows us to set up a proxy without needing to change the system-wide proxy settings, i.e. this lets you continue using all other applications with the local connection instead of through the proxy. If you don't have Firefox already, you should install it - if you have it already installed, please make sure you update it to the latest version. 
-
-
 ## Setting up the local machine for hands-on tutorials
 
 There are quite a few requirements for all the software used in this workshop to function properly. You can either install it all by hand (or perhaps you have it installed already), but if you don't want to bother with the set up, you can simply use the virtual machine option. 
 
 
 * **Note for Windows users**: While ssh is a standard feature of linux and mac os x operating systems, it is not so on Windows. If you are running windows, you will therefore need to install a [PuTTY client](http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html) or something similar that supports ssh tunneling*
+
+### Firefox
+
+We will be using the firefox browser to work interactively with the cluster in the last part of the workshop. We use Firefox because it allows us to set up a proxy without needing to change the system-wide proxy settings, i.e. this lets you continue using all other applications with the local connection instead of through the proxy. If you don't have Firefox already, you should install it - if you have it already installed, please make sure you update it to the latest version. 
 
 ### Easiest Setup: use a Virtual Machine
 
@@ -212,39 +252,3 @@ about an untrusted certificate (we created a self-signed certificate during the 
 Note that the `--setup` option is only needed the first time you start the 
 notebook (to set up your SSL certificate and password) -- you can leave it out 
 when starting the notebook server up again at some later point. 
-
-The notebooks are organized in three directories: 
-
-* [python_tutorial](https://github.com/rokroskar/spark_workshop/tree/master/notebooks/python_intro) - basic introduction to Big Data and python concepts
-* [spark_tutorial](https://github.com/rokroskar/spark_workshop/tree/master/notebooks/spark_intro) - essential Spark skills
-* [gutenberg](https://github.com/rokroskar/spark_workshop/tree/master/notebooks/gutenberg) - "project" notebooks building up an analysis of the Gutenberg books corpus
-
-You should start by having a look at the python introduction notebook (where you can also execute cells) which introduces some essential python concepts. When you open the notebooks running on the notebook server (i.e. in your browser at `localhost:8889`), you can execute any cell in the notebook by entering `Shift+Enter`. You can also modify any of the cells to experiment. Once you're happy with the python introduction, continue on to the notebook marked "EMPTY" in the same directory and complete the exercises.  
-
-
-## Outline
-### Basics
-
-* map/reduce/filter operations
-* some python concepts that are useful for Spark
-   * lambda functions
-   * list comprehensions (generator expressions) 
-   * generators (needed for mapPartitions)
-   * key/value tuples
-
-### Applying the basics in Spark
-* description of Spark data and computation model (RDDs)
-* different ways of running Spark apps 
-   * local (i.e. laptop)
-   * stand-alone (i.e. Euler)
-   * YARN (Brutus cluster)
-   * Amazon EC2
-* map/reduce in Spark
-   * intro to the computation graph
-   * creating key, value RDDs
-   * standard library functions (reduceByKey, aggregate, sortBy, etc.)
-
-### Advanced
-* optimizations/profiling
-* writing aggregator classes
-
