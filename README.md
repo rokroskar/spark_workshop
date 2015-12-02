@@ -10,7 +10,7 @@ paradigm through the  use of the [Spark framework](http://spark.apache.org). Spa
 The course is split into two hands-on components: 
 
 * The first consists of two sets of exercises demonstrating some features of the Python language useful for Spark applications, and a brief introduction to using Spark. 
-* The second part is a "mini-project" to do some basic analysis of a text corpus, in this case the Gutenberg books project. This second part is meant to be run remotely on a Hadoop cluster with an underlying Hadoop Distributed Filesystem (HDFS). 
+* The second part is a series of "mini-projects" analyzing a text corpus, in this case the Gutenberg books project, and a Twitter dataset. This second part is meant to be run remotely on a Hadoop cluster with an underlying Hadoop Distributed Filesystem (HDFS). 
 
 I recommend that you do the tutorial exercises first before attempting the Gutenberg corpus notebooks!
 
