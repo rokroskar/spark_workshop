@@ -46,7 +46,7 @@ We will be using the firefox browser to work interactively with the cluster in t
 There are quite a few requirements for all the software used in this workshop to function properly. You can either install it all by hand (or perhaps you have it installed already), but if you don't want to bother with the set up, you can simply use the virtual machine option. 
 
 
-*Note: While ssh is a standard feature of linux and mac os x operating systems, it is not so on Windows. If you are running windows, you will therefore need to install a [PuTTY client](http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html) or something similar that supports ssh tunneling*
+* **Note for Windows users**: While ssh is a standard feature of linux and mac os x operating systems, it is not so on Windows. If you are running windows, you will therefore need to install a [PuTTY client](http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html) or something similar that supports ssh tunneling*
 
 ### Easiest Setup: use a Virtual Machine
 
