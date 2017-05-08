@@ -1,4 +1,3 @@
-
 import glob, re, os
 from bs4 import BeautifulSoup
 
@@ -22,87 +21,82 @@ def get_formatted_number(num):
         return ' '.join([num, 'BC'])
     return num
 
-class RdfParser():
+class RdfParser(dict):
     def __init__(self, rdf_data, gid):
+        self['gid'] = gid 
+        for k in ['author_id','author_name','first_name','last_name']:
+            self[k] = None
         self.rdf_data = rdf_data
-        self.gid = gid
-
-        self.author_id = None
-        self.author_name = None
-        self.first_name = None
-        self.last_name = None
-
+        self.parse()
+              
     def parse(self):
-        soup = BeautifulSoup(self.rdf_data, 'lxml', from_encoding='utf-8')
+        soup = BeautifulSoup(self.rdf_data, 'lxml')
 
         # The tile of the book: this may or may not be divided
         # into a new-line-seperated title and subtitle.
         # If it is, then we will just split the title.
-        self.title = soup.find('dcterms:title')
-        self.title = self.title.text if self.title else '- No Title -'
-        self.title = self.title.split('\n')[0]
-        self.subtitle = ' '.join(self.title.split('\n')[1:])
-        self.author_id = None
+        self['title'] = soup.find('dcterms:title')
+        self['title'] = self['title'].text if self['title'] else '- No Title -'
+        self['title'] = self['title'].split('\n')[0]
+        self['subtitle'] = ' '.join(self['title'].split('\n')[1:])
+        self['author_id'] = None
 
         # Parsing the name of the Author. Sometimes it's the name of
         # an organization or the name is not known and therefore
         # the <dcterms:creator> or <marcrel:com> node only return
         # "anonymous" or "unknown". For the case that it's only one word
-        # `self.last_name` will be null.
+        # `self['last_name']` will be null.
         # Because of a rare edge case that the field of the parsed author's name
         # has more than one comma we will join the first name in reverse, starting
         # with the second item.
-        self.author = soup.find('dcterms:creator') or soup.find('marcrel:com')
-        if self.author:
-            self.author_id = self.author.find('pgterms:agent')
-            self.author_id = self.author_id.attrs['rdf:about'].split('/')[-1] if 'rdf:about' in getattr(self.author_id, 'attrs', '') else None
+        self['author'] = soup.find('dcterms:creator') or soup.find('marcrel:com')
+        if self['author']:
+            self['author_id'] = self['author'].find('pgterms:agent')
+            self['author_id'] = self['author_id'].attrs['rdf:about'].split('/')[-1] if 'rdf:about' in getattr(self['author_id'], 'attrs', '') else None
 
-            if self.author.find('pgterms:name'):
-                self.author_name = self.author.find('pgterms:name')
-                self.author_name = self.author_name.text.split(',')
+            if self['author'].find('pgterms:name'):
+                self['author_name'] = self['author'].find('pgterms:name')
+                self['author_name'] = self['author_name'].text.split(',')
 
-                if len(self.author_name) > 1:
-                    self.first_name = ' '.join(self.author_name[::-2]).strip()
-                self.last_name = self.author_name[0]
+                if len(self['author_name']) > 1:
+                    self['first_name'] = ' '.join(self['author_name'][::-2]).strip()
+                self['last_name'] = self['author_name'][0]
 
         # Parsing the birth and (death, if the case) year of the author.
         # These values are likely to be null.
-        self.birth_year = soup.find('pgterms:birthdate')
-        self.birth_year = self.birth_year.text if self.birth_year else None
-        self.birth_year = get_formatted_number(self.birth_year)
+        self['birth_year'] = soup.find('pgterms:birthdate')
+        self['birth_year'] = self['birth_year'].text if self['birth_year'] else None
+        self['birth_year'] = get_formatted_number(self['birth_year'])
 
-        self.death_year = soup.find('pgterms:deathdate')
-        self.death_year = self.death_year.text if self.death_year else None
-        self.death_year = get_formatted_number(self.death_year)
+        self['death_year'] = soup.find('pgterms:deathdate')
+        self['death_year'] = self['death_year'].text if self['death_year'] else None
+        self['death_year'] = get_formatted_number(self['death_year'])
 
         # ISO 639-3 language codes that consist of 2 or 3 letters
         try : 
-            self.language = soup.find('dcterms:language').find('rdf:value').text
+            self['language'] = soup.find('dcterms:language').find('rdf:value').text
         except AttributeError : 
-            self.language = None
+            self['language'] = None
 
         # The download count of the books on www.gutenberg.org.
         # This will be used to determine the popularity of the book.
-        self.downloads = soup.find('pgterms:downloads').text
+        self['downloads'] = soup.find('pgterms:downloads').text
 
         # The book might be licensed under GPL, public domain
         # or might be copyrighted
-        self.license = soup.find('dcterms:rights').text
+        self['license'] = soup.find('dcterms:rights').text
 
         # Finding out all the file types this book is available in
         file_types = soup.find_all('pgterms:file')
-        self.file_types = {}
+        self['file_types'] = {}
         for x in file_types:
             if not x.find('rdf:value').text.endswith('application/zip'):
                 k = x.attrs['rdf:about'].split('/')[-1]
                 v = x.find('rdf:value').text
-                self.file_types.update({k:v})
-
-        return self
+                self['file_types'].update({k:v})
 
 
-
-def get_text(html_path) :
+def clean_text(text) :
     """Clean HTML tags, escape characters, special unicode, punctuation, and empty spaces from the raw html
     
     Inputs:
@@ -113,54 +107,89 @@ def get_text(html_path) :
     
     """
     
-    with open(html_path) as f : 
-        source = f.read()
-    
     # lower case
-    source = source.lower()
+    text = text.lower()
     
     # define the regular expressions
     
-    # remove tags and punctuation 
-    no_tags = re.compile('<.*>')
-    cleaned = no_tags.sub('',source)
-    
     # remove escape characters
-    no_escape = re.compile('\r?\n|\r')
-    cleaned = no_escape.sub(' ', cleaned)
-   
-    # replace umlauts
-    a_uml = re.compile('\\xc3\\xa4')
-    cleaned = a_uml.sub('ae', cleaned)
-
-    o_uml = re.compile('\\xc3\\xb6')
-    cleaned = o_uml.sub('oe', cleaned)
-
-    u_uml = re.compile('\\xc3\\xbc')
-    cleaned = u_uml.sub('ue', cleaned)
-
-    # remove all non-ascii
-    no_non_ascii = re.compile('[^\x00-\x7F]+')
-    cleaned = no_non_ascii.sub(' ', cleaned)
+    text = re.sub('\r?\n|\r', ' ', text)
     
     # remove punctuation
-    no_punctuation = re.compile('[^a-zA-Z0-9\s]')
-    cleaned = no_punctuation.sub('', cleaned)
-    
-    # remove numbers
-    no_numbers = re.compile('[0-9]+')
-    cleaned = no_numbers.sub('', cleaned)
-   
-    no_empty_space = re.compile('\s+')
-    cleaned = no_empty_space.sub(' ', cleaned) 
-
-    # remove mdash
-    cleaned = cleaned.replace('mdash', ' ')
+    text = re.sub("[^a-zA-Z0-9\s'-]", '', text)
      
     # when returning, remove also the left and right space padding
-    return cleaned.strip()
+    return text.strip()
 
-def get_gid(html_path) : 
+def get_metadata(gid, rdf_lookup) :
+    """Extract the metadata from the Gutenberg book represented by the gid.
+    
+    Inputs:
+        `gid`: the Gutenberg project book ID
+        
+        `rdf_lookup`: a dictionary mapping a gid to an rdf file path
+
+    Outputs:
+        dictionary containing the book metadata
+
+    """
+    gid = str(gid)
+
+    with open(rdf_lookup[gid], encoding='utf-8') as f :
+        rp = RdfParser(f.read(), gid)
+
+    return rp
+
+import tempfile
+import zipfile
+
+def extract_data(data_path, extract_path):
+    """Extract .zip files from Gutenberg DVD archive located at `data_path` to `extract_path`"""
+    i = 0
+    for root, dirs, files in os.walk(data_path):
+        target_dir = os.path.join(extract_path, '/'.join(root.split('/')[3:]))
+        os.makedirs(target_dir, exist_ok=True)
+        for f in files:
+            if os.path.splitext(f)[1].lower() == '.zip':
+                if not os.path.exists(os.path.join(target_dir,os.path.splitext(f)[0]+'.txt')):
+                    try: 
+                        with zipfile.ZipFile(os.path.join(root, f),"r") as zip_ref:
+                            zip_ref.extractall(target_dir)
+                            i+=1
+                    except NotImplementedError: 
+                        pass
+          
+    print('Extracted %d files'%i)
+
+
+def find_rdf_file(gid, rdf_path): 
+    for root, dirs, files in os.walk(rdf_path):
+        for f in files:
+            if re.findall('(\d+)',f)[0] == str(gid):
+                return os.path.join(root, f)
+    raise RuntimeError('gid %s not found'%gid)
+
+def get_filelist(basepath): 
+    filter_filenames = re.compile('[\d-]+.txt')
+    find_8 = re.compile('.+(?=-\d\.txt)') 
+
+    filelist = []
+    for root, dirs, files in os.walk(basepath): 
+        for f in files: 
+            if filter_filenames.search(f) is not None:
+                filelist.append(os.path.join(root,f))
+                
+    # remove the plain-text files when an 8-bit encoded file exists
+    for f in filelist: 
+        f8 = find_8.findall(f)
+        if len(f8) > 0: 
+            try: 
+                filelist.remove(f8[0]+'.txt')
+            except ValueError:
+                pass
+    return filelist
+
+def get_gid(filename):
     """
     Return the Gutenberg book ID (`gid`) give the path to the raw html file.
 
@@ -171,40 +200,35 @@ def get_gid(html_path) :
         `gid`: the ID of the Gutenberg book
 
     """
+    return re.findall('(\d+)',os.path.basename(filename))[0]
 
-    digits = re.compile('[0-9]+')
-    gid = digits.findall(os.path.splitext(os.path.basename(html_path))[0])[0]
-    return int(gid)
+def get_encoding(charset_string): 
+    encoding = re.findall('charset=(.+)', charset_string)
+    if len(encoding) == 0: 
+        return 'utf-8'
+    else: 
+        return encoding[0]
 
-def get_metadata(gid, rdf_path = '/cluster/work/sdid/roskarr/gutenberg/rdf-files/') :
-    """Extract the metadata from the Gutenberg book represented by the gid.
-    
-    Inputs:
-        `gid`: the Gutenberg project book ID
-
-    Optional Keywords:
-         `rdf_path`: path to the Gutenberg project RDF projects
-
-    Outputs:
-        dictionary containing the book metadata
-
-    """
-    
-
-    gid = str(gid)
-
-    rdf_file = glob.glob(rdf_path+gid+'/*')[0]
-
-    with open(rdf_file) as f :
-        rdf_data = f.read() 
-
-    rp = RdfParser(rdf_data, gid).parse()
-
-    return {'gid': int(rp.gid), 'title': rp.title, 
-            'first_name': rp.first_name, 'last_name': rp.last_name, 
-            'birth_year': rp.birth_year, 'death_year': rp.death_year, 
-            'lang': rp.language, 'downloads': rp.downloads}
-
-    #return "%d||%s||%s||%s||%s||%s"%(int(rp.        gid), rp.title,rp.first_name,rp.last_name,rp.birth_year,rp.death_year)
-
-
+def read_file(filename, rdf_lookup): 
+    try:     # if we don't find the metadata, drop the file
+        rp = get_metadata(get_gid(filename), rdf_lookup)
+        rp['filename'] = filename
+    except: 
+        return None, None
+    basename = os.path.basename(filename)
+     
+    if basename in rp['file_types']:     # if no encoding is given, drop the file
+        encoding = get_encoding(rp['file_types'][basename])
+        try: 
+            with open(filename, encoding=encoding, errors='ignore') as f: 
+                text = f.read()
+        except Exception as e: 
+            if isinstance(e, UnicodeError):
+                print('UnicodeError while reading ', basename)
+                return None, None
+            else:
+                raise RuntimeError("problems with decoding %s with encoding %s"%(filename, encoding))
+        return rp, text
+    else:
+        print('metadata not found for ', basename)
+        return None, None
