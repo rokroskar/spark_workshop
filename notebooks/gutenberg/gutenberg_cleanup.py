@@ -1,5 +1,7 @@
 import glob, re, os
 from bs4 import BeautifulSoup
+import tempfile
+import zipfile
 
 #
 # `get_formatted_number` and `RdfParser` are from 
@@ -21,8 +23,10 @@ def get_formatted_number(num):
         return ' '.join([num, 'BC'])
     return num
 
+    
 class RdfParser(dict):
     def __init__(self, rdf_data, gid):
+        super().__init__()
         self['gid'] = gid 
         for k in ['author_id','author_name','first_name','last_name']:
             self[k] = None
@@ -30,7 +34,7 @@ class RdfParser(dict):
         self.parse()
               
     def parse(self):
-        soup = BeautifulSoup(self.rdf_data, 'lxml')
+        soup = BeautifulSoup(self.rdf_data, 'xml')
 
         # The tile of the book: this may or may not be divided
         # into a new-line-seperated title and subtitle.
@@ -49,18 +53,19 @@ class RdfParser(dict):
         # Because of a rare edge case that the field of the parsed author's name
         # has more than one comma we will join the first name in reverse, starting
         # with the second item.
-        self['author'] = soup.find('dcterms:creator') or soup.find('marcrel:com')
-        if self['author']:
-            self['author_id'] = self['author'].find('pgterms:agent')
+        author = soup.find('dcterms:creator') or soup.find('marcrel:com')
+        if author:
+            self['author_id'] = author.find('pgterms:agent')
             self['author_id'] = self['author_id'].attrs['rdf:about'].split('/')[-1] if 'rdf:about' in getattr(self['author_id'], 'attrs', '') else None
 
-            if self['author'].find('pgterms:name'):
-                self['author_name'] = self['author'].find('pgterms:name')
+            if author.find('pgterms:name'):
+                self['author_name'] = author.find('pgterms:name')
                 self['author_name'] = self['author_name'].text.split(',')
 
                 if len(self['author_name']) > 1:
                     self['first_name'] = ' '.join(self['author_name'][::-2]).strip()
                 self['last_name'] = self['author_name'][0]
+
 
         # Parsing the birth and (death, if the case) year of the author.
         # These values are likely to be null.
@@ -140,8 +145,18 @@ def get_metadata(gid, rdf_lookup) :
 
     return rp
 
-import tempfile
-import zipfile
+def get_rdf_lookup(rdf_path):
+    """Generate a dictionary of (gid, path) mapping for the rdf files to make lookup faster"""
+
+    rdf_lookup = {}
+    find_gid = re.compile('(\d+)')
+    for root, dirs, files in os.walk(rdf_path):
+        for f in files:
+            name, ext = os.path.splitext(f)
+            if ext == '.rdf':
+                rdf_lookup[find_gid.findall(name)[0]] = os.path.join(root,f)
+    return rdf_lookup
+
 
 def extract_data(data_path, extract_path):
     """Extract .zip files from Gutenberg DVD archive located at `data_path` to `extract_path`"""
@@ -162,16 +177,11 @@ def extract_data(data_path, extract_path):
     print('Extracted %d files'%i)
 
 
-def find_rdf_file(gid, rdf_path): 
-    for root, dirs, files in os.walk(rdf_path):
-        for f in files:
-            if re.findall('(\d+)',f)[0] == str(gid):
-                return os.path.join(root, f)
-    raise RuntimeError('gid %s not found'%gid)
+def get_filelist(basepath, extension='.txt'): 
+    """Recursively generate a list of files of a given extension starting at `basepath`"""
 
-def get_filelist(basepath): 
-    filter_filenames = re.compile('[\d-]+.txt')
-    find_8 = re.compile('.+(?=-\d\.txt)') 
+    filter_filenames = re.compile('[\d-]+%s'%extension)
+    find_8 = re.compile('.+(?=-\d\%s)'%extension) 
 
     filelist = []
     for root, dirs, files in os.walk(basepath): 
@@ -184,7 +194,7 @@ def get_filelist(basepath):
         f8 = find_8.findall(f)
         if len(f8) > 0: 
             try: 
-                filelist.remove(f8[0]+'.txt')
+                filelist.remove(f8[0]+extension)
             except ValueError:
                 pass
     return filelist
@@ -210,12 +220,15 @@ def get_encoding(charset_string):
         return encoding[0]
 
 def read_file(filename, rdf_lookup): 
+    basename = os.path.basename(filename)
+
     try:     # if we don't find the metadata, drop the file
         rp = get_metadata(get_gid(filename), rdf_lookup)
         rp['filename'] = filename
-    except: 
+    except Exception as e: 
+        print('Error loading metadata for ', basename)
+        print(e)
         return None, None
-    basename = os.path.basename(filename)
      
     if basename in rp['file_types']:     # if no encoding is given, drop the file
         encoding = get_encoding(rp['file_types'][basename])
