@@ -1,12 +1,16 @@
-import glob, re, os
-from bs4 import BeautifulSoup
+import glob
+import os
+import re
 import tempfile
 import zipfile
 
+from bs4 import BeautifulSoup
+
 #
-# `get_formatted_number` and `RdfParser` are from 
+# `get_formatted_number` and `RdfParser` are from
 # https://github.com/kiwix/gutenberg
 #
+
 
 def get_formatted_number(num):
     """
@@ -23,16 +27,16 @@ def get_formatted_number(num):
         return ' '.join([num, 'BC'])
     return num
 
-    
+
 class RdfParser(dict):
     def __init__(self, rdf_data, gid):
         super().__init__()
-        self['gid'] = gid 
-        for k in ['author_id','author_name','first_name','last_name']:
+        self['gid'] = gid
+        for k in ['author_id', 'author_name', 'first_name', 'last_name']:
             self[k] = None
         self.rdf_data = rdf_data
         self.parse()
-              
+
     def parse(self):
         soup = BeautifulSoup(self.rdf_data, 'xml')
 
@@ -56,31 +60,36 @@ class RdfParser(dict):
         author = soup.find('dcterms:creator') or soup.find('marcrel:com')
         if author:
             self['author_id'] = author.find('pgterms:agent')
-            self['author_id'] = self['author_id'].attrs['rdf:about'].split('/')[-1] if 'rdf:about' in getattr(self['author_id'], 'attrs', '') else None
+            self['author_id'] = self['author_id'].attrs[
+                'rdf:about'].split('/')[-1] if 'rdf:about' in getattr(
+                    self['author_id'], 'attrs', '') else None
 
             if author.find('pgterms:name'):
                 self['author_name'] = author.find('pgterms:name')
                 self['author_name'] = self['author_name'].text.split(',')
 
                 if len(self['author_name']) > 1:
-                    self['first_name'] = ' '.join(self['author_name'][::-2]).strip()
+                    self['first_name'] = ' '.join(
+                        self['author_name'][::-2]).strip()
                 self['last_name'] = self['author_name'][0]
-
 
         # Parsing the birth and (death, if the case) year of the author.
         # These values are likely to be null.
         self['birth_year'] = soup.find('pgterms:birthdate')
-        self['birth_year'] = self['birth_year'].text if self['birth_year'] else None
+        self['birth_year'] = self['birth_year'].text if self[
+            'birth_year'] else None
         self['birth_year'] = get_formatted_number(self['birth_year'])
 
         self['death_year'] = soup.find('pgterms:deathdate')
-        self['death_year'] = self['death_year'].text if self['death_year'] else None
+        self['death_year'] = self['death_year'].text if self[
+            'death_year'] else None
         self['death_year'] = get_formatted_number(self['death_year'])
 
         # ISO 639-3 language codes that consist of 2 or 3 letters
-        try : 
-            self['language'] = soup.find('dcterms:language').find('rdf:value').text
-        except AttributeError : 
+        try:
+            self['language'] = soup.find('dcterms:language').find(
+                'rdf:value').text
+        except AttributeError:
             self['language'] = None
 
         # The download count of the books on www.gutenberg.org.
@@ -98,40 +107,41 @@ class RdfParser(dict):
             if not x.find('rdf:value').text.endswith('application/zip'):
                 k = x.attrs['rdf:about'].split('/')[-1]
                 v = x.find('rdf:value').text
-                self['file_types'].update({k:v})
+                self['file_types'].update({k: v})
 
 
-def clean_text(text) :
+def clean_text(text):
     """Clean HTML tags, escape characters, special unicode, punctuation, and empty spaces from the raw html
-    
+
     Inputs:
         `html_path`: path to the raw html Gutenberg project book file
 
     Outputs:
         a string of cleaned, lower-case text
-    
+
     """
-    
+
     # lower case
     text = text.lower()
-    
+
     # define the regular expressions
-    
+
     # remove escape characters
     text = re.sub('\r?\n|\r', ' ', text)
-    
+
     # remove punctuation
     text = re.sub("[^a-zA-Z0-9\s'-]", '', text)
-     
+
     # when returning, remove also the left and right space padding
     return text.strip()
 
-def get_metadata(gid, rdf_lookup) :
+
+def get_metadata(gid, rdf_lookup):
     """Extract the metadata from the Gutenberg book represented by the gid.
-    
+
     Inputs:
         `gid`: the Gutenberg project book ID
-        
+
         `rdf_lookup`: a dictionary mapping a gid to an rdf file path
 
     Outputs:
@@ -140,10 +150,11 @@ def get_metadata(gid, rdf_lookup) :
     """
     gid = str(gid)
 
-    with open(rdf_lookup[gid], encoding='utf-8') as f :
+    with open(rdf_lookup[gid], encoding='utf-8') as f:
         rp = RdfParser(f.read(), gid)
 
     return rp
+
 
 def get_rdf_lookup(rdf_path):
     """Generate a dictionary of (gid, path) mapping for the rdf files to make lookup faster"""
@@ -154,7 +165,7 @@ def get_rdf_lookup(rdf_path):
         for f in files:
             name, ext = os.path.splitext(f)
             if ext == '.rdf':
-                rdf_lookup[find_gid.findall(name)[0]] = os.path.join(root,f)
+                rdf_lookup[find_gid.findall(name)[0]] = os.path.join(root, f)
     return rdf_lookup
 
 
@@ -166,38 +177,42 @@ def extract_data(data_path, extract_path):
         os.makedirs(target_dir, exist_ok=True)
         for f in files:
             if os.path.splitext(f)[1].lower() == '.zip':
-                if not os.path.exists(os.path.join(target_dir,os.path.splitext(f)[0]+'.txt')):
-                    try: 
-                        with zipfile.ZipFile(os.path.join(root, f),"r") as zip_ref:
+                if not os.path.exists(
+                        os.path.join(target_dir,
+                                     os.path.splitext(f)[0] + '.txt')):
+                    try:
+                        with zipfile.ZipFile(os.path.join(root, f),
+                                             "r") as zip_ref:
                             zip_ref.extractall(target_dir)
-                            i+=1
-                    except NotImplementedError: 
+                            i += 1
+                    except NotImplementedError:
                         pass
-          
-    print('Extracted %d files'%i)
+
+    print('Extracted %d files' % i)
 
 
-def get_filelist(basepath, extension='.txt'): 
+def get_filelist(basepath, extension='.txt'):
     """Recursively generate a list of files of a given extension starting at `basepath`"""
 
-    filter_filenames = re.compile('[\d-]+%s'%extension)
-    find_8 = re.compile('.+(?=-\d\%s)'%extension) 
+    filter_filenames = re.compile('[\d-]+%s' % extension)
+    find_8 = re.compile('.+(?=-\d\%s)' % extension)
 
     filelist = []
-    for root, dirs, files in os.walk(basepath): 
-        for f in files: 
+    for root, dirs, files in os.walk(basepath):
+        for f in files:
             if filter_filenames.search(f) is not None:
-                filelist.append(os.path.join(root,f))
-                
+                filelist.append(os.path.join(root, f))
+
     # remove the plain-text files when an 8-bit encoded file exists
-    for f in filelist: 
+    for f in filelist:
         f8 = find_8.findall(f)
-        if len(f8) > 0: 
-            try: 
-                filelist.remove(f8[0]+extension)
+        if len(f8) > 0:
+            try:
+                filelist.remove(f8[0] + extension)
             except ValueError:
                 pass
     return filelist
+
 
 def get_gid(filename):
     """
@@ -210,37 +225,43 @@ def get_gid(filename):
         `gid`: the ID of the Gutenberg book
 
     """
-    return re.findall('(\d+)',os.path.basename(filename))[0]
+    return re.findall('(\d+)', os.path.basename(filename))[0]
 
-def get_encoding(charset_string): 
+
+def get_encoding(charset_string):
+    """Return the string encoding."""
     encoding = re.findall('charset=(.+)', charset_string)
-    if len(encoding) == 0: 
+    if len(encoding) == 0:
         return 'utf-8'
-    else: 
+    else:
         return encoding[0]
 
-def read_file(filename, rdf_lookup): 
+
+def read_file(filename, rdf_lookup):
+    """Read the file with associated RDF metadata."""
     basename = os.path.basename(filename)
 
-    try:     # if we don't find the metadata, drop the file
+    try:  # if we don't find the metadata, drop the file
         rp = get_metadata(get_gid(filename), rdf_lookup)
         rp['filename'] = filename
-    except Exception as e: 
+    except Exception as e:
         print('Error loading metadata for ', basename)
         print(e)
         return None, None
-     
-    if basename in rp['file_types']:     # if no encoding is given, drop the file
+
+    if basename in rp['file_types']:  # if no encoding is given, drop the file
         encoding = get_encoding(rp['file_types'][basename])
-        try: 
-            with open(filename, encoding=encoding, errors='ignore') as f: 
+        try:
+            with open(filename, encoding=encoding, errors='ignore') as f:
                 text = f.read()
-        except Exception as e: 
+        except Exception as e:
             if isinstance(e, UnicodeError):
                 print('UnicodeError while reading ', basename)
                 return None, None
             else:
-                raise RuntimeError("problems with decoding %s with encoding %s"%(filename, encoding))
+                raise RuntimeError(
+                    "problems with decoding %s with encoding %s" % (filename,
+                                                                    encoding))
         return rp, text
     else:
         print('metadata not found for ', basename)
